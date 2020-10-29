@@ -15,3 +15,6 @@
 [1029/193001.439:ERROR:registration_protocol_win.cc(56)] CreateFile: 系统找不到指定的文件。 (0x2)
 [1029/193003.415:ERROR:registration_protocol_win.cc(56)] CreateFile: 系统找不到指定的文件。 (0x2)
 [1029/193011.421:ERROR:registration_protocol_win.cc(56)] CreateFile: 系统找不到指定的文件。 (0x2)
+[1029/194439.433:ERROR:http_transport_win.cc(170)] WinHttpCrackUrl: URL 未使用可识别的协议  (0x2ee6)
+[1029/194441.883:ERROR:http_transport_win.cc(170)] WinHttpCrackUrl: URL 未使用可识别的协议  (0x2ee6)
+[1029/194458.927:ERROR:http_transport_win.cc(170)] WinHttpCrackUrl: URL 未使用可识别的协议  (0x2ee6)
