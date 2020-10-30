@@ -19,13 +19,13 @@
           </div>
       </div>
       </div>
-      <singer-list-tile
-      />
+<!--      <singer-list-tile
+      />-->
   </div>
 </template>
 
 <script>
-import SingerListTile from '@/components/main/homepage/SingerListTitleShow'
+
 export default {
   props:{
     title:{
@@ -64,7 +64,7 @@ export default {
     }
   },
   components:{
-    SingerListTile
+    // SingerListTile
   }
 
 

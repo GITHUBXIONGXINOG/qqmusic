@@ -15,7 +15,14 @@ import RadioStation from '@/views/RadioStation'
 import Mv from '@/views/Mv'
 import DigitalAlbum from '@/views/DigitalAlbum'
 import Ticketing from '@/views/Ticketing'
-import SingerListTitle from '@/views/SingerListTitle'
+// import SingerListTitle from '@/views/SingerListTitle'
+import Classic from '@/views/homepage/Classic'
+import Ktv from '@/views/homepage/Ktv'
+import Lovesong from '@/views/homepage/Lovesong'
+import Networksong from '@/views/homepage/Networksong'
+import Officialplaylist from '@/views/homepage/Officialplaylist'
+import Recommend from '@/views/homepage/Recommend'
+
 
 const routes = [
   {
@@ -25,7 +32,14 @@ const routes = [
     children:[
       {path: '',component: Homepage},
       {path: 'homepage',component:Homepage,children:[
-          {path: 'singerlisttitle',component:SingerListTitle}
+          {path: '',component:Recommend},
+          {path: 'classic',component:Classic},
+          {path: 'ktv',component:Ktv},
+          {path: 'lovesong',component:Lovesong},
+          {path: 'networksong',component:Networksong},
+          {path: 'officialplaylist',component:Officialplaylist},
+          {path: 'recommend',component:Recommend},
+
         ]},
       {path: 'singer',component:Singer},
       {path: 'record',component:Record},
