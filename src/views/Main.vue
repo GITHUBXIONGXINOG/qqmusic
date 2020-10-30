@@ -4,7 +4,10 @@
         title="音乐馆"
         @nav-click="toPath"
     />
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+
 
   </div>
  </template>

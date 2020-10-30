@@ -74,7 +74,7 @@ a{
 
 
 }
-//标题内容
+//标题内容 首页 歌手...
 .main-header > .nav-list ul{
   display: flex;
   justify-content: space-between;
@@ -85,8 +85,51 @@ a{
 }
 
 .nav-active{
-  color: #31C27C;
+  color: #31C27C!important;
 }
+//背景
+ .homepage{
+   background: rgb(242, 242, 242);
+   height: 35vw;
+ }
+
+//首页头部标签
+.singer-list-title-show{
+  border: 1px solid black;
+}
+
+.singer-list-title-show .song-wrap{
+  //background: grey;
+  margin: 0 auto;
+}
+
+//为你推荐,官方歌单...
+.singer-list-title-show .song-list-ul{
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+  border: 1px solid blue;
+  width: 1200px;
+  padding: 0 290px;
+  flex-wrap: nowrap;
+
+}
+//歌单推荐标识
+.singer-list-title-show .playlistRecommendation{
+  height: 110px;
+  width: 1200px;
+  border: 1px solid gray;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  font-size: 29px;
+  align-items: center;
+  letter-spacing:10px;
+  color: rgb(51, 51, 51);
+  font-family:"宋体";
+}
+
+
 
 /*首页 为你推荐样式*/
 //$distance = 1vw;
@@ -116,6 +159,5 @@ a{
 
   width: 224px;
   height: 224px;
-
 
 }

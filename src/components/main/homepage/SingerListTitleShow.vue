@@ -1,24 +1,26 @@
 <template>
-  <div>
-      <div class="singer-list-title-show">
+  <div >
+      <div class="singer-list-title-show" >
         <div class="song-list">
-          <ul>
-            <li
-                v-for="item of songList"
-                :key="item.name"
-                :class="{'nav-active': isActive(item.path)}"
-                @click="navClick(item.path) "
-            >
+          <div class="playlistRecommendation">
+            歌单推荐
+          </div>
+          <div class="song-wrap">
+              <ul class="song-list-ul">
+                <li
+                    v-for="item of songList"
+                    :key="item.name"
+                    :class="{'nav-active': isActive(item.path)}"
+                    @click="navClick(item.path) "
+                >
+                  {{item.name}}
+                </li>
+              </ul>
+          </div>
 
-              {{item.name }}
-
-            </li>
-          </ul>
         </div>
-
     </div>
-    <!--      <singer-list-tile
-          />-->
+
   </div>
 </template>
 
@@ -44,19 +46,23 @@ export default {
       this.$emit('nav-click',path)
     },
     isActive(path){
-     /* console.log(path)
+/*      console.log(path)
       console.log(this.$route.path)*/
-      //debugger
+      // debugger
       if (path === this.$route.path){
         return true
       }
-      if (path === '/homepage' && this.$route.path === '/'){
+      if (path === '/recommend' && this.$route.path === '/homepage' ){
+        console.log(path)
         return true
       }
       return false
     }
   },
   components:{
+
+  },
+  mounted() {
 
   }
 

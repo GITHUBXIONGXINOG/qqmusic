@@ -54,7 +54,11 @@ export default {
       this.$emit('nav-click',path)
     },
     isActive(path){
-      if (path === this.$route.path){
+      let reg = new RegExp('^'+path+'/')
+      if (this.$route.path.match(reg)){
+        return true
+      }
+      if (path === this.$route.path ){
         return true
       }
       if (path === '/homepage' && this.$route.path === '/'){
@@ -63,8 +67,12 @@ export default {
       return false
     }
   },
+  created() {
+
+  },
+
   components:{
-    // SingerListTile
+
   }
 
 

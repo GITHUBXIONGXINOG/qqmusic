@@ -30,7 +30,8 @@ const routes = [
     component:Main,
     //Main路由的子路由
     children:[
-      {path: '',component: Homepage},
+        //redirect 重定向
+      {path: '',component: Homepage,redirect:'/homepage/recommend'},
       {path: 'homepage',component:Homepage,children:[
           {path: '',component:Recommend},
           {path: 'classic',component:Classic},
