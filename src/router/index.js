@@ -32,7 +32,7 @@ const routes = [
     children:[
         //redirect 重定向
       {path: '',component: Homepage,redirect:'/homepage/recommend'},
-      {path: 'homepage',component:Homepage,children:[
+      {path: 'homepage',component:Homepage,redirect:'/homepage/recommend',children:[
           {path: '',component:Recommend},
           {path: 'classic',component:Classic},
           {path: 'ktv',component:Ktv},

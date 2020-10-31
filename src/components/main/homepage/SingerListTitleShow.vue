@@ -46,16 +46,19 @@ export default {
       this.$emit('nav-click',path)
     },
     isActive(path){
-/*      console.log(path)
-      console.log(this.$route.path)*/
-      // debugger
+      console.log(path)
+      console.log(this.$route.path)
+      debugger
       if (path === this.$route.path){
         return true
       }
       if (path === '/recommend' && this.$route.path === '/homepage' ){
-        console.log(path)
         return true
       }
+      if (path === '/homepage/recommend' && this.$route.path === '/homepage' ){
+        return true
+      }
+
       return false
     }
   },

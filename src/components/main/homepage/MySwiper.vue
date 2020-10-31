@@ -1,6 +1,7 @@
+<!--
 <template>
   <div class="my-swiper">
-<!--    <div v-swiper:mySwiper="swiperOption">
+&lt;!&ndash;    <div v-swiper:mySwiper="swiperOption">
       <div class="swiper-wrapper">
 
         <div class="swiper-slide"  v-for="(item,index) of swiperList" :key="index">
@@ -14,7 +15,7 @@
         <div class="swiper-button-next" slot="button-next"></div>&ndash;&gt;
       </div>
       <div class="swiper-pagination"></div>
-    </div>-->
+    </div>&ndash;&gt;
     <swiper :options="swiperOption" ref="mySwiper" class="wrap">
       <swiper-slide v-for="(page,index) in pages" :key="index" class="swiperStyle">
         <div class="swiperPageImgList" v-for="item in page" :key="item.id">
@@ -62,3 +63,4 @@
     }
 </script>
 
+-->
