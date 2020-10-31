@@ -10,7 +10,7 @@
                 <li
                     v-for="item of songList"
                     :key="item.name"
-                    :class="{'nav-active': isActive(item.path)}"
+                    :class="['select',{'nav-active': isActive(item.path)}]"
                     @click="navClick(item.path) "
                 >
                   {{item.name}}
@@ -46,9 +46,7 @@ export default {
       this.$emit('nav-click',path)
     },
     isActive(path){
-      console.log(path)
-      console.log(this.$route.path)
-      debugger
+      // debugger
       if (path === this.$route.path){
         return true
       }

@@ -41,8 +41,16 @@
       methods:{
         async fetchRecommendSwiper(){
           const res = await this.$http.get('/recommend/playlist/u')
-          this.RecommendList = res.data.data.list.map(item => ({img:item.cover}))
-          // console.log(this.RecommendList.map(item=>item.img))
+          // console.log(res)
+          this.RecommendList = res.data.data.list.map(item => ({
+            img:item.cover,
+            title:item.title,
+            username:item.username,
+            id:item.content_id,
+            listen_num:item.listen_num,
+            type:item.type
+          }))
+           // console.log(this.RecommendList.map(item=>item))
         }
       },
       created() {

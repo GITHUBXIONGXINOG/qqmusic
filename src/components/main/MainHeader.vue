@@ -6,14 +6,14 @@
               <img src="../../../public/img/logo.png" alt="logo" class="log_img">
               <img src="../../../public/img/mark_1.png" class="mark_img">
               <div v-for="(item,index) in titleAll" :key="index" class="title">
-                  <i>{{item}}</i>
+                  <a href="javascript:;">{{item}}</a>
               </div>
               <div class="searchInput">
                   <div class="searchAndIcon">
                       <input type="text" placeholder="搜索音乐、MV、歌单、用户">
-                      <i class="iconfont searchIcon">
-                        <span>&#xe6b4;</span>
-                      </i>
+                      <a href="javascript:;" class="iconfont searchIcon">
+                          <i></i>
+                      </a>
                   </div>
               </div>
               <div class="userSet">
@@ -22,13 +22,16 @@
                   </div>
                   <div class="openVipPosition">
                       <div class="openVip">
-                        <a href="javascript:;">开通VIP</a>
+                           <a href="javascript:;">开通VIP</a>
+                           <img src="../../../public/img/箭头下.svg" alt="">
+                           <img src="../../../public/img/箭头上.svg" alt="">
                       </div>
                   </div>
 
                   <div class="reCharge">
                     <a href="javascript:;">充值</a>
                   </div>
+
               </div>
 
           </div>
@@ -38,7 +41,7 @@
               <li
                   v-for="item of navList"
                   :key="item.name"
-                  :class="{'nav-active': isActive(item.path)}"
+                  :class="['select',{'nav-active': isActive(item.path)}]"
                   @click="navClick(item.path) "
               >
                 {{item.name }}
