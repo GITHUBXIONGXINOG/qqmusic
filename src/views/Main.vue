@@ -15,6 +15,7 @@
 <script>
 import MainHeader from '@/components/main/MainHeader'
 export default {
+
   methods:{
     toPath(path){
       this.$router.push(path)

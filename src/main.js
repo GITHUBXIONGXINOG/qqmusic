@@ -9,6 +9,8 @@ Vue.config.productionTip = false
 import http from "@/http";
 Vue.prototype.$http = http
 
+import '@/assets/icon/iconfont.css'
+
 //轮播图组件全局挂载
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/swiper-bundle.css'
@@ -19,3 +21,4 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+

@@ -2,9 +2,37 @@
   <div>
       <div class="mod_header">
         <div class="main-header">
-          <div class="title">
-            {{ title }}
+          <div class="main_header_wrap">
+              <img src="../../../public/img/logo.png" alt="logo" class="log_img">
+              <img src="../../../public/img/mark_1.png" class="mark_img">
+              <div v-for="(item,index) in titleAll" :key="index" class="title">
+                  <i>{{item}}</i>
+              </div>
+              <div class="searchInput">
+                  <div class="searchAndIcon">
+                      <input type="text" placeholder="搜索音乐、MV、歌单、用户">
+                      <i class="iconfont searchIcon">
+                        <span>&#xe6b4;</span>
+                      </i>
+                  </div>
+              </div>
+              <div class="userSet">
+                  <div class="login">
+                    <a href="javascript:;">登录</a>
+                  </div>
+                  <div class="openVipPosition">
+                      <div class="openVip">
+                        <a href="javascript:;">开通VIP</a>
+                      </div>
+                  </div>
+
+                  <div class="reCharge">
+                    <a href="javascript:;">充值</a>
+                  </div>
+              </div>
+
           </div>
+
           <div class="nav-list">
             <ul>
               <li
@@ -45,7 +73,8 @@ export default {
         { path:'/mv',name:'MV'},
         { path:'/digitalAlbum',name:'数字专辑'},
         { path:'/ticketing',name:'票务'},
-      ]
+      ],
+      titleAll:['音乐馆','我的音乐','客户端','开放平台','VIP']
     }
   },
   methods:{

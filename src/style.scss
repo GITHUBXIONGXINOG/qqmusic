@@ -15,24 +15,129 @@ li{
 }
 a{
   text-decoration: none;
+  color: black;
+}
+i{
+  font-style: normal;
 }
 /*头部标题*/
 .mod_header{
-  width: 100%;
+  //width: 100%;
+  width: 1200px;
+  margin: 0 auto;
+  //border: 1px solid black;
+  position: relative;
+}
+//log样式
+.mod_header .log_img{
+  //border: 1px solid red;
+  width: 170px;
+  height: 46px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 24px 20px 0;
 }
 
-/*.main-header{
-  //padding: 0 auto;
-  border: 1px solid black;
-  //margin: 0 163px;
-  margin: 0 auto;
-  width: 1200px;
-}*/
+
+.main_header_wrap{
+  display: flex;
+}
+
+//选中标题
+.main-header .main_header_wrap> .titleChecked{
+  color: #fff;
+  font-size: 18px;
+  background: #31C27C;
+  width: 94px;
+  height: 90px;
+  padding: 0px 20px;
+  margin-left: 20px;
+  text-align: center;
+  line-height: 90px;
+  //border: 1px solid blue;
+
+}
+//标题
+.main-header .main_header_wrap> .title{
+  color: black;
+  font-size: 18px;
+  //background: #31C27C;
+  //width: 94px;
+  height: 90px;
+  padding: 0px 17px;
+
+  text-align: center;
+  line-height: 84px;
+  //border: 1px solid blue;
+
+}
+//音乐馆
+.main-header .main_header_wrap> .title:nth-child(3){
+  color: #fff;
+  font-width: 700;
+  width: 94px;
+  background: #31C27C;
+}
+
+//mark样式
+.mod_header .mark_img{
+  position: absolute;
+  width: 37.13px;
+  height: 14px;
+  top: 18px;
+  left: 450px;
+}
+
+//输入样式
+
+.mod_header .searchInput{
+  width: 220px;
+  height: 38px;
+  outline-style: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  position: relative;
+  left: 40px;
+  top: 25px;
+
+}
+
+//搜索框
+.mod_header .searchInput input{
+  position: absolute;
+  width: 190px;
+  height: 36px;
+  outline-style: none;
+  border: none;
+  padding: 0 0 0 20px;
+  //margin: 0  0 0  10px ;
+
+}
+//搜索图标
+.mod_header .searchInput .searchIcon{
+  position: absolute;
+  width: 38px;
+  height: 35px;
+  outline-style: none;
+  top: 0;
+  left: 185px;
+
+}
+.mod_header .searchInput .searchIcon span{
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  outline-style: none;
+  top: 25%;
+  left: 25%;
+
+}
+
 //根据屏幕适应宽度
 @media screen and (min-width: 1200px) and (max-width: 2000px){
   .main-header{
     //padding: 0 auto;
-    border: 1px solid black;
+    //border: 1px solid black;
     //margin: 0 163px;
     margin: 0 auto;
     width: 1200px;
@@ -42,25 +147,14 @@ a{
 @media screen and (min-width: 320px) and (max-width: 1199px){
   .main-header{
     padding: 0 1vw;
-    border: 1px solid black;
+    //border: 1px solid black;
     //margin: 0 163px;
     margin: 0 auto;
     width: 1200px;
   }
 }
 
-.main-header > .title{
-  color: #fff;
-  font-size: 18px;
-  background: #31C27C;
-  width: 94px;
-  height: 90px;
-  padding: 0px 20px;
-  text-align: center;
-  line-height: 90px;
 
-
-}
 
 .main-header > .nav-list{
   color: black;
@@ -89,13 +183,16 @@ a{
 }
 //背景
  .homepage{
-   background: rgb(242, 242, 242);
+   //不支持渐变时显示
+   background-color: rgb(242, 242, 242);
+   //渐变
+   background-image: linear-gradient(to bottom right, rgb(242, 242, 242) , white);
    height: 35vw;
  }
 
 //首页头部标签
 .singer-list-title-show{
-  border: 1px solid black;
+  //border: 1px solid black;
 }
 
 .singer-list-title-show .song-wrap{
@@ -108,7 +205,7 @@ a{
   display: flex;
   justify-content: space-around;
   margin: 0 auto;
-  border: 1px solid blue;
+  //border: 1px solid blue;
   width: 1200px;
   padding: 0 290px;
   flex-wrap: nowrap;
@@ -118,7 +215,7 @@ a{
 .singer-list-title-show .playlistRecommendation{
   height: 110px;
   width: 1200px;
-  border: 1px solid gray;
+  //border: 1px solid gray;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -127,37 +224,222 @@ a{
   letter-spacing:10px;
   color: rgb(51, 51, 51);
   font-family:"宋体";
+  user-select:none;
 }
 
-
-
-/*首页 为你推荐样式*/
-//$distance = 1vw;
-.my-swiper{
-  //overflow: hidden;
-}
-
-.my-swiper .wrap{
-  width: 1200px;
-  margin: 0 auto;
-}
-
-.my-swiper .swiperStyle{
-  //border:1px black solid;
+//用户设置
+.mod_header .main_header_wrap .userSet{
+  //border: 1px solid black;
   display: flex;
+  width: 263px;
+  height: 90px;
+  margin-left: 60px;
   justify-content: space-between;
+  align-items: center;
+}
 
-  //padding: 0 2.6vw;
-  width: 500px;
+.mod_header .main_header_wrap .userSet > div{
+  display: flex;
 
+  //border: 1px solid black;
+  line-height: 90px;
+}
+//登录
+.mod_header .main_header_wrap .userSet .login{
+  width: 39px;
+  height: 90px;
+  justify-content: center;
+}
+//vip
+.mod_header .main_header_wrap .userSet .openVip .openVipPosition{
+  width: 122px;
+  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
+.mod_header .main_header_wrap .userSet .openVip{
+  //background: blue;
+  width: 120px;
+  height: 90px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  //flex-wrap: nowrap;
+}
+.mod_header .main_header_wrap .userSet .openVip a{
+  font-size: 15px;
+  border-radius: 3px;
+  background: #31C27C;
+  height: 39.6px;
+  width: 120px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+//充值
+.mod_header .main_header_wrap .userSet .reCharge{
+  width: 83px;
+  height: 90px;
+  justify-content: center;
+  //border: 1px solid blue;
+  //display: flex;
+  align-items: center;
+  background: white;
+}
+.mod_header .main_header_wrap .userSet .reCharge a{
+
+  display: flex;
+  font-size: 15px;
+  border-radius: 3px;
+  background: white;
+  height: 39.6px;
+  width: 120px;
+  color: black;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(201, 201, 201);
+
+}
+
+/*轮播推荐样式*/
+
+//包裹框的样式
+.my-swiper .wrap{
+  //border: 1px solid yellow;
+
+}
+//整个图片框的样式
+.my-swiper .swiperStyle{
+  display: flex;
+  //border: 1px solid red;
+  padding: 0 10vw;
+  margin: 25px 0;
+}
+//两个图片之间的样式
 .my-swiper .swiperPageImgList{
-    //float: left;
+  padding: 0 10px;
+  //border: 1px solid blue;
 }
+//图片样式
 .my-swiper .swiperPageImgList .img{
-
   width: 224px;
   height: 224px;
+  //border: 1px solid green;
 
 }
+//后退边框
+.my-swiper .wrap-prev{
+  position: absolute;
+  top: 90px;
+  width: 80px;
+  height: 100px;
+  //background: rgb(224, 224, 224);
+  background: rgb(236, 236, 236);
+  //border: 1px solid red;
+  visibility: hidden;
+}
+//前进边框
+.my-swiper .wrap-next{
+  position: absolute;
+  top: 90px;
+  width: 80px;
+  height: 100px;
+  background: rgb(236, 236, 236);
+  //border: 1px solid red;
+  right: 0px;
+  visibility: hidden;
+
+}
+
+.bg-grey{
+  background: rgb(224, 224, 224);
+}
+//后退按钮
+.my-swiper .wrap-prev .swiper-button-prev{
+  //visibility: hidden;
+  //background: cadetblue;
+  // position: relative;
+   left: 0px;
+  top: 20px;
+   //right: 20px;
+  //border: 1px solid red;
+  width: 80px;
+  height: 100px;
+  color: rgb(96, 96, 96);
+}
+//前进按钮
+.my-swiper .swiper-button-next  {
+  //visibility: hidden;
+  //background: cadetblue;
+  //position: relative;
+  //left: 20px;
+  right: 0px;
+  top: 20px;
+  //border: 1px solid red;
+  width: 80px;
+  height: 100px;
+  color: rgb(96, 96, 96);
+
+}
+
+
+
+//显示
+//后退
+.my-swiper:hover .wrap-prev{
+  visibility: visible;
+  animation: moveLeft 0.5s linear infinite;
+  animation-iteration-count:1;
+
+}
+//前进
+.my-swiper:hover .wrap-next{
+  visibility: visible;
+  animation: moveRight 0.5s linear infinite;
+  animation-iteration-count:1;
+}
+
+
+.my-swiper .wrap-prev:hover{
+
+  background: rgb(224, 224, 224);
+}
+.my-swiper .wrap-next:hover{
+  background: rgb(224, 224, 224);
+}
+
+//动画效果
+.animated {
+  animation: move 3s linear infinite;
+  animation-iteration-count:1;
+}
+@keyframes moveLeft {
+  from{
+    left: -20px;
+  }
+  to {
+    left: 0px;
+  }
+}
+@keyframes moveRight {
+  from{
+    right: -20px;
+  }
+  to {
+    right: 0px;
+  }
+}
+
+  //符号图标
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+

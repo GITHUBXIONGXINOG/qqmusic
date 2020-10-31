@@ -27,6 +27,7 @@
 
 <script>
     export default {
+
       props:{
         swiperList:{
           type: Array,
