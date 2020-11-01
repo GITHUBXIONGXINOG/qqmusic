@@ -3,6 +3,7 @@
     <singer-list-title-show
         @nav-click="toPath"
     />
+      <rotation-show />
   <router-view></router-view>
   </div>
 
@@ -10,6 +11,7 @@
 
 <script>
     import SingerListTitleShow from '@/components/main/homepage/SingerListTitleShow'
+    import RotationShow from "@/components/main/RotationShow";
     export default {
       data(){
         return{
@@ -32,7 +34,8 @@
 
       },
       components: {
-        SingerListTitleShow
+        SingerListTitleShow,
+          RotationShow
       }
     }
 

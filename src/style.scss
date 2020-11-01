@@ -703,3 +703,86 @@ input::-webkit-input-placeholder{
   border-radius: 3px;
 }
 
+
+//margin居中
+.margin_center{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+//轮播图样式
+.slide-view{
+  position: relative;
+  border: 1px solid black;
+  width: 100%;
+  height: 500px;
+  //图片
+  .slide-img{
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    @extend .margin_center;
+
+  }
+  //上一张按钮
+  .up-pag{
+    width: 100px;
+    position: absolute;
+    //border: 1px solid red;
+    @extend .margin_center;
+    left: 50px;
+    height: 100px;
+    margin-left:  0;
+    span{
+      position: absolute;
+      //border: 1px solid green;
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+      @extend .margin_center;
+    }
+  }
+  //下一张按钮
+  .next-page{
+    width: 100px;
+    position: absolute;
+    //border: 1px solid red;
+    @extend .margin_center;
+    right: 50px;
+    height: 100px;
+    margin-right: 0 ;
+    span{
+      position: absolute;
+      //border: 1px solid green;
+      width: 50px;
+      height: 50px;
+      font-size: 50px;
+      @extend .margin_center;
+    }
+  }
+  //导航按钮
+  .slide-index{
+    position: absolute;
+    width: 160px;
+    height: 20px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0 auto;
+    //border: 1px solid red;
+    li{
+      float: left;
+      width: 10px;
+      //border: 1px solid green;
+      padding: 0 6px 0 0px;
+    }
+  }
+}
+//点击样式
+.checkedSyle{
+  //为不是a标签的元素设置手指形状
+  cursor:pointer;
+}
+
