@@ -237,15 +237,7 @@ input::-webkit-input-placeholder{
    height: 35vw;
  }
 
-//首页头部标签
-//.singer-list-title-show{
-//  //border: 1px solid black;
-//}
 
-//.singer-list-title-show .song-wrap{
-//  //background: grey;
-//  margin: 0 auto;
-//}
 
 //为你推荐,官方歌单...
 .singer-list-title-show .song-list-ul{
@@ -393,25 +385,33 @@ input::-webkit-input-placeholder{
 //两个图片之间的样式
 .my-swiper .swiperPageImgList{
   padding: 0 10px;
+  overflow: hidden;
   //border: 1px solid blue;
+  & :hover .img{
+    //transition: transform 0.6s ease-out;
+    transform: scale(1.05,1.05);
+  }
 }
 //图片样式
 .my-swiper .swiperPageImgList .img{
   width: 224px;
   height: 224px;
   //border: 1px solid green;
-
-
+  transition: transform 0.6s ease-out;
 }
+
+
 //图片外框
 .my-swiper .swiperPageImgList .img_show{
   //border: 1px solid red;
   position: relative;
-
+  overflow: hidden;
+  width: 224px;
+  height: 224px;
 }
 
 //悬浮图片框
-.my-swiper .swiperPageImgList .img_cover_wrap{
+.my-swiper .swiperPageImgList .img_show .img_cover_wrap{
   position: absolute;
   //border: 1px solid green;
   font-size: 60px;
@@ -422,16 +422,17 @@ input::-webkit-input-placeholder{
   margin: auto;
   width: 224px;
   height: 224px;
-  visibility: hidden;
   background: rgba(0,0,0,0.3);
   //不透明度0
   opacity: 0;
+  transition: opacity 1s;
+
 }
 
 
 //悬浮播放按钮
-.my-swiper .swiperPageImgList .img_cover{
-
+.my-swiper .swiperPageImgList .img_show .img_cover{
+  opacity: 0;
   position: absolute;
   //border: 1px solid green;
   font-size: 60px;
@@ -441,14 +442,22 @@ input::-webkit-input-placeholder{
   top: 0;
   bottom: 0;
   margin: auto;
-  width: 62px;
-  height: 62px;
-
-
+  width: 63px;
+  height: 63px;
+  transform: scale(0.8,0.8);
+  transition: transform 0.4s,opacity 1s;
 }
-//悬浮显示
-.my-swiper .swiperPageImgList:hover .img_cover_wrap{
-  visibility: inherit;
+
+//悬浮显示播放图标
+.my-swiper .swiperPageImgList .img_show:hover .img_cover {
+  transform: scale(1, 1);
+  opacity:1
+}
+
+
+//悬浮显示背景
+.my-swiper .swiperPageImgList .img_show:hover .img_cover_wrap{
+  //visibility: inherit;
   opacity: 1;
   //transition: opacity 0.5s ease-in;
   animation: moveBlack 0.5s linear infinite;
@@ -503,9 +512,7 @@ input::-webkit-input-placeholder{
 }
 //后退按钮
 .my-swiper .wrap-prev .swiper-button-prev{
-  //visibility: hidden;
-  //background: cadetblue;
-  // position: relative;
+
    left: 0px;
   top: 20px;
    //right: 20px;
@@ -516,10 +523,7 @@ input::-webkit-input-placeholder{
 }
 //前进按钮
 .my-swiper .swiper-button-next  {
-  //visibility: hidden;
-  //background: cadetblue;
-  //position: relative;
-  //left: 20px;
+
   right: 0px;
   top: 20px;
   //border: 1px solid red;
@@ -579,7 +583,7 @@ input::-webkit-input-placeholder{
 @keyframes moveBlack {
   from{
     opacity: 0;
-  }
+   }
   to {
     opacity: 1;
   }
@@ -597,3 +601,105 @@ input::-webkit-input-placeholder{
 .select{
   cursor:pointer
 }
+
+
+.singer-show {
+  .bg_singer{
+    background: url("../public/img/bg_singer.jpg") no-repeat center center;
+    width: 100vw;
+    height: 378px;
+    overflow: hidden;
+    position: relative;
+    .section_inner{
+      .singer_push_tit{
+          background: url("../public/img/singer_tit@2x.png") no-repeat ;
+          background-size: 800px 210px;
+          width: 500px;
+          height: 60px;
+        //border: 1px solid red;
+        position: absolute;
+        top: 103px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      .singer_push_desx{
+        background: url("../public/img/singer_tit@2x.png") no-repeat 0px -60px ;
+        background-size: 800px 210px;
+        width: 260px;
+        height: 50px;
+        //border: 1px solid red;
+        position: absolute;
+        top: 173px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      .singer_push_btn_login{
+        position: absolute;
+        //height: 100px;
+        border: 1px solid #3e3e3e;
+        border-radius: 3px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 174px;
+        height: 48px;
+        bottom: 100px;
+        .singer_push_btn_text{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 48px;
+          border: 0px solid transparent;
+          color: white;
+          font-size: 18px;
+        }
+        //transition: border-color 2s;
+
+        & :hover{
+          //border: 1px solid #ffffff;
+
+          //transition: border-color 0.8s;
+        }
+      }
+    }
+  }
+}
+
+
+//hover边框
+.div1 {
+  position: relative;
+}
+
+.div1:before{
+  content: "";
+  display: block;
+  width: 0px;
+  height: 0px;
+  border: 1px solid transparent;
+  //border: 1px solid red;
+  border-radius: 3px;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.div1:before {
+  top: -1px;
+  left: -1px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transition:  border-color 0.2s ease-out, width 1s ease-in 0.1s, height 1s ease-in 0.1s;
+}
+
+.div1:hover:before {
+  width: 101%;
+  height: 101%;
+  transition: border-color 0.2s ease-out 0.2s,width 0.2s ease-out, height 0.2s ease-out;
+  border-color: #ffffff;
+  //border-color: red;
+  border-radius: 3px;
+}
+

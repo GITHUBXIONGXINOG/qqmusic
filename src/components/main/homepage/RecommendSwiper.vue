@@ -4,12 +4,12 @@
         <div class="swiper-wrapper wrap">
             <div class="swiper-slide swiperStyle" v-for="(page,index) in pages" :key="index" >
                 <div class="swiperPageImgList" v-for="item in page" :key="item.id">
-                  <div class="img_show">
-                      <img :src="item.img" class="img">
-                      <a href="javascript:;" class="img_cover_wrap" >
-                           <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover">
-                      </a>
-                  </div>
+                      <div class="img_show ">
+                          <img :src="item.img" class="img">
+                          <a href="javascript:;" class="img_cover_wrap" >
+                               <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover">
+                          </a>
+                      </div>
 
 
                     <div class="ablumInfo">
