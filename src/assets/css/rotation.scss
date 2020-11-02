@@ -1,0 +1,268 @@
+//上下左右置0
+.center{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+//margin居中
+.margin_center{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+//点击样式
+.checkedSyle{
+  //为不是a标签的元素设置手指形状
+  cursor:pointer;
+}
+
+//iconfont symbol导入样式
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+//轮播图
+.slide-content{
+  //border: 1px solid red;
+  position: relative;
+  height: 369px;
+  @extend .margin_center;
+  top: 0px;
+
+  overflow: hidden;
+  //后退按钮
+  .up-page{
+    //border: 1px solid red;
+    width: 80px;
+    height: 110px;
+    position: absolute;
+    top: 48px;
+    background: rgb(236, 236, 236);
+    opacity: 1;
+    overflow: hidden;
+    left: -100px;
+    span{
+      //border: 1px solid green;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+      @extend .margin_center;
+    }
+    transition: left 0.8s;
+  }
+
+  //前进按钮
+  .next-page{
+    //border: 1px solid red;
+    width: 80px;
+    height: 110px;
+    position: absolute;
+    top: 48px;
+    right: -100px;
+    background: rgb(236, 236, 236);
+    opacity: 1;
+    span{
+      //border: 1px solid green;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+      @extend .margin_center;
+    }
+    transition: right 0.8s;
+  }
+
+  &:hover .up-page{
+    left: 0;
+    //opacity: 0;
+  }
+  &:hover .next-page{
+    right: 0;
+    //opacity: 0;
+  }
+
+
+
+  //导航按钮
+  .slide-index{
+    position: absolute;
+    width: 70px;
+    height: 20px;
+    right: 0;
+    left: 0;
+    bottom: 65px;
+    margin: 0 auto;
+    //border: 1px solid red;
+    li{
+      float: left;
+      width: 14px;
+      font-size: 10px;
+      padding: 0 15px;
+    }
+  }
+}
+
+
+
+
+
+//图片文字内容样式
+.slide-view{
+  //border: 1px solid black;
+  width: 1200px;
+  height: 400px;
+  //height: 500px;
+  display: flex;
+  @extend .margin_center;
+  padding: 0px 0px;
+  justify-content: space-between;
+  //background: #000;
+
+
+  //图片文字外框
+  .slide-img{
+    position: relative;
+    margin-top: 0;
+    //border: 1px solid green;
+    width: 224px;
+    height: 310px;
+    //overflow: hidden;
+
+    //图片直接包裹器
+    & .img-wrap{
+      width: 224px;
+      height: 224px;
+      overflow: hidden;
+    }
+
+    //图片本体 大小
+    &  .img-info{
+      width: 224px;
+      height: 224px;
+      transition: transform 1s;
+    }
+
+    //整个鼠标移入封面样式
+    .img-wrap{
+      width: 224px;
+      height: 224px;
+      transition: transform 1s;
+      //鼠标移入图片播放样式
+      .img_cover_wrap{
+        position: absolute;
+        top: 0;
+        left: 0;
+        //径向渐变
+        background-image: radial-gradient( rgba(0,0,0,0.1),  rgba(0,0,0,0.11));
+        /* 浏览器不支持的时候显示 */
+        background-color: rgba(0,0,0,0.1);
+        font-size: 60px;
+        width: 224px;
+        height: 224px;
+        opacity: 0;
+        transition: transform 0.4s,opacity 1s;
+        //播放按钮
+        .img_cover_button{
+          //border: 1px solid green;
+          position: absolute;
+          //font-size: 61px;
+          color: black;
+          @extend .margin_center;
+          width: 80px;
+          height: 80px;
+          transform: scale(0.6,0.6);
+          transition: transform 0.8s,opacity 0.8s;
+        }
+      }
+      //外层包裹opacity改变,里面按钮缩放和透明度都改变
+      &:hover .img_cover_wrap{
+        opacity: 1;
+      }
+      &:hover .img_cover_button{
+        opacity: 1;
+        transform: scale(0.9,0.9);
+      }
+    }
+
+    //鼠标移入图片缩放
+    &  :hover img{
+      transform: scale(1.1);
+    }
+
+    //文字信息
+    & .text-info{
+      //border: 1px solid red;
+      font-size: 14px;
+      margin-top: 15px;
+      a{
+        //border: 1px solid deepskyblue;
+        line-height:22px;
+        height: 23.2px;
+        width: 10px;
+      }
+      div{
+        //border: 1px solid black;
+        width: 224px;
+        height: 22px;
+        font-weight:400;
+        color: #999999;
+      }
+    }
+  }
+
+}
+
+
+/*
+
+
+//hover样式  鼠标移入后动画效果
+.hoverStyle {
+  position: relative;
+  width: 224px;
+  height: 224px;
+  //background: green;
+  overflow: hidden;
+  &:before{
+    content: "";
+    display: block;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    box-sizing: border-box;
+    position: absolute;
+    background: transparent;
+    transition: background 1s ease-in;
+  }
+
+  &:hover:before {
+    position: absolute;
+    transition: background 1s ease-out;
+    !* 浏览器不支持的时候显示 *!
+    background-color:  rgba(0,0,0,0.5);
+    //background: black;
+    //径向渐变
+    //background-image: radial-gradient( rgba(0,0,0,0.1),  rgba(0,0,0,0.2));
+
+  }
+
+
+
+}
+
+*/
+
+

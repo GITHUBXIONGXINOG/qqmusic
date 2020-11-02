@@ -1,15 +1,19 @@
 <template>
   <div class="recommend">
-    <recommend-swiper
-        :recommend-list="RecommendList"
-        :swiper-option="swiperOption"
-    />
+<!--    <recommend-swiper-->
+<!--        :recommend-list="RecommendList"-->
+<!--        :swiper-option="swiperOption"-->
+<!--    />-->
+      <rotation-show
+            :slide-list="RecommendList"
+
+      />
   </div>
 </template>
 
 <script>
-    import RecommendSwiper from '@/components/main/homepage/RecommendSwiper'
-
+    // import RecommendSwiper from '@/components/main/homepage/RecommendSwiper'
+    import RotationShow from "@/components/main/RotationShow";
     export default {
       data(){
         return {
@@ -36,7 +40,8 @@
         }
       },
       components:{
-        RecommendSwiper,
+        // RecommendSwiper,
+          RotationShow
       },
       methods:{
         async fetchRecommendSwiper(){

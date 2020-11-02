@@ -3,8 +3,12 @@
     <singer-list-title-show
         @nav-click="toPath"
     />
+
       <rotation-show />
-  <router-view></router-view>
+
+      <router-view></router-view>
+<!--      <router-view></router-view>-->
+
   </div>
 
 </template>
