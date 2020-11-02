@@ -13,7 +13,7 @@
  </template>
 
 <script>
-import MainHeader from '@/components/main/MainHeader'
+import MainHeader from '@/components/main/homepage/MainHeader'
 export default {
 
   methods:{

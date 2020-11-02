@@ -3,8 +3,8 @@
       <div class="mod_header">
         <div class="main-header">
           <div class="main_header_wrap">
-              <img src="../../../public/img/logo.png" alt="logo" class="log_img">
-              <img src="../../../public/img/mark_1.png" class="mark_img">
+              <img src="../../../../public/img/logo.png" alt="logo" class="log_img">
+              <img src="../../../../public/img/mark_1.png" class="mark_img">
               <div v-for="(item,index) in titleAll" :key="index" class="title">
                   <a href="javascript:;">{{item}}</a>
               </div>
@@ -23,8 +23,8 @@
                   <div class="openVipPosition">
                       <div class="openVip">
                            <a href="javascript:;">开通VIP</a>
-                           <img src="../../../public/img/箭头下.svg" alt="">
-                           <img src="../../../public/img/箭头上.svg" alt="">
+                           <img src="../../../../public/img/箭头下.svg" alt="">
+                           <img src="../../../../public/img/箭头上.svg" alt="">
                       </div>
                   </div>
 
