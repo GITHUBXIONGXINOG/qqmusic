@@ -136,7 +136,7 @@
         computed:{
             pages () {
                 const pages = []
-                let flag = 0
+
                 //savePage为保留页数,只保留slideList为5倍数的页数
                 const savePage = Math.floor(this.slideList.length/5)
                 this.slideList.forEach((item, index) => {

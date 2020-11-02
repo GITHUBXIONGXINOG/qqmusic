@@ -1,21 +1,21 @@
 <template>
   <div class="officialplaylist">
-    <network-song
-        :recommend-list="RecommendList"
-        :swiper-option="swiperOption"
-    />
+        <rotation-show
+            :slide-list="NetworksongList"
+        />
+
   </div>
 </template>
 
 
 
 <script>
-import NetworkSong from '@/components/main/homepage/NetworkSong'
+import RotationShow from "@/components/main/RotationShow";
 
 export default {
   data(){
     return {
-      RecommendList: [],
+      NetworksongList: [],
 
       swiperOption: {
         slidesPerView: 1,
@@ -33,13 +33,13 @@ export default {
     }
   },
   components:{
-    NetworkSong,
+      RotationShow
   },
   methods:{
     async fetchRecommendSwiper(){
       const res = await this.$http.get('/songlist/list?category=146')
       // console.log(res)
-      this.RecommendList = res.data.data.list.map(item => ({
+      this.NetworksongList = res.data.data.list.map(item => ({
         img:item.imgurl,
         title:item.dissname,
         username:item.creator.name,
@@ -47,7 +47,7 @@ export default {
         listen_num:item.listennum,
         type:item.creator.type
       }))
-      console.log(this.RecommendList.map(item=>item))
+      // console.log(this.RecommendList.map(item=>item))
     }
   },
   created() {

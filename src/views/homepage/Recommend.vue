@@ -1,46 +1,24 @@
 <template>
   <div class="recommend">
-<!--    <recommend-swiper-->
-<!--        :recommend-list="RecommendList"-->
-<!--        :swiper-option="swiperOption"-->
-<!--    />-->
+
       <rotation-show
             :slide-list="RecommendList"
-
+      />
+      <rotation-show
+          :slide-list="RecommendList"
       />
   </div>
 </template>
 
 <script>
-    // import RecommendSwiper from '@/components/main/homepage/RecommendSwiper'
     import RotationShow from "@/components/main/RotationShow";
     export default {
       data(){
         return {
           RecommendList: [],
-          /*          swiperOption: {
-            pagination: {
-              el: '.swiper-pagination'
-            },
-
-          }*/
-          swiperOption: {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true
-            },
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev'
-            }
-          }
         }
       },
       components:{
-        // RecommendSwiper,
           RotationShow
       },
       methods:{

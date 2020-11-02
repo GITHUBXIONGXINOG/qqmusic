@@ -1,48 +1,30 @@
 <template>
   <div class="ktv">
-    <ktv-swiper
-        :recommend-list="RecommendList"
-        :swiper-option="swiperOption"
-    />
+       <rotation-show
+           :slide-list="KtvList"
+            />
   </div>
 
 </template>
 
 <script>
-import KtvSwiper from '@/components/main/homepage/KtvSwiper'
+import RotationShow from "@/components/main/RotationShow";
+
 export default {
   data(){
     return {
-      RecommendList: [],
-      /*          swiperOption: {
-        pagination: {
-          el: '.swiper-pagination'
-        },
+      KtvList: [],
 
-      }*/
-      swiperOption: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev'
-        }
-      }
     }
   },
   components:{
-    KtvSwiper
+      RotationShow
   },
   methods:{
     async fetchRecommendSwiper(){
       const res = await this.$http.get('/songlist/list?category=141')
       // console.log(res)
-      this.RecommendList = res.data.data.list.map(item => ({
+      this.KtvList = res.data.data.list.map(item => ({
         img:item.imgurl,
         title:item.dissname,
         username:item.creator.name,

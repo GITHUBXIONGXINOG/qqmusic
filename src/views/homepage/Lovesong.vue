@@ -1,42 +1,29 @@
 <template>
   <div class="lovesong">
-      <love-song-swiper
-          :recommend-list="RecommendList"
-          :swiper-option="swiperOption"
+<!--      <love-song-swiper-->
+<!--          :recommend-list="RecommendList"-->
+<!--          :swiper-option="swiperOption"-->
+<!--      />-->
+      <rotation-show
+            :slide-list="LovesongList"
       />
   </div>
 
 </template>
 
 <script>
-  import LoveSongSwiper from '@/components/main/homepage/LoveSongSwiper'
-    export default {
+  // import LoveSongSwiper from '@/components/main/homepage/LoveSongSwiper'
+  import RotationShow from "@/components/main/RotationShow";
+
+  export default {
       data(){
         return {
-          RecommendList: [],
-          /*          swiperOption: {
-            pagination: {
-              el: '.swiper-pagination'
-            },
-
-          }*/
-          swiperOption: {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true
-            },
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev'
-            }
-          },
+            LovesongList: [],
         }
       },
       components:{
-        LoveSongSwiper
+        // LoveSongSwiper
+          RotationShow
       },
       methods:{
         async fetchRecommendSwiper(){
@@ -44,7 +31,7 @@
 
           const res = await this.$http.get('/songlist/list?category=148')
           // console.log(res)
-          this.RecommendList = res.data.data.list.map(item => ({
+          this.LovesongList = res.data.data.list.map(item => ({
             img:item.imgurl,
             title:item.dissname,
             username:item.creator.name,

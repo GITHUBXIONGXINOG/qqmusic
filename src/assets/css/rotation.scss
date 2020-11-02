@@ -95,19 +95,20 @@
 
   //导航按钮
   .slide-index{
+    //border: 1px solid red;
     position: absolute;
-    width: 70px;
+    width: 140px;
     height: 20px;
     right: 0;
     left: 0;
-    bottom: 65px;
+    bottom: 35px;
     margin: 0 auto;
-    //border: 1px solid red;
+    display: flex;
+    justify-content: center;
     li{
-      float: left;
-      width: 14px;
-      font-size: 10px;
-      padding: 0 15px;
+      //border: 1px solid blue;
+      font-size: 9px;
+      padding: 0 8px;
     }
   }
 }
