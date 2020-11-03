@@ -27,11 +27,18 @@
                 </div>
             </div>
         </div>
+<!--        <rotation-show
+            :slide-list="RecommendList"
+        />-->
+        <rotation-api
+            :index="index"
+        />
     </div>
 </template>
 
 <script>
-
+import RotationShow from "@/components/main/commont/rotation/RotationShow";
+import RotationApi from "@/components/main/commont/rotation/RotationApi";
 export default {
 
     props:{
@@ -61,8 +68,7 @@ export default {
                         {path: '/homepage/classic',name:'韩国'},
                         {path: '/homepage/ktv',name:'日本'},
                      ],
-                //精彩推荐
-                [],
+                //精彩推荐 去掉
                 //新碟首发
                 [
                     {path: '/homepage/recommend',name:'内地'},
@@ -90,6 +96,8 @@ export default {
                     {path: '/homepage/ktv',name:'日本'},
                 ],
             ],
+
+            // RecommendList:[]
         }
     },
 
@@ -111,13 +119,31 @@ export default {
             }
             return false
         },
+/*        async fetchRecommendSwiper(){
+            const res = await this.$http.get('/recommend/playlist/u')
+            // console.log(res)
+            // debugger
+            this.RecommendList = res.data.data.list.map(item => ({
+                img:item.cover,
+                title:item.title,
+                username:item.username,
+                id:item.content_id,
+                listen_num:item.listen_num,
+                type:item.type
+            }))
+            // console.log(this.RecommendList.map(item=>item))
+        }*/
 
     },
     components:{
-
+        RotationShow,
+        RotationApi
     },
     mounted() {
 
+    },
+    created() {
+        // this.fetchRecommendSwiper()
     }
 
 }

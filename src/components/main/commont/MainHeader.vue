@@ -59,10 +59,10 @@
 
 export default {
   props:{
-    title:{
+/*    title:{
       type:String,
       default:'Music'
-    }
+    }*/
   },
   data(){
     return{

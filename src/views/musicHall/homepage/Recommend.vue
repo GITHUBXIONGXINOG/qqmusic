@@ -1,13 +1,14 @@
+<!--
 <template>
   <div class="recommend">
 
       <rotation-show
             :slide-list="RecommendList"
       />
-<!--      <rotation-show
+&lt;!&ndash;      <rotation-show
           :slide-list="RecommendList"
       />
-      -->
+      &ndash;&gt;
   </div>
 </template>
 
@@ -43,3 +44,4 @@
 
     }
 </script>
+-->

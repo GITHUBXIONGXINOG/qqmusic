@@ -2,7 +2,6 @@
   <div class="main">
       <!--头部公共组件-->
     <main-header
-        title="音乐馆"
         @nav-click="toPath"
     />
     <keep-alive>

@@ -55,22 +55,7 @@
     @extend .margin_center;
     position: absolute;
   }
-  /*
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
 
-    font-size: 29px;
-    align-items: center;
-    letter-spacing:10px;
-    color: rgb(51, 51, 51);
-    font-family:"宋体";
-    user-select:none;
-  //display: none;
-  //.title-img{
-  //  display: block;
-  //
-  //}*/
   //标题图片
   .title-img{
     width: 200px;
@@ -79,11 +64,17 @@
   }
 }
 //循环设置不同标题的top值,显示不同的title
-@for $i from 0 to 6{
+@for $i from 0 to 5{
   .title-#{$i}
   {
     .title-img{
-      top: (-50px * $i);
+      @if($i>=2){//精彩推荐没有api,跳过
+        top: (-50px * ($i+1));
+      }
+      @else{
+        top: (-50px * $i);
+      }
+
     }
   }
 }
@@ -100,4 +91,5 @@
   flex-wrap: nowrap;
   font-size: 15px;
 }
+
 
