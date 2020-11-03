@@ -1,5 +1,5 @@
 <template>
   <div class="categoryPlaylist">
-    categoryPlaylist
+    categoryPlaylist分类歌单
   </div>
 </template>

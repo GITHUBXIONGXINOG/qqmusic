@@ -1,5 +1,5 @@
 <template>
   <div class="record">
-    record
+    record新碟
   </div>
 </template>

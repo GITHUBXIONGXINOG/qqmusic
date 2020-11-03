@@ -3,10 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import './style.scss'
+import './assets/css/style.scss'
 Vue.config.productionTip = false
 
-import http from "@/http";
+import http from "@/assets/js/http";
 Vue.prototype.$http = http
 
 import '@/assets/icon/iconfont.css'

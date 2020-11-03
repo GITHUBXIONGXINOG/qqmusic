@@ -6,56 +6,37 @@ Vue.use(VueRouter)
 
 //导入子路由
 import Main from '@/views/Main'
-import Homepage from '@/views/Homepage'
-import Singer from '@/views/Singer'
-import Record from '@/views/Record'
-import Rank from '@/views/Rank'
-import CategoryPlaylist from '@/views/CategoryPlaylist'
-import RadioStation from '@/views/RadioStation'
-import Mv from '@/views/Mv'
-import DigitalAlbum from '@/views/DigitalAlbum'
-import Ticketing from '@/views/Ticketing'
-// import SingerListTitle from '@/views/SingerListTitle'
-import Classic from '@/views/homepage/Classic'
-import Ktv from '@/views/homepage/Ktv'
-import Lovesong from '@/views/homepage/Lovesong'
-import Networksong from '@/views/homepage/Networksong'
-import Officialplaylist from '@/views/homepage/Officialplaylist'
-import Recommend from '@/views/homepage/Recommend'
+import Homepage from './musichall/homepage'
+import Singer from './musichall/singer'
+import NewRecord from './musichall/newrecord'
+import Rank from './musichall/rank'
+import CategoryPlaylist from './musichall/categoryplaylist'
+import RadioStation from './musichall/radiostation'
+import Mv from './musichall/mv/'
+import DigitalAlbum from './musichall/digitalablum'
+import Ticketing from './musichall/ticketing'
 
 
-const routes = [
-  {
-    path:'/',
-    component:Main,
-    //Main路由的子路由
-    children:[
-        //redirect 重定向
-      {path: '',component: Homepage,redirect:'/homepage/recommend'},
-      {path: 'homepage',component:Homepage,redirect:'/homepage/recommend',children:[
-          {path: '',component:Recommend},
-          {path: 'classic',component:Classic},
-          {path: 'ktv',component:Ktv},
-          {path: 'lovesong',component:Lovesong},
-          {path: 'networksong',component:Networksong},
-          {path: 'officialplaylist',component:Officialplaylist},
-          {path: 'recommend',component:Recommend},
+export default new VueRouter({
+  mode:'history',
+  base:process.env.BASE_URL,
+  routes:[
+    { path:'/',
+      component:Main,
+      redirect:'/homepage',
+      children:[
+          Homepage,
+          Singer,
+          CategoryPlaylist,
+          NewRecord,
+          Rank,
+          RadioStation,
+          Mv,
+          DigitalAlbum,
+          Ticketing
+      ]
+    },
 
-        ]},
-      {path: 'singer',component:Singer},
-      {path: 'record',component:Record},
-      {path: 'rank',component:Rank},
-      {path: 'categoryPlaylist',component:CategoryPlaylist},
-      {path: 'radioStation',component:RadioStation},
-      {path: 'mv',component:Mv},
-      {path: 'digitalAlbum',component:DigitalAlbum},
-      {path: 'ticketing',component:Ticketing},
-    ]
-  }
-]
-
-const router = new VueRouter({
-  routes
+  ]
 })
 
-export default router

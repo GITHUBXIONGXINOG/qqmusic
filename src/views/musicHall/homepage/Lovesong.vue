@@ -1,9 +1,5 @@
 <template>
   <div class="lovesong">
-<!--      <love-song-swiper-->
-<!--          :recommend-list="RecommendList"-->
-<!--          :swiper-option="swiperOption"-->
-<!--      />-->
       <rotation-show
             :slide-list="LovesongList"
       />

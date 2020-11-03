@@ -1,5 +1,5 @@
 <template>
   <div class="digitalAlbum">
-    digitalAlbum
+    digitalAlbum数字专辑
   </div>
 </template>

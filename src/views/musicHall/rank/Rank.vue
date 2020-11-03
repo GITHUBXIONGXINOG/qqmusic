@@ -1,5 +1,5 @@
 <template>
   <div class="rank">
-    rank
+    rank排行榜
   </div>
 </template>

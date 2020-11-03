@@ -1,5 +1,5 @@
 <template>
   <div class="radioStation">
-    radioStation
+    radioStation电台
   </div>
 </template>

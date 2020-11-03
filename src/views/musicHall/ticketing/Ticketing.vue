@@ -1,5 +1,5 @@
 <template>
   <div class="ticketing">
-    ticketing
+    ticketing票务
   </div>
 </template>

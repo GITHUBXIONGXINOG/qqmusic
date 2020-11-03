@@ -69,12 +69,12 @@ export default {
       navList:[
         { path:'/homepage',name:'首页'},
         { path:'/singer',name:'歌手'},
-        { path:'/record',name:'新碟'},
+        { path:'/newrecord',name:'新碟'},
         { path:'/rank',name:'排行榜'},
-        { path:'/categoryPlaylist',name:'分类歌单'},
-        { path:'/radioStation',name:'电台'},
+        { path:'/categoryplaylist',name:'分类歌单'},
+        { path:'/radiostation',name:'电台'},
         { path:'/mv',name:'MV'},
-        { path:'/digitalAlbum',name:'数字专辑'},
+        { path:'/digitalalbum',name:'数字专辑'},
         { path:'/ticketing',name:'票务'},
       ],
       titleAll:['音乐馆','我的音乐','客户端','开放平台','VIP']
