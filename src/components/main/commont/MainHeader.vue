@@ -1,3 +1,4 @@
+<!--头部公共组件-->
 <template>
   <div>
       <div class="mod_header">
@@ -50,8 +51,7 @@
           </div>
       </div>
       </div>
-<!--      <singer-list-tile
-      />-->
+
   </div>
 </template>
 

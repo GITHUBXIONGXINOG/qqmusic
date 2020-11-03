@@ -9,7 +9,7 @@
 
 <script>
   // import LoveSongSwiper from '@/components/main/homepage/LoveSongSwiper'
-  import RotationShow from "@/components/main/RotationShow";
+  import RotationShow from "@/components/main/commont/rotation/RotationShow";
 
   export default {
       data(){

@@ -46,7 +46,7 @@
     height: 110px;
     position: absolute;
     top: 48px;
-    background: rgb(236, 236, 236);
+    background: rgba(71,71,71,0.1);
     opacity: 1;
     overflow: hidden;
     left: -100px;
@@ -58,7 +58,11 @@
       font-size: 40px;
       @extend .margin_center;
     }
-    transition: left 0.8s;
+    transition: left 0.8s,background 0.8s;
+    &:hover {
+      background: rgba(71,71,71,0.2);
+
+    }
   }
 
   //前进按钮
@@ -69,7 +73,8 @@
     position: absolute;
     top: 48px;
     right: -100px;
-    background: rgb(236, 236, 236);
+    //background: rgb(236, 236, 236);
+    background: rgba(71,71,71,0.1);
     opacity: 1;
     span{
       //border: 1px solid green;
@@ -79,16 +84,18 @@
       font-size: 40px;
       @extend .margin_center;
     }
-    transition: right 0.8s;
+    transition: right 0.8s,background 0.8s;
+    &:hover {
+      background: rgba(71,71,71,0.2);
+    }
+
   }
 
   &:hover .up-page{
     left: 0;
-    //opacity: 0;
   }
   &:hover .next-page{
     right: 0;
-    //opacity: 0;
   }
 
 
@@ -222,48 +229,3 @@
   }
 
 }
-
-
-/*
-
-
-//hover样式  鼠标移入后动画效果
-.hoverStyle {
-  position: relative;
-  width: 224px;
-  height: 224px;
-  //background: green;
-  overflow: hidden;
-  &:before{
-    content: "";
-    display: block;
-
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    box-sizing: border-box;
-    position: absolute;
-    background: transparent;
-    transition: background 1s ease-in;
-  }
-
-  &:hover:before {
-    position: absolute;
-    transition: background 1s ease-out;
-    !* 浏览器不支持的时候显示 *!
-    background-color:  rgba(0,0,0,0.5);
-    //background: black;
-    //径向渐变
-    //background-image: radial-gradient( rgba(0,0,0,0.1),  rgba(0,0,0,0.2));
-
-  }
-
-
-
-}
-
-*/
-
-

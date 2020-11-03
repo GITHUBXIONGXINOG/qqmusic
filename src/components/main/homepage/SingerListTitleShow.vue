@@ -1,6 +1,7 @@
+<!--
 <template>
   <div >
-      <div class="singer-list-title-show" >
+      <div class="singer-list-title-show b2" >
         <div class="song-list">
           <div class="playlistRecommendation">
             <h4>歌单推荐</h4>
@@ -73,3 +74,4 @@ export default {
 
 
 
+-->

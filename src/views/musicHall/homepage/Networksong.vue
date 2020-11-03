@@ -10,7 +10,7 @@
 
 
 <script>
-import RotationShow from "@/components/main/RotationShow";
+import RotationShow from "@/components/main/commont/rotation/RotationShow";
 
 export default {
   data(){

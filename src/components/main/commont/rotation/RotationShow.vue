@@ -1,5 +1,6 @@
 <template>
     <div class="rotation-show">
+
         <div class="slide-content">
             <!--图片内容-->
             <div class="slide-view"
@@ -13,7 +14,7 @@
                         >
                         <nav>
                              <a href="javascript:;" class="img_cover_wrap" >
-                                 <img src="../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">
+                                 <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">
                               </a>
                         </nav>
 
@@ -39,9 +40,6 @@
             >
                 <span class="iconfont icon-jiantouyouxi"></span>
             </div>
-
-
-
             <!--导航按钮-->
             <ul class="slide-index">
                 <li v-for="(v,i) in pages" :key="i"
@@ -54,9 +52,7 @@
                     </svg>
                 </li>
             </ul>
-
         </div>
-
 
     </div>
 </template>
@@ -79,7 +75,6 @@
             }
         },
         methods:{
-
               /*定时器
      //开始改变变量n 作为是否轮播的比较参数
             go(){
@@ -123,20 +118,14 @@
                 //  toFixed 四舍五入 保留指定小数位数
                 return res.toFixed(1)+'万'
             },
-
-
-
         },
         //mounted 在页面加载完成后执行的函数
         mounted() {
             // this.go()
-
-
         },
         computed:{
             pages () {
                 const pages = []
-
                 //savePage为保留页数,只保留slideList为5倍数的页数
                 const savePage = Math.floor(this.slideList.length/5)
                 this.slideList.forEach((item, index) => {
@@ -161,7 +150,6 @@
                 })
                 return pages
             },
-
         }
     }
 

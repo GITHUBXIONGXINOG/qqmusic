@@ -1,9 +1,10 @@
+<!-- src/views/musicHall/homepage/SingerListTitle.vue-->
 <template>
   <div class="singer-list-title">
-    <singer-list-title-show
+<!--    <singer-list-title-show
         @nav-click="toPath"
 
-    />
+    />-->
 
   </div>
 </template>
