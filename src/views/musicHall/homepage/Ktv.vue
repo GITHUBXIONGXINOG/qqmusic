@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="ktv">
        <rotation-show
@@ -41,3 +42,4 @@ export default {
 
 }
 </script>
+-->

@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="classic">
    <rotation-show
@@ -42,3 +43,4 @@ export default {
 
 }
 </script>
+-->

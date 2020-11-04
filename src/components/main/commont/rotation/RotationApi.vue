@@ -103,7 +103,8 @@ export default {
                     img:item.picUrl,
 
                 }))
-                // console.log(res)
+               // debugger
+  /*               console.log(res)*/
                 // console.log(this.apiGetList.map(item=>item))
             }
             else if (index==4){

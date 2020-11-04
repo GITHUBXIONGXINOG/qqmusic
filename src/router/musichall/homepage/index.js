@@ -1,3 +1,4 @@
+/*
 export default {
     path:'/homepage',
     component:() => import('@/views/musicHall/homepage/Homepage'),
@@ -12,3 +13,4 @@ export default {
         {path: 'officialplaylist',component:()=>import('@/views/musicHall/homepage/Officialplaylist')},
     ]
 }
+*/

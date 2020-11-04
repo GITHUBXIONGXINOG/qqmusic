@@ -268,35 +268,123 @@
 
 //排行榜
 .content-3{
-  .slide-img{
-    //border: 1px solid red;
-    .img-wrap{
+  height: 500px;
+  //border: 1px solid red;
+
+  .slide-view{
+    height: 100%;
+
+    .slide-img{
       //border: 1px solid red;
-      .img-info{
-        //border: 1px solid red;
-      }
-      nav{
-        //border: 1px solid red;
+      height: 100%;
+
+      .img-wrap{
+        //border: 1px solid black;
+        height: 100%;
+        .img-info{
+          //border: 1px solid blue;
+          opacity: .03;
+        }
+        //鼠标移入图片播放样式
         .img_cover_wrap{
-          //border: 1px solid red;
+          //border: 1px solid blue;
+          background: transparent;
+          opacity: 1;
+
           .img_cover_button{
+            //border: 1px solid white;
+            //height: 0px;
+            //width: 80px;
+            opacity: 0;
+            top: 70px;
+            transform: scale(0.5,0.5);
+            transition: transform 0.4s,opacity 0.4s;
+          }
+          //定位线
+          &:before{
+            width: 35px;
+            height: 0px;
+            background: white;
+            display: block;
+            content: '';
+            border: 1px solid white;
+            //border-bottom: none;
+            //margin-top: 50px;
+            margin: 145px auto;
+            opacity: 1;
+            transition: opacity 1s;
+          }
+          &:hover:before{
+            opacity: 0;
+          }
+        }
+
+        //外层包裹opacity改变,里面按钮缩放和透明度都改变
+        &:hover .img_cover_wrap{
+          opacity: 1;
+        }
+        &:hover .img_cover_button{
+          opacity: 1;
+          transform: scale(0.6,0.6);
+          height: 80px;
+        }
+
+        nav{
+
+          //border: 1px solid red;
+          .img_cover_wrap{
             //border: 1px solid red;
+            .img_cover_button{
+              //border: 1px solid red;
+            }
           }
         }
       }
-    }
-    .text-info{
-      //border: 1px solid red;
-      a{
+
+
+      .text-info{
+        //visibility: hidden;
         //border: 1px solid red;
+        a{
+          //border: 1px solid red;
+        }
+        div{
+          //border: 1px solid red;
+        }
       }
-      div{
-        //border: 1px solid red;
-      }
+
     }
 
   }
+  //排行榜背景颜色
+  .slide-img-0{
+    background: url("../../assets/img/dianfengbang.png") no-repeat 80px 35px,rgba(#cb6e89,.9) ;
+    background-size: 65px 54px;
+  }
+  .slide-img-1{
+    background: url("../../assets/img/dianfengbang.png") no-repeat 80px 35px,rgba(#6e97b4,.9);
+    background-size: 65px 54px;
+  }
+  .slide-img-2{
+    background: url("../../assets/img/dianfengbang.png") no-repeat 80px 35px,rgba(#6ec1ba,.9);
+    background-size: 65px 54px;
+  }
+  .slide-img-3{
+    background: url("../../assets/img/dianfengbang.png") no-repeat 80px 35px,rgba(#518e93,9);
+    background-size: 65px 54px;
+  }
+  .slide-img-4{
+    background: url("../../assets/img/dianfengbang.png") no-repeat 80px 35px,rgba(#e69a74,.9);
+    background-size: 65px 54px;
+  }
+
+  .slide-index,.up-page,.next-page{
+    display: none;
+  }
+
 }
+
+
 
 //mv
 .content-4{

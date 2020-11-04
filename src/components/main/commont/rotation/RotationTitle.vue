@@ -16,22 +16,28 @@
                     <!--导航标题-->
                     <ul class="song-list-ul">
                         <li
-                            v-for="item of List[index]"
-                            :key="item.name"
+                            v-for="(item,index) of List[index]"
+                            :key="index"
                             :class="['select',{'nav-active': isActive(item.path)}]"
                             @click="navClick(item.path) "
                         >
-                            {{item.name}}
+                            <i :class="`item-name-${index}`">{{item.name}}</i>
+                            <div v-if="isRank(item)" class="isrank">
+                                <div v-for((v,i) in 3)>
+                                        <i class="singerList-rank">{{this.songList[i].rank}}</i>
+                                        <i class="singerList-title">{{this.songList[i].title}}</i>
+                                        <i class="singerList-singerName">{{this.songList[i].singerName}}</i>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
-<!--        <rotation-show
-            :slide-list="RecommendList"
-        />-->
+
         <rotation-api
             :index="index"
+            :apiGetList="apiGetList"
         />
     </div>
 </template>
@@ -45,6 +51,10 @@ export default {
         index:{
             type: Number,
             required: true,
+        },
+        apiGetList:{
+            type: Object,
+            required: true
         }
     },
     data(){
@@ -80,11 +90,11 @@ export default {
                 ],
                 //排行榜
                 [
-                    {path: '/homepage/recommend',name:'热歌'},
-                    {path: '/homepage/officialplaylist',name:'新歌'},
-                    {path: '/homepage/lovesong',name:'流行指数'},
-                    {path: '/homepage/networksong',name:'欧美'},
-                    {path: '/homepage/classic',name:'韩国'},
+                    {path: '/homepage/recommend',name:'飙升'},
+                    {path: '/homepage/officialplaylist',name:'热歌'},
+                    {path: '/homepage/lovesong',name:'新歌'},
+                    {path: '/homepage/networksong',name:'流行指数'},
+                    {path: '/homepage/classic',name:'听歌识曲'},
                 ],
                 //MV
                 [
@@ -96,7 +106,7 @@ export default {
                     {path: '/homepage/ktv',name:'日本'},
                 ],
             ],
-
+            songList:null
             // RecommendList:[]
         }
     },
@@ -107,6 +117,9 @@ export default {
             this.$emit('nav-click',path)
         },
         isActive(path){
+            if (this.index==3){
+                return false
+            }
             // debugger
             if (path === this.$route.path){
                 return true
@@ -119,20 +132,22 @@ export default {
             }
             return false
         },
-/*        async fetchRecommendSwiper(){
-            const res = await this.$http.get('/recommend/playlist/u')
-            // console.log(res)
+        isRank(res){
             // debugger
-            this.RecommendList = res.data.data.list.map(item => ({
-                img:item.cover,
+            // console.log(this.apiGetList)
+            // console.log(res)
+            if (!res.song){
+                return false
+            }
+            debugger
+            this.songList = res.song.map(item=>({
+                rank:item.rank,
+                singerName:item.singerName,
+                songId:item.songId,
                 title:item.title,
-                username:item.username,
-                id:item.content_id,
-                listen_num:item.listen_num,
-                type:item.type
             }))
-            // console.log(this.RecommendList.map(item=>item))
-        }*/
+            return true
+        }
 
     },
     components:{

@@ -2,15 +2,15 @@
     <div class="rotation-show">
 
         <div class="slide-content"
-             :class="`content-${index}`"
-        >
+             :class="`content-${index}`">
             <!--图片内容-->
             <div class="slide-view"
                  v-for="(page,indexPage) in pages" :key="indexPage"
                  v-show="n==indexPage"
-
             >
-                <div class="slide-img  " v-for="(v,i) in page" :key="i">
+                <div class="slide-img  " v-for="(v,i) in page" :key="i"
+                     :class="`slide-img-${i}`"
+                >
                     <div class="img-wrap ">
                         <img  class="img-info  checkedSyle"
                               :src="v.img"
@@ -66,7 +66,7 @@
 
     export default {
         props:{
-          slideList: {
+            slideList: {
                 type: Array,
                 required: true
             },
@@ -89,21 +89,6 @@
             }
         },
         methods:{
-              /*定时器
-     //开始改变变量n 作为是否轮播的比较参数
-            go(){
-                //循环定时器
-               this.interId = setInterval(()=>{
-                    this.n++
-                    if (this.n == this.slideList.length){
-                      this.n = 0
-                    }
-                 },1500)
-            },
-            //清除定时器
-            clearGo(){
-                clearInterval(this.interId)
-            },*/
             //点击按钮
             clickPage(str){
                 if (str === 'up'){
@@ -201,11 +186,12 @@
                 if (this.index==4){
                     // debugger
                     this.number=this.numToTenThousand(v.listen_num)
-                    console.log(this.number)
+                    // console.log(this.number)
                     return true
                 }
                 return false
             }
+
         },
         //mounted 在页面加载完成后执行的函数
         mounted() {

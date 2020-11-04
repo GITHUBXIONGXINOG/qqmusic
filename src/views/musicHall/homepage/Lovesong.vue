@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="lovesong">
       <rotation-show
@@ -44,3 +45,4 @@
 
     }
 </script>
+-->
