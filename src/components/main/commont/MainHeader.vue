@@ -1,6 +1,6 @@
 <!--头部公共组件-->
 <template>
-  <div>
+  <div class="outer_header">
       <div class="mod_header">
         <div class="main-header">
           <div class="main_header_wrap">

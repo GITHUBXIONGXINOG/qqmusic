@@ -1,0 +1,387 @@
+.content-0{
+  //border: 1px solid red;
+  //图片文字外框
+  .slide-img{
+
+    //图片直接包裹器
+    .img-wrap{
+
+      //图片本体 大小
+      .img-info{
+        //border: 1px solid red;
+
+      }
+      nav{
+        //border: 1px solid red;
+
+        //鼠标移入图片播放样式
+        .img_cover_wrap{
+          //border: 1px solid red;
+
+        }
+      }
+    }
+    .text-info{
+      //border: 1px solid blue;
+
+      a{
+
+      }
+
+
+      div{
+        //border: 1px solid red;
+      }
+    }
+
+  }
+}
+
+/*
+//新歌首发
+.content-1{
+  display: flex;
+  //flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: -20px ;
+!*  justify-content:space-between;
+  flex-flow:row wrap;*!
+  align-content: center;
+
+  //图片文字外框
+  .slide-img{
+    //border: 1px solid red;
+    width: 380px;
+    height: 110px;
+    padding: 10px 3px;
+    margin: 0  0;
+    //图片直接包裹器
+    .img-wrap{
+      //border: 1px solid red;
+      width: 86px;
+      height: 86px;
+      overflow: hidden;
+
+      //图片本体 大小
+      .img-info{
+        //border: 1px solid red;
+        width: 86px;
+        height: 86px;
+      }
+      nav{
+        border: 1px solid red;
+
+        //鼠标移入图片播放样式
+        .img_cover_wrap{
+          //border: 1px solid red;
+          width: 86px;
+          height: 86px;
+          margin-top:10px;
+          .img_cover_button{
+            //border: 1px solid red;
+          }
+        }
+      }
+    }
+    .text-info{
+      //border: 1px solid blue;
+      width: 185px;
+      height: 44px;
+      position: absolute;
+      top: 20px;
+      left: 100px;
+      a{
+        width: 195px;
+        display:block;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+      }
+
+
+      div{
+        //border: 1px solid red;
+      }
+    }
+
+  }
+}
+*/
+
+//新歌首发
+.content-1{
+  .slide-view{
+    display: flex;
+    //flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: -20px ;
+
+    align-content: center;
+
+    //图片文字外框
+    .slide-img{
+      //border: 1px solid red;
+      width: 380px;
+      height: 110px;
+      padding: 10px 3px;
+      margin: 0  0;
+      //图片直接包裹器
+      .img-wrap{
+        //border: 1px solid red;
+        width: 86px;
+        height: 86px;
+        overflow: hidden;
+
+        //图片本体 大小
+        .img-info{
+          //border: 1px solid red;
+          width: 100%;
+          height: 100%;
+        }
+        nav{
+          //border: 1px solid red;
+
+          //鼠标移入图片播放样式
+          .img_cover_wrap{
+            //border: 1px solid red;
+            width: 86px;
+            height: 86px;
+            margin-top:10px;
+            .img_cover_button{
+              //border: 1px solid red;
+            }
+          }
+        }
+      }
+      .text-info{
+        //border: 1px solid blue;
+        width: 185px;
+        height: 44px;
+        position: absolute;
+        top: 20px;
+        left: 100px;
+        a{
+          width: 195px;
+          display:block;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+        }
+
+
+        div{
+          //border: 1px solid red;
+        }
+      }
+
+    }
+  }
+  .slide-index{
+    //bottom: 0;
+  }
+}
+
+//新碟首发
+.content-2{
+  //border: 1px solid red;
+  height: 710px;
+  //overflow: visible;
+  .slide-view{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -20px ;
+    align-content: center;
+    //border: 1px solid red;
+    height: 740px;
+    //图片文字外框
+    .slide-img{
+      //border: 1px solid red;
+      width: 224px;
+      height: 282px;
+      //padding: 10px 3px;
+      margin: 0  0;
+      //图片直接包裹器
+      .img-wrap{
+        //border: 1px solid red;
+        width: 224px;
+        height: 224px;
+        //overflow: hidden;
+
+        //图片本体 大小
+        .img-info{
+          //border: 1px solid red;
+
+        }
+        nav{
+          //border: 1px solid red;
+
+          //鼠标移入图片播放样式
+          .img_cover_wrap{
+            //border: 1px solid red;
+            /*width: 86px;
+            height: 86px;*/
+            //margin-top:10px;
+            .img_cover_button{
+              //border: 1px solid red;
+            }
+          }
+        }
+      }
+      .text-info{
+        //border: 1px solid blue;
+        width: 185px;
+        height: 44px;
+        position: absolute;
+/*        top: 20px;
+        left: 100px;*/
+        //margin-bottom: 0px;
+        bottom: 0px;
+        a{
+          width: 195px;
+          display:block;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+        }
+
+
+        div{
+          //border: 1px solid red;
+        }
+      }
+
+    }
+  }
+  .up-page{
+    //border: 1px solid red;
+    //top: 100px!important;
+
+  }
+  .slide-index{
+    //border: 1px solid red;
+
+  }
+}
+
+
+//排行榜
+.content-3{
+  .slide-img{
+    //border: 1px solid red;
+    .img-wrap{
+      //border: 1px solid red;
+      .img-info{
+        //border: 1px solid red;
+      }
+      nav{
+        //border: 1px solid red;
+        .img_cover_wrap{
+          //border: 1px solid red;
+          .img_cover_button{
+            //border: 1px solid red;
+          }
+        }
+      }
+    }
+    .text-info{
+      //border: 1px solid red;
+      a{
+        //border: 1px solid red;
+      }
+      div{
+        //border: 1px solid red;
+      }
+    }
+
+  }
+}
+
+//mv
+.content-4{
+  //border: 1px solid red;
+  height: 710px;
+  //overflow: visible;
+  .slide-view{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -20px ;
+    align-content: center;
+    //border: 1px solid red;
+    height: 740px;
+    //图片文字外框
+    .slide-img{
+      //border: 1px solid red;
+      width: 224px;
+      height: 231px;
+      //padding: 10px 3px;
+      margin: 0  0;
+      //图片直接包裹器
+      .img-wrap{
+        //border: 1px solid red;
+        width: 224px;
+        height: 126px;
+        //overflow: hidden;
+
+        //图片本体 大小
+        .img-info{
+          //border: 1px solid red;
+
+        }
+        nav{
+          //border: 1px solid red;
+
+          //鼠标移入图片播放样式
+          .img_cover_wrap{
+            //border: 1px solid red;
+            /*width: 86px;
+            height: 86px;*/
+            //margin-top:10px;
+            height: 126px;
+            .img_cover_button{
+              //border: 1px solid red;
+            }
+          }
+        }
+      }
+      .text-info{
+        //border: 1px solid blue;
+        width: 185px;
+        height: 44px;
+        position: absolute;
+        /*        top: 20px;
+                left: 100px;*/
+        //margin-bottom: 0px;
+        //bottom: 0px;
+        a{
+          //border: 1px solid black;
+          width: 195px;
+          display:block;
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+        }
+        span{
+          //border: 1px solid black;
+          color: #999999;
+          font-size: 15px;
+          user-select:none;
+        }
+
+
+        div{
+          //border: 1px solid red;
+        }
+      }
+
+    }
+  }
+  .up-page{
+    //border: 1px solid red;
+    //top: 100px!important;
+
+  }
+  .slide-index{
+    //border: 1px solid red;
+
+  }
+}

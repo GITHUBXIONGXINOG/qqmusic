@@ -1,13 +1,16 @@
 <template>
     <div class="rotation-show">
 
-        <div class="slide-content">
+        <div class="slide-content"
+             :class="`content-${index}`"
+        >
             <!--图片内容-->
             <div class="slide-view"
-                 v-for="(page,index) in pages" :key="index"
-                 v-show="n==index"
+                 v-for="(page,indexPage) in pages" :key="indexPage"
+                 v-show="n==indexPage"
+
             >
-                <div class="slide-img " v-for="(v,i) in page" :key="i">
+                <div class="slide-img  " v-for="(v,i) in page" :key="i">
                     <div class="img-wrap ">
                         <img  class="img-info  checkedSyle"
                               :src="v.img"
@@ -23,8 +26,10 @@
 
                     <!--图片标题内容-->
                     <div class="text-info" >
-                        <a href="javascript:;">{{v.title}}</a>
-                        <div>播放量:&nbsp;&nbsp;{{numToTenThousand(v.listen_num)}}</div>
+                        <a href="javascript:;" :setTitle="setTitle(v)">{{title}}</a>
+                        <div :setContent="setContent(v)">{{content}}</div>
+                        <span v-if="setNumber(v)" class="iconfont">&#xe6c2;&nbsp;{{number}}</span>
+<!--                        <span :setNumber="setNumber(v)">{{number}}</span>-->
                     </div>
                 </div>
             </div>
@@ -64,6 +69,10 @@
           slideList: {
                 type: Array,
                 required: true
+            },
+            index:{
+              type: Number,
+                required: true
             }
         },
         data(){
@@ -71,7 +80,12 @@
                 n:0,
                 interId:null,
                 upToPage:null,
-                nextToPage:null
+                nextToPage:null,
+                p:0,
+                title:null,
+                content:null,
+                subtitle:null,
+                number:null
             }
         },
         methods:{
@@ -100,7 +114,7 @@
                 }
                 if (str === 'next'){
                     this.n++
-                    if (this.n == Math.floor(this.slideList.length/5)){
+                    if (this.n == Math.floor(this.slideList.length/this.p)){
                         this.n = 0
                     }
                 }
@@ -118,22 +132,100 @@
                 //  toFixed 四舍五入 保留指定小数位数
                 return res.toFixed(1)+'万'
             },
+            //设置轮播图页数
+            setPage(index){
+                switch (index){
+                    case 0:
+                        this.p=5
+                        break
+                    case 1:
+                        this.p=9
+                        break
+                    case 2:
+                        this.p=10
+                        break
+                    case 3:
+                        this.p=5
+                        break
+                    case 4:
+                        this.p=10
+                        break
+                }
+                 },
+            //设置标题
+            setTitle(v){
+                switch (this.index){
+                    case 0:
+                        this.subtitle = null
+                        break
+                    case 1:
+                    case 2:
+
+                        this.subtitle = v.subtitle
+
+                }
+                if (!this.subtitle){
+                    this.title = v.title
+                }else {
+                    this.title=v.title+this.subtitle
+                }
+
+
+                // console.log(v)
+            },
+            //设置文字
+            setContent(v){
+                if (this.index==0){
+                    // this.content='播放量: '+this.numToTenThousand(v.listen_num)
+                    this.content='播放量: '+this.numToTenThousand(v.listen_num)
+                }
+                else if (this.index==1 || this.index==2){
+                    this.content=v.username
+                        // console.log(content)
+                }
+                else if (this.index==4){
+           /*         debugger
+                    console.log(v)*/
+                    this.content=v.username
+                        // +this.numToTenThousand(v.listen_num)
+
+                }
+                // debugger
+            /*    if (!v.listen_num){
+                    console.log(v)
+                }*/
+
+            },
+            //设置播放量数字
+            setNumber(v){
+                if (this.index==4){
+                    debugger
+                    this.number=this.numToTenThousand(v.listen_num)
+                    console.log(this.number)
+                    return true
+                }
+                return false
+            }
         },
         //mounted 在页面加载完成后执行的函数
         mounted() {
             // this.go()
+            // this.setWord(this.index)
         },
         computed:{
+            //页数
             pages () {
+                // debugger
                 const pages = []
+                this.setPage(this.index)
                 //savePage为保留页数,只保留slideList为5倍数的页数
-                const savePage = Math.floor(this.slideList.length/5)
+                const savePage = Math.floor(this.slideList.length/this.p)
                 this.slideList.forEach((item, index) => {
                     // debugger
                     //Math.floor() 返回小于或等于一个给定数字的最大整数
-                    const page = Math.floor(index / 5)
+                    const page = Math.floor(index / this.p)
                     //page是页数,5是每页可完整显示的数据,如果index是5,说明有6条数据,剩下的一条将被放在下一张轮播图中
-                    //固定只显示两页
+
                     // debugger
                         if (!pages[page]  && page<savePage) {
                             pages[page] = []

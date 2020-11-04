@@ -1,40 +1,15 @@
 <!--首页页面-->
 <template>
     <div class="homepage">
-    <!--        <div class="homepage b1">
-                <singer-list-title-show
-                    @nav-click="toPath"
-                />
-
-
-                &lt;!&ndash;      <rotation-show />&ndash;&gt;
-                <router-view></router-view>
-            </div>
-            <div class="homepage b3">
-                <singer-list-title-show
-                    @nav-click="toPath"
-                />
-
-
-                &lt;!&ndash;      <rotation-show />&ndash;&gt;
-                <router-view></router-view>
-            </div>-->
-        <div class="showStation" v-for="(item,index) in 5" :key="index">
+        <div class="showStation" v-for="(item,index) in 5" :key="index"
+             :class="`showStyle-${index}`"
+        >
             <rotation-title
                 @nav-click="toPath"
                 :index="index"
             />
             <router-view></router-view>
         </div>
-<!--
-        <div class="showStation" >
-            <rotation-title
-                @nav-click="toPath"
-                :index=0
-            />
-            <router-view></router-view>
-        </div>
--->
 
     </div>
 </template>
@@ -46,12 +21,7 @@
     export default {
       data(){
         return{
-       /*   swiperList:[],
-          swiperOption: {
-            pagination: {
-              el: '.swiper-pagination'
-            },
-          },*/
+
         }
 
       },
@@ -65,7 +35,6 @@
 
       },
       components: {
-        // SingerListTitleShow,
           RotationShow,
           RotationTitle
       }

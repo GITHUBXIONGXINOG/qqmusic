@@ -3,7 +3,7 @@
 
         <rotation-show
             :slide-list="apiGetList"
-
+            :index="index"
         />
     </div>
 </template>
@@ -19,25 +19,6 @@ export default {
     },
     data(){
         return {
-  /*          apiSetList: {
-                recommend:{
-                    path:'/recommend/playlist/u'//为你推荐
-                },
-                official:{
-                    path:'/recommend/playlist'//官方歌单
-                }
-
-            },*/
-/*                [
-
-                ['/recommend/playlist'],
-                ['/songlist/list?category=148'],//情歌
-                ['/songlist/list?category=146'],//网络歌曲
-                ['/songlist/list?category=136'],//经典
-                ['/songlist/list?category=141'],//ktv热歌
-    ]*/
-
-
             apiSetList: {
                 path:''
             },
@@ -58,13 +39,13 @@ export default {
                     this.apiSetList.path='/new/songs?type=0'//新歌首发
                     break
                 case 2:
-                    this.apiSetList.path='/new/album?type=1'//新碟首发
+                    this.apiSetList.path='/new/album?type=1&num=20'//新碟首发
                     break
                 case 3:
                     this.apiSetList.path='/top/category?showDetail=1'//排行榜
                     break
                 case 4:
-                    this.apiSetList.path='/mv/list?type=0'//mv
+                    this.apiSetList.path='/new/mv?type=0'//mv
                     break
             }
 
@@ -87,18 +68,21 @@ export default {
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
                     title:item.title,
                     subtitle:item.subtitle,
-                    username:item.singer.name,
+                    username:item.singer[0].name,
                     id:item.album.id,
                     // listen_num:item.listen_num,
                     type:item.type
                 }))
+                // debugger
+                // console.log(this.apiGetList.map(item=>item))
+
             }
             else if (index==2){
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
                     title:item.name,
                     // subtitle:item.subtitle,
-                    username:item.singers.name,
+                    username:item.singers[0].name,
                     id:item.id,
                     // listen_num:item.listen_num,
                     type:item.type
@@ -113,10 +97,6 @@ export default {
                 this.apiGetList = res.data.data[0].list.map(item => ({
                     label:item.label,
                     song:item.song,
-                    // rank:item.rank,
-                    // title:item.title,
-                    // subtitle:item.subtitle,
-                    // username:item.singername,
                     id:item.topId,
                     listen_num:item.listenNum,
                     // type:item.type
@@ -129,16 +109,19 @@ export default {
             else if (index==4){
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:item.picurl,
-                    title:item.title,
+                    title:item.mvtitle,
                     // subtitle:item.subtitle,
-                    username:item.singers.name,
+                    username:item.singername,
                     id:item.mvid,
-                    listen_num:item.playcnt,
-                    type:item.type
+                    listen_num:item.listennum,
+                    type:item.mvtitle
                 }))
+/*                debugger
+                console.log(res)
+                console.log(this.apiGetList.map(item=>item))*/
             }
 
-            // console.log(this.apiGetList.map(item=>item))
+
         },
 
     },

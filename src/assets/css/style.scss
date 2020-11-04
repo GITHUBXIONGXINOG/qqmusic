@@ -229,68 +229,7 @@ input::-webkit-input-placeholder{
    //border: 1px solid red;
  }*/
 
-/*.showStation{
-  //不支持渐变时显示
-  background-color: rgb(242, 242, 242);
-  //背景 线性渐变 左上到右下
-  background-image: linear-gradient(to bottom right, rgb(242, 242, 242) , white);
-  height: 532px;
-  //border: 1px solid red;
-}
 
-
-
-
-  //标题正文外框
-.rotation-title .song-list-title-wrap{
-  overflow: hidden;
-  height: 113px;
-  width: 1200px;
-  border: 1px solid gray;
-  margin: 0 auto;
-
-  .song-list-title{
-    width: 200px;
-    height: 40px;
-    overflow: hidden;
-    @extend .margin_
-   }
-  !*
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-
-    font-size: 29px;
-    align-items: center;
-    letter-spacing:10px;
-    color: rgb(51, 51, 51);
-    font-family:"宋体";
-    user-select:none;
-  //display: none;
-  //.title-img{
-  //  display: block;
-  //
-  //}*!
-  .title-img{
-    //margin: 100px;
-    width: 200px;
-    //height: 100px;
-    //overflow: hidden;
-  }
-}
-
-//为你推荐,官方歌单...
-.rotation-title .song-list-ul{
-  display: flex;
-  justify-content: space-around;
-  margin: 0 auto;
-  //border: 1px solid blue;
-  width: 1200px;
-  height: 50px;
-  padding: 0 290px;
-  flex-wrap: nowrap;
-  font-size: 15px;
-}*/
 
 //用户设置
 .mod_header .main_header_wrap .userSet{
