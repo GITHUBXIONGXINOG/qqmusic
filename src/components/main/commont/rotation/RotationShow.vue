@@ -199,7 +199,7 @@
             //设置播放量数字
             setNumber(v){
                 if (this.index==4){
-                    debugger
+                    // debugger
                     this.number=this.numToTenThousand(v.listen_num)
                     console.log(this.number)
                     return true
