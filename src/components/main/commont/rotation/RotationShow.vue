@@ -27,11 +27,35 @@
                     <!--图片标题内容-->
                     <div class="text-info" >
                         <a href="javascript:;" :setTitle="setTitle(v)">{{title}}</a>
-                        <div :setContent="setContent(v)">{{content}}</div>
+                        <div :setContent="setContent(v)">
+                            {{content}}
+                            <!--如果是排行榜-->
+                            <div v-if="v.song" class="isRank">
+                                <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
+                                    <div class="rank-title-wrap">
+                                        <span class="rank-number">
+                                            {{v.song[p].rank}}
+                                        </span>
+                                        <a class="rank-title">
+                                            {{v.song[p].title}}
+                                        </a>
+                                    </div>
+                                        <a class="rank-singerName" >
+                                        {{v.song[p].singerName.length>18
+                                            ? v.song[p].singerName.slice(0,17)+'...'
+                                            : v.song[p].singerName}}
+                                        </a>
+                                </div>
+
+                            </div>
+
+                        </div>
                         <span v-if="setNumber(v)" class="iconfont">&#xe6c2;&nbsp;{{number}}</span>
-<!--                        <span :setNumber="setNumber(v)">{{number}}</span>-->
+
                     </div>
+
                 </div>
+
             </div>
             <!--后退按钮-->
             <div class="up-page checkedSyle"
@@ -88,7 +112,8 @@
                 title:null,
                 content:null,
                 subtitle:null,
-                number:null
+                number:null,
+                rankList:null
             }
         },
         methods:{
@@ -171,6 +196,13 @@
                     this.content=v.username
                         // console.log(content)
                 }
+                else if (this.index==3){
+                    /*         debugger
+                             console.log(v)*/
+                    // this.content=v.song[0]
+                    // +this.numToTenThousand(v.listen_num)
+                    this.isRank(v)
+                }
                 else if (this.index==4){
            /*         debugger
                     console.log(v)*/
@@ -193,7 +225,25 @@
                     return true
                 }
                 return false
-            }
+            },
+            //判读排行
+            isRank(res){
+
+                // console.log(this.apiGetList)
+                // console.log(res)
+   /*             if (!res.song){
+                    return false
+                }*/
+                this.rankList = res.song.map(item=>({
+                    rank:item.rank,
+                    singerName:item.singerName,
+                    songId:item.songId,
+                    title:item.title,
+                }))
+         /*       console.log(this.songList.map(item=>item))
+                return true*/
+            },
+
 
         },
         //mounted 在页面加载完成后执行的函数

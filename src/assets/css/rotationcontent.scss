@@ -37,76 +37,7 @@
   }
 }
 
-/*
-//新歌首发
-.content-1{
-  display: flex;
-  //flex-direction: row;
-  flex-wrap: wrap;
-  margin-top: -20px ;
-!*  justify-content:space-between;
-  flex-flow:row wrap;*!
-  align-content: center;
 
-  //图片文字外框
-  .slide-img{
-    //border: 1px solid red;
-    width: 380px;
-    height: 110px;
-    padding: 10px 3px;
-    margin: 0  0;
-    //图片直接包裹器
-    .img-wrap{
-      //border: 1px solid red;
-      width: 86px;
-      height: 86px;
-      overflow: hidden;
-
-      //图片本体 大小
-      .img-info{
-        //border: 1px solid red;
-        width: 86px;
-        height: 86px;
-      }
-      nav{
-        border: 1px solid red;
-
-        //鼠标移入图片播放样式
-        .img_cover_wrap{
-          //border: 1px solid red;
-          width: 86px;
-          height: 86px;
-          margin-top:10px;
-          .img_cover_button{
-            //border: 1px solid red;
-          }
-        }
-      }
-    }
-    .text-info{
-      //border: 1px solid blue;
-      width: 185px;
-      height: 44px;
-      position: absolute;
-      top: 20px;
-      left: 100px;
-      a{
-        width: 195px;
-        display:block;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-        overflow:hidden;
-      }
-
-
-      div{
-        //border: 1px solid red;
-      }
-    }
-
-  }
-}
-*/
 
 //新歌首发
 .content-1{
@@ -277,7 +208,7 @@
     .slide-img{
       //border: 1px solid red;
       height: 100%;
-
+      position: relative;
       .img-wrap{
         //border: 1px solid black;
         height: 100%;
@@ -333,7 +264,7 @@
 
           //border: 1px solid red;
           .img_cover_wrap{
-            //border: 1px solid red;
+            //border: 1px solid blue;
             .img_cover_button{
               //border: 1px solid red;
             }
@@ -343,16 +274,55 @@
 
 
       .text-info{
+        position: absolute;
         //visibility: hidden;
         //border: 1px solid red;
-        a{
-          //border: 1px solid red;
+        height: 220px;
+        width: 170px;
+        top: 160px;
+        left: 0px;
+        right: 0px;
+        display: flex;
+        margin: 25px auto;
+        //隐藏默认通用标题
+        >a{
+          display: none;
         }
-        div{
-          //border: 1px solid red;
+        .isRank{
+          //width: 150px;
+          margin:0 auto ;
+          color: white;
+          height: 220px;
+          display: flex;
+          //flex-wrap: wrap;
+          flex-direction: column;
+          .rank-wrap{
+            //border: 1px solid yellow;
+            height: 100px;
+            width: 170px;
+            .rank-title-wrap{
+              //border: 1px solid black;
+              i,a{
+                //border: 1px solid green;
+                color: white;
+                cursor:pointer;
+              }
+              .rank-number{
+                color: white;
+              }
+              .rank-title{
+                margin-left: 5px ;
+              }
+            }
+            .rank-singerName{
+              //border: 1px solid black;
+              margin-left: 17px;
+              color: white;
+              cursor:pointer;
+            }
+          }
         }
       }
-
     }
 
   }
