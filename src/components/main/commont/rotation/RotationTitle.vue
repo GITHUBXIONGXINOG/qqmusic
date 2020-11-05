@@ -15,6 +15,7 @@
                 <div class="song-wrap">
                     <!--导航标题-->
                     <ul class="song-list-ul">
+                        <!--@click绑定点击事件,调用navClick方法,把此时的地址传递给navClick-->
                         <li
                             v-for="(item,index) of List[index]"
                             :key="index"
@@ -35,9 +36,13 @@
             </div>
         </div>
 
+        <!--调用rotation-api子组件
+            使用:index传递index给子组件,子组件在props中定义index接收
+            该index由homepage传入到rotation-title,再由rotation-title传入到rotation-api中
+        -->
         <rotation-api
             :index="index"
-            :apiGetList="apiGetList"
+
         />
     </div>
 </template>
@@ -46,16 +51,18 @@
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
 import RotationApi from "@/components/main/commont/rotation/RotationApi";
 export default {
-
+    /*
+    * rotation-tile是父组件homepage的子组件
+    * 子组件使用props定义接收父组件传递的值
+    * 定义接收index,index是首页的循环值,每个index代表首页的一个轮播图组件部分,由homepage传入
+    * */
     props:{
+
         index:{
             type: Number,
             required: true,
         },
-        apiGetList:{
-            type: Object,
-            required: true
-        }
+
     },
     data(){
         return{
@@ -112,6 +119,11 @@ export default {
     },
 
     methods:{
+        /*在本子组件中navClick函数被调用后,通过this.$emit派发事件,
+        * 第一个为该派发事件的名字nav-click
+        * 第二个为传递的值path
+        * 在这里打包成nav-click函数,里面有点击获取到的地址path,父组件homepage通过@获取该函数
+        * */
         navClick(path){
             //派发事件 通知父组件被点击
             this.$emit('nav-click',path)

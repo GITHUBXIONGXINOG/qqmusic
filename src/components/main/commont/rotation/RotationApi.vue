@@ -1,6 +1,8 @@
 <template>
     <div class="retation-api">
-
+        <!--
+            v-bind传递值apiGetList和index到子组件rotation-show对应的值中,rotation-show使用props接收
+        -->
         <rotation-show
             :slide-list="apiGetList"
             :index="index"
@@ -12,6 +14,9 @@
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
 export default {
     props:{
+        /*定义接收来自父组件的index
+        * 该index由homepage传入到rotation-title,再由rotation-title传入到rotation-api中
+        * */
         index:{
             type: Number,
             required: true
@@ -52,7 +57,8 @@ export default {
         },
         async fetchRecommendSwiper(index){
             const res = await this.$http.get(this.apiSetList.path)
-            // console.log(res)
+          /*  debugger
+            console.log(res)*/
             if (index==0){
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:item.cover,

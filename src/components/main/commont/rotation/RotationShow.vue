@@ -65,6 +65,9 @@
 <script>
 
     export default {
+       /*
+            使用props定义接收来自父组件的slideList和index
+        */
         props:{
             slideList: {
                 type: Array,
