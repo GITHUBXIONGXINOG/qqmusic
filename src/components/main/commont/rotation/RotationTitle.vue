@@ -31,6 +31,19 @@
                                 </div>
                             </div>
                         </li>
+                        <div class="playAll" v-if="index==1">
+                            <a href="javascript:;" class="playAllWrap">
+
+                                <div class="playInfoWrap">
+                                    <svg class="icon bofang1" aria-hidden="true">
+                                        <use xlink:href="#icon-bofang1"></use>
+                                    </svg>
+                                    <i>
+                                        播放全部
+                                    </i>
+                                </div>
+                            </a>
+                        </div>
                     </ul>
                 </div>
             </div>

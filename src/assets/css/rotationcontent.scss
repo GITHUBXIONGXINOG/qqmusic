@@ -51,7 +51,7 @@
 
     //图片文字外框
     .slide-img{
-      //border: 1px solid red;
+      border-bottom: 1px solid #f2f2f2;
       width: 380px;
       height: 110px;
       padding: 10px 3px;
@@ -150,12 +150,9 @@
 
           //鼠标移入图片播放样式
           .img_cover_wrap{
-            //border: 1px solid red;
-            /*width: 86px;
-            height: 86px;*/
-            //margin-top:10px;
+
             .img_cover_button{
-              //border: 1px solid red;
+
             }
           }
         }
@@ -305,7 +302,7 @@
               i,a{
                 //border: 1px solid green;
                 color: white;
-                cursor:pointer;
+
               }
               .rank-number{
                 color: white;
@@ -359,7 +356,7 @@
 //mv
 .content-4{
   //border: 1px solid red;
-  height: 710px;
+  height: 600px!important;
   //overflow: visible;
   .slide-view{
     display: flex;
@@ -367,7 +364,7 @@
     margin-top: -20px ;
     align-content: center;
     //border: 1px solid red;
-    height: 740px;
+    height: 500px;
     //图片文字外框
     .slide-img{
       //border: 1px solid red;

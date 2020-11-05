@@ -36,11 +36,11 @@
                                         <span class="rank-number">
                                             {{v.song[p].rank}}
                                         </span>
-                                        <a class="rank-title">
+                                        <a class="rank-title" href="javascript:;">
                                             {{v.song[p].title}}
                                         </a>
                                     </div>
-                                        <a class="rank-singerName" >
+                                        <a class="rank-singerName" href="javascript:;" >
                                         {{v.song[p].singerName.length>18
                                             ? v.song[p].singerName.slice(0,17)+'...'
                                             : v.song[p].singerName}}
