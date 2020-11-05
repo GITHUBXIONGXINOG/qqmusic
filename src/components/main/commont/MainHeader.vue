@@ -21,16 +21,49 @@
                   <div class="login">
                     <a href="javascript:;">登录</a>
                   </div>
-                  <div class="openVipPosition">
+
+<!--                  <div class="openVipPosition">
                       <div class="openVip">
                            <a href="javascript:;">开通VIP</a>
                            <img src="../../../../public/img/箭头下.svg" alt="">
                            <img src="../../../../public/img/箭头上.svg" alt="">
+                           <ul class="selectbox-vip">
+                               <li>
+
+                               </li>
+                           </ul>
                       </div>
                   </div>
 
                   <div class="reCharge">
                     <a href="javascript:;">充值</a>
+                  </div>-->
+
+                  <div v-for="(item,index) in selectBox" :key="index"
+                        :class="`select-box-${index}`"
+                  >
+                      <ul href="javascript:;" >
+                          <a href="javascript:;">
+                              {{item}}
+                              <svg class="icon triangle-down" aria-hidden="true">
+                                  <use xlink:href="#icon-sanjiaoxing2"></use>
+                              </svg>
+                              <svg class="icon triangle-up" aria-hidden="true">
+                                  <use xlink:href="#icon-sanjiaoxing"></use>
+                              </svg>
+                              <div class="select-box-wrap">
+                                  <li v-for="(i,j) in BoxContent" :key="j"
+                                      :class="`box-content-${index}-${j}`">
+<!--                                      <a href="javascript:;">{{j}}</a>-->
+                                      <a href="javascript:;">{{i[index]}}</a>
+
+                                      <!--    <li>{{i[index]}}</li>-->
+                                  </li>
+                              </div>
+                          </a>
+
+
+                      </ul>
                   </div>
 
               </div>
@@ -66,7 +99,10 @@ export default {
   },
   data(){
     return{
-      navList:[
+        titleAll:[
+            '音乐馆','我的音乐','客户端','开放平台','VIP'
+        ],
+        navList:[
         { path:'/homepage',name:'首页'},
         { path:'/singer',name:'歌手'},
         { path:'/newrecord',name:'新碟'},
@@ -77,7 +113,22 @@ export default {
         { path:'/digitalalbum',name:'数字专辑'},
         { path:'/ticketing',name:'票务'},
       ],
-      titleAll:['音乐馆','我的音乐','客户端','开放平台','VIP']
+        selectBox:[
+            '开通vip',
+            '充值'
+        ],
+        BoxContent:[
+            [
+                '开通绿钻豪华版',
+                '开通付费包'
+            ],
+            [
+                '购买乐币',
+                '充值饭票'
+            ]
+        ],
+
+
     }
   },
   methods:{

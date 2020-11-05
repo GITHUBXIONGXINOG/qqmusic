@@ -254,6 +254,370 @@ input::-webkit-input-placeholder{
   height: 90px;
   justify-content: center;
 }
+
+
+.mod_header .main_header_wrap .userSet{
+  /*vip和充值通用*/
+  .select-box-0,.select-box-1{
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    ul{
+      height: 90px;
+      //border: 1px solid blue;
+      display: flex;
+      align-items: center;
+      background: white;
+      & img{
+        position: absolute;
+        //border: 1px solid red;
+        width: 10px;
+        height: 10px;
+        top: 0;
+        right: 5px;
+        bottom: 0;
+        margin: auto;
+      }
+      & img:last-child{
+        visibility: hidden;
+      }
+      a{
+        display: flex;
+        font-size: 13px;
+        border-radius: 3px;
+        line-height: 39.6px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        .triangle-down{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+        }
+        .triangle-up{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+          //display: none;
+          opacity: 0;
+        }
+        .select-box-wrap {
+          opacity: 0;
+          position: absolute;
+          //border: 1px solid #c9c9c9;
+          border-top: none;
+          //border-radius: 3px;
+          border-radius: 0;
+          height: 80px;
+          top: 39px;
+          display: flex;
+          flex-direction: column;
+          li{
+            height: 40px;
+            //border-radius: 3px;
+            //border: none;
+            border: 1px solid #c9c9c9;
+            //border-top: none;
+            z-index: 999;
+            //border: 1px solid red;
+            a{
+              color:black;
+              border: none;
+              background: white;
+              height: 100%;
+              border: 0;
+              border-radius: 0;
+              border-top: none;
+            }
+          }
+
+
+        }
+
+      }
+    }
+    a:hover{
+      border-radius: 0;
+      .select-box-wrap{
+        opacity: 1;
+        :hover{
+          background: #31c27c;
+          border-top-color:  #c9c9c9;
+          color: white;
+        }
+
+      }
+      .triangle-down{
+        opacity: 0;
+      }
+      .triangle-up{
+        opacity: 1;
+      }
+    }
+  }
+
+  /*开通vip*/
+  .select-box-0{
+    width: 122px;
+  /*  height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;*/
+    ul{
+      width: 120px;
+/*      height: 90px;
+      //justify-content: center;
+      display: flex;
+      align-items: center;
+      position: relative;*/
+/*      & img{
+        position: absolute;
+        //border: 1px solid red;
+        width: 10px;
+        height: 10px;
+        top: 0;
+        right: 5px;
+        bottom: 0;
+        margin: auto;
+      }*/
+/*      & img:last-child{
+        visibility: hidden;
+      }*/
+      a{
+
+
+        background: #31C27C;
+        //height: 39.6px;
+        width: 120px;
+        color: white;
+/*        display: flex;
+        font-size: 13px;
+        border-radius: 3px;
+        line-height: 39.6px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        */
+        /*
+        .triangle-down{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+        }
+        .triangle-up{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+          //display: none;
+          opacity: 0;
+        }
+        */
+
+        .select-box-wrap{
+          width: 120px;
+/*          opacity: 0;
+          position: absolute;
+          //border: 1px solid #c9c9c9;
+          border-top: none;
+          //border-radius: 3px;
+          border-radius: 0;
+          height: 80px;
+          top: 39px;
+          display: flex;
+          flex-direction: column;*/
+        li{
+            width: 120px;
+/*            height: 40px;
+            //border-radius: 3px;
+            //border: none;
+            border: 1px solid #c9c9c9;
+            //border-top: none;
+            z-index: 999;
+            //border: 1px solid red;*/
+            a{
+              width: 100%;
+/*
+              color:black;
+              border: none;
+              background: white;
+              height: 100%;
+              border: 0;
+              border-radius: 0;
+              border-top: none;*/
+            }
+          }
+
+          .box-content-0-1{
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-top: none;
+            a{
+              border-bottom-left-radius: 3px;
+              border-bottom-right-radius: 3px;
+              border-top: none;
+            }
+          }
+        }
+      }
+    }
+/*    a:hover{
+      border-radius: 0;
+      .select-box-wrap{
+        opacity: 1;
+       :hover{
+          background: #31c27c;
+          border-top-color:  #c9c9c9;
+         color: white;
+        }
+
+      }
+      .triangle-down{
+        opacity: 0;
+      }
+      .triangle-up{
+        opacity: 1;
+      }
+    }*/
+  }
+
+  /*充值*/
+  .select-box-1{
+    //border: 1px solid red;
+    width: 83px;
+/*    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;*/
+    ul{
+      width: 84px;
+/*      height: 90px;
+      //justify-content: center;
+      //border: 1px solid blue;
+      display: flex;
+      align-items: center;
+      background: white;*/
+/*      & img{
+        position: absolute;
+        //border: 1px solid red;
+        width: 10px;
+        height: 10px;
+        top: 0;
+        right: 5px;
+        bottom: 0;
+        margin: auto;
+      }*/
+/*      & img:last-child{
+        visibility: hidden;
+      }*/
+      a{
+        background: white;
+        width: 90px;
+        color: black;
+        border: 1px solid rgb(201, 201, 201);
+/*
+
+        display: flex;
+        font-size: 13px;
+        border-radius: 3px;
+        line-height: 39.6px;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        */
+/*        .triangle-down{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+        }
+        .triangle-up{
+          font-size: 8px;
+          position: absolute;
+          right: 10px;
+          opacity: 0;
+        }*/
+        .select-box-wrap{
+          width: 84px;
+/*  opacity: 0;
+          position: absolute;
+          //border: 1px solid #c9c9c9;
+          border-top: none;
+          //border-radius: 3px;
+          border-radius: 0;
+
+          height: 80px;
+          top: 39px;
+          display: flex;
+          flex-direction: column;*/
+          li{
+            height: 40px;
+            width: 84px;
+            border: 1px solid #c9c9c9;
+            //border-top: none;
+            z-index: 999;
+            //border: 1px solid red;
+            a{
+              color:black;
+              border: none;
+              background: white;
+              width: 82px;
+              height: 100%;
+              border: 0;
+              border-radius: 0;
+              border-top: none;
+
+            }
+
+          }
+
+
+
+          .box-content-1-1{
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+            border-top: none;
+            a{
+              border-bottom-left-radius: 3px;
+              border-bottom-right-radius: 3px;
+              border-top: none;
+            }
+          }
+
+
+        }
+      }
+    }
+    a:hover{
+      //border-radius: 0;
+      .select-box-wrap{
+
+        //opacity: 1;
+        :hover{
+          background: #31c27c;
+          border-top-color:  #c9c9c9;
+          color: white;
+        }
+
+      }
+
+
+/*      .triangle-down{
+        opacity: 0;
+      }
+      .triangle-up{
+        opacity: 1;
+      }*/
+    }
+    //:hover a{
+    //
+    //    background: #31c27c;
+    //
+    //}
+  }
+}
+
+/*
+
 //vip
 .mod_header .main_header_wrap .userSet .openVipPosition   {
   width: 122px;
@@ -263,7 +627,6 @@ input::-webkit-input-placeholder{
   align-items: center;
 
 }
-
 .mod_header .main_header_wrap .userSet .openVip{
   //background: blue;
   width: 120px;
@@ -305,9 +668,6 @@ input::-webkit-input-placeholder{
   line-height: 39.6px;
 }
 
-
-
-
 //充值
 .mod_header .main_header_wrap .userSet .reCharge{
   width: 83px;
@@ -333,6 +693,7 @@ input::-webkit-input-placeholder{
 
 }
 
+*/
 
 
   //符号图标
