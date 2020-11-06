@@ -248,6 +248,14 @@
 .showStyle-1{
   //border: 1px solid red;
   height: 555px!important;
+  .song-list{
+    .song-list-title-wrap{
+      height: 105px;
+      .song-list-title{
+        margin-top: 40px;
+      }
+    }
+  }
   .song-list-ul{
     position: relative;
     padding: 0 355px!important;
@@ -309,7 +317,17 @@
   height: 808px!important;
   overflow: hidden;
   position: relative;
-
+  .title-2{
+    .song-list{
+      height: 163px;
+      .song-list-title{
+        margin-top: 50px;
+      }
+      .song-list-ul{
+        width: 1070px;
+      }
+    }
+  }
 }
 //排行榜
 .showStyle-3{

@@ -38,7 +38,7 @@ i{
   height: 46px;
   //align-items: center;
   //justify-content: center;
-  margin: 21px 28px 20px -5px;
+  margin: 21px 28px 20px 0px;
   padding-left: 0px;
 }
 
@@ -510,6 +510,15 @@ input::-webkit-input-placeholder{
 /*      & img:last-child{
         visibility: hidden;
       }*/
+      & >a:before{
+        content: '';
+        display: block;
+        width: 83px;
+        height: 40px;
+        background: #000;
+        position: absolute;
+        opacity: 0;
+      }
       a{
         background: white;
         width: 90px;
@@ -536,6 +545,7 @@ input::-webkit-input-placeholder{
           right: 10px;
           opacity: 0;
         }*/
+
         .select-box-wrap{
           width: 84px;
 /*  opacity: 0;
@@ -598,6 +608,7 @@ input::-webkit-input-placeholder{
           color: white;
         }
 
+
       }
 
 
@@ -608,11 +619,7 @@ input::-webkit-input-placeholder{
         opacity: 1;
       }*/
     }
-    //:hover a{
-    //
-    //    background: #31c27c;
-    //
-    //}
+
   }
 }
 
