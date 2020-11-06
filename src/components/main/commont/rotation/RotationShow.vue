@@ -40,6 +40,7 @@
                                             {{v.song[p].title}}
                                         </a>
                                     </div>
+                                    <!--隐藏超出的文字-->
                                         <a class="rank-singerName" href="javascript:;" >
                                         {{v.song[p].singerName.length>18
                                             ? v.song[p].singerName.slice(0,17)+'...'
@@ -60,20 +61,25 @@
             <!--后退按钮-->
             <div class="up-page checkedSyle"
                  @click="clickPage('up')"
+                 v-if="pages.length>1"
             >
                 <span class="iconfont icon-jiantou3"></span>
             </div>
             <!--前进按钮-->
             <div class="next-page checkedSyle"
                  @click="clickPage('next')"
+                 v-if="pages.length>1"
             >
                 <span class="iconfont icon-jiantouyouxi"></span>
             </div>
             <!--导航按钮-->
-            <ul class="slide-index">
+            <ul class="slide-index"
+                v-if="pages.length>1"
+            >
                 <li v-for="(v,i) in pages" :key="i"
                     class=" checkedSyle"
                     @click="clickNav(i)"
+
                 >
                     <svg class="icon" aria-hidden="true">
                         <use :xlink:href="[ n == i ? '#icon-nav-middle-deep' : '#icon-nav-shallow'] ">
@@ -136,6 +142,7 @@
             clickNav(index){
                 this.n = index
             },
+
             //转换位数
             numToTenThousand(num){
                 if (num < 10000){

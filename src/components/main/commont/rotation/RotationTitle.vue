@@ -16,13 +16,17 @@
                     <!--导航标题-->
                     <ul class="song-list-ul">
                         <!--@click绑定点击事件,调用navClick方法,把此时的地址传递给navClick-->
+                        <!--isAcive判断选中-->
                         <li
-                            v-for="(item,index) of List[index]"
-                            :key="index"
-                            :class="['select',{'nav-active': isActive(item.path)}]"
-                            @click="navClick(item.path) "
+                            v-for="(item,n) of List[index]"
+                            :key="n"
+                            :class="['select']"
+                            @click="navClick(item.path,index,n)"
                         >
-                            <i :class="`item-name-${index}`">{{item.name}}</i>
+                            <i :class="[`item-name-${n}`,{'nav-active':isClickFlag(n)}]"
+                        >
+                                {{item.name}}
+                            </i>
                             <div v-if="isRank(item)" class="isrank">
                                 <div v-for((v,i) in 3)>
                                         <i class="singerList-rank">{{this.songList[i].rank}}</i>
@@ -31,6 +35,7 @@
                                 </div>
                             </div>
                         </li>
+                        <!--播放全部-->
                         <div class="playAll" v-if="index==1">
                             <a href="javascript:;" class="playAllWrap">
 
@@ -52,10 +57,14 @@
         <!--调用rotation-api子组件
             使用:index传递index给子组件,子组件在props中定义index接收
             该index由homepage传入到rotation-title,再由rotation-title传入到rotation-api中
+            clickPath将点击的请求地址传入api
+            在父组件tilte里声明ref属性和对应的名字(这里定义的是api),
+            这样就可以通过this.$refs.api.属性名或
+            this.$refs.api.方法名 来调子组件的数据或方法
         -->
         <rotation-api
             :index="index"
-
+            ref="api"
         />
     </div>
 </template>
@@ -82,31 +91,31 @@ export default {
             List:[
                 //歌单推荐
                 [
-                        {path: '/homepage/recommend',name:'为你推荐'},
-                        {path: '/homepage/officialplaylist',name:'官方歌单'},
-                        {path: '/homepage/lovesong',name:'情歌'},
-                        {path: '/homepage/networksong',name:'网络歌曲'},
-                        {path: '/homepage/classic',name:'经典'},
-                        {path: '/homepage/ktv',name:'KTV热歌'},
+                        {path: '/recommend/playlist/u',name:'为你推荐'},
+                        {path: '/recommend/playlist',name:'官方歌单'},
+                        {path: '/songlist/list?category=148',name:'情歌'},
+                        {path: '/songlist/list?category=146',name:'网络歌曲'},
+                        {path: '/songlist/list?category=136',name:'经典'},
+                        {path: '/songlist/list?category=141',name:'KTV热歌'},
                     ],
                 //新歌首发
                 [
-                        {path: '/homepage/recommend',name:'最新'},
-                        {path: '/homepage/officialplaylist',name:'内地'},
-                        {path: '/homepage/lovesong',name:'港台'},
-                        {path: '/homepage/networksong',name:'欧美'},
-                        {path: '/homepage/classic',name:'韩国'},
-                        {path: '/homepage/ktv',name:'日本'},
+                        {path: '/new/songs?type=0',name:'最新'},
+                        {path: '/new/songs?type=1',name:'内地'},
+                        {path: '/new/songs?type=2',name:'港台'},
+                        {path: '/new/songs?type=3',name:'欧美'},
+                        {path: '/new/songs?type=4',name:'韩国'},
+                        {path: '/new/songs?type=5',name:'日本'},
                      ],
                 //精彩推荐 去掉
                 //新碟首发
                 [
-                    {path: '/homepage/recommend',name:'内地'},
-                    {path: '/homepage/officialplaylist',name:'港台'},
-                    {path: '/homepage/lovesong',name:'欧美'},
-                    {path: '/homepage/networksong',name:'韩国'},
-                    {path: '/homepage/classic',name:'日本'},
-                    {path: '/homepage/ktv',name:'其它'},
+                    {path: '/new/album?type=1&num=20',name:'内地'},
+                    {path: '/new/album?type=2&num=20',name:'港台'},
+                    {path: '/new/album?type=3&num=20',name:'欧美'},
+                    {path: '/new/album?type=4&num=20',name:'韩国'},
+                    {path: '/new/album?type=5&num=20',name:'日本'},
+                    {path: '/new/album?type=6&num=20',name:'其它'},
                 ],
                 //排行榜
                 [
@@ -118,16 +127,18 @@ export default {
                 ],
                 //MV
                 [
-                    {path: '/homepage/recommend',name:'精选'},
-                    {path: '/homepage/officialplaylist',name:'内地'},
-                    {path: '/homepage/lovesong',name:'韩国'},
-                    {path: '/homepage/networksong',name:'港台'},
-                    {path: '/homepage/classic',name:'欧美'},
-                    {path: '/homepage/ktv',name:'日本'},
+                    {path: '/new/mv?type=0',name:'精选'},
+                    {path: '/new/mv?type=1',name:'内地'},
+                    {path: '/new/mv?type=2',name:'韩国'},
+                    {path: '/new/mv?type=3',name:'港台'},
+                    {path: '/new/mv?type=4',name:'欧美'},
+                    {path: '/new/mv?type=5',name:'日本'},
                 ],
             ],
-            songList:null
+            songList:null,
             // RecommendList:[]
+            clickFlag:0,
+            clickPath:[],
         }
     },
 
@@ -137,12 +148,21 @@ export default {
         * 第二个为传递的值path
         * 在这里打包成nav-click函数,里面有点击获取到的地址path,父组件homepage通过@获取该函数
         * */
-        navClick(path){
+        navClick(path,index,clickIndex){
             //派发事件 通知父组件被点击
             this.$emit('nav-click',path)
+            //将点击的地址保存到clickPath
+            // debugger
+            // this.clickPath=path
+            this.$refs.api.clickPath(path,index)
+            this.clickFlag=clickIndex
         },
-        isActive(path){
-            if (this.index==3){
+ /*       //点击切换获取地址
+        clickPath(path){
+            this.$emit('click-path',path)
+        },*/
+   /*     isActive(path){
+/!*            if (this.index==3){
                 return false
             }
             // debugger
@@ -154,9 +174,17 @@ export default {
             }
             if (path === '/homepage/recommend' && this.$route.path === '/homepage' ){
                 return true
-            }
+            }*!/
             return false
+        },*/
+/*        ClickSetFlag(clickIndex){
+            // console.log(path)
+            this.clickFlag=clickIndex
+        },*/
+        isClickFlag(flag){
+           return  flag==this.clickFlag ? true :false
         },
+
         isRank(res){
             // debugger
             // console.log(this.apiGetList)
@@ -164,7 +192,7 @@ export default {
             if (!res.song){
                 return false
             }
-            debugger
+            // debugger
             this.songList = res.song.map(item=>({
                 rank:item.rank,
                 singerName:item.singerName,
@@ -187,6 +215,10 @@ export default {
     }
 
 }
+/*window.onload=function () {
+   var iList = document.querySelectorAll('.select > i')
+    console.log(iList)
+}*/
 </script>
 
 

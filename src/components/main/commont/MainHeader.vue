@@ -22,22 +22,6 @@
                     <a href="javascript:;">登录</a>
                   </div>
 
-<!--                  <div class="openVipPosition">
-                      <div class="openVip">
-                           <a href="javascript:;">开通VIP</a>
-                           <img src="../../../../public/img/箭头下.svg" alt="">
-                           <img src="../../../../public/img/箭头上.svg" alt="">
-                           <ul class="selectbox-vip">
-                               <li>
-
-                               </li>
-                           </ul>
-                      </div>
-                  </div>
-
-                  <div class="reCharge">
-                    <a href="javascript:;">充值</a>
-                  </div>-->
 
                   <div v-for="(item,index) in selectBox" :key="index"
                         :class="`select-box-${index}`"

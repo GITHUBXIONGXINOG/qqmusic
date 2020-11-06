@@ -361,7 +361,10 @@
         display: flex;
         justify-content: center;
         color: white;
-
+        .nav-active{
+          /*隐藏默认的title选中样式*/
+          color: white!important;
+        }
       }
 
     }

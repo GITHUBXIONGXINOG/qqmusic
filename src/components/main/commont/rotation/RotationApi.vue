@@ -7,10 +7,18 @@
             :slide-list="apiGetList"
             :index="index"
         />
+<!--
+        <rotation-title
+            @click-path="fetchClickPath"
+            :index="index"
+            />
+-->
+
     </div>
 </template>
 
 <script>
+// import RotationTitle from "@/components/main/commont/rotation/RotationTitle";
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
 export default {
     props:{
@@ -20,20 +28,27 @@ export default {
         index:{
             type: Number,
             required: true
-        }
+        },
+/*        clickPath:{
+            type: String,
+            default: 'clickPath'
+        }*/
     },
     data(){
         return {
             apiSetList: {
                 path:''
             },
-            apiGetList: []
+            apiGetList: [],
+
         }
     },
     components:{
-        RotationShow
+        RotationShow,
+        // RotationTitle
     },
     methods:{
+        //apiSet 初始化 默认地址
         apiSet(index){
             // debugger
             switch (index){
@@ -55,10 +70,12 @@ export default {
             }
 
         },
+        //默认初始化输出
         async fetchRecommendSwiper(index){
             const res = await this.$http.get(this.apiSetList.path)
           /*  debugger
             console.log(res)*/
+            /*对应不同api的保存数据*/
             if (index==0){
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:item.cover,
@@ -131,12 +148,99 @@ export default {
 
         },
 
+        //点击歌单地址后输出
+        async  clickPath(path,index){
+            // debugger
+            // console.log(path)
+            // console.log(index)
+            const res = await this.$http.get(path)
+
+            // console.log(res)
+            //   debugger
+              // console.log(res)
+            /*对应不同api的保存数据*/
+            if (index==0){
+                this.apiGetList = res.data.data.list.map(item => ({
+                    img:item.cover || item.cover_url_medium || item.imgurl || item.imgurl,
+                    title:item.title || item.dissname,
+                    id:item.content_id || item.dissid,
+                    listen_num:item.listen_num || item.access_num || item.listennum,
+                }))
+/*                debugger
+                console.log(this.apiGetList.map(item=>item))*/
+            }
+            else if (index==1){
+                this.apiGetList = res.data.data.list.map(item => ({
+                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
+                    title:item.title,
+                    subtitle:item.subtitle,
+                    username:item.singer[0].name,
+                    id:item.album.id,
+                    // listen_num:item.listen_num,
+                    type:item.type
+                }))
+                // debugger
+                // console.log(this.apiGetList.map(item=>item))
+
+            }
+            else if (index==2){
+                this.apiGetList = res.data.data.list.map(item => ({
+                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
+                    title:item.name,
+                    // subtitle:item.subtitle,
+                    username:item.singers[0].name,
+                    id:item.id,
+                    // listen_num:item.listen_num,
+                    type:item.type
+                }))
+            }
+            else if (index==3){//排行榜
+
+                // console.log(res.data)
+                // debugger
+                // console.log(res.data.data)
+                // console.log(res.data.data[0].list.map(item=>item))
+                this.apiGetList = res.data.data[0].list.map(item => ({
+                    label:item.label,
+                    song:item.song,
+                    id:item.topId,
+                    listen_num:item.listenNum,
+                    // type:item.type
+                    img:item.picUrl,
+
+                }))
+                // debugger
+                /*               console.log(res)*/
+                // console.log(this.apiGetList.map(item=>item))
+            }
+            else if (index==4){
+                this.apiGetList = res.data.data.list.map(item => ({
+                    img:item.picurl,
+                    title:item.mvtitle,
+                    // subtitle:item.subtitle,
+                    username:item.singername,
+                    id:item.mvid,
+                    listen_num:item.listennum,
+                    type:item.mvtitle
+                }))
+                /*                debugger
+                                console.log(res)
+                                console.log(this.apiGetList.map(item=>item))*/
+            }
+
+
+
+        }
+
     },
     created() {
 
         this.apiSet(this.index)
         this.fetchRecommendSwiper(this.index)
     },
+    watch(){
+
+    }
 
 }
 </script>

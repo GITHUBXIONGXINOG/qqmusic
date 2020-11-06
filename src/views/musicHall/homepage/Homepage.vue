@@ -35,7 +35,9 @@
           /*调用toPath函数,进行路由跳转
           * */
         toPath(path){
-          this.$router.push(path)
+
+          // this.$router.push(path)
+          //   console.log(path)
         }
       },
 
