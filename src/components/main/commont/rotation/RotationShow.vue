@@ -37,7 +37,10 @@
                                             {{v.song[p].rank}}
                                         </span>
                                         <a class="rank-title" href="javascript:;">
-                                            {{v.song[p].title}}
+<!--                                            {{v.song[p].title}}-->
+                                            {{v.song[p].title.length>10
+                                            ? v.song[p].title.slice(0,9)+'...'
+                                            : v.song[p].title}}
                                         </a>
                                     </div>
                                     <!--隐藏超出的文字-->

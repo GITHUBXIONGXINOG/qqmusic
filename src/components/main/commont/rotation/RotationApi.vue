@@ -53,19 +53,19 @@ export default {
             // debugger
             switch (index){
                 case 0:
-                    this.apiSetList.path='/recommend/playlist/u'//为你推荐
+                    this.apiSetList.path='/api/recommend/playlist/u'//为你推荐
                     break
                 case 1:
-                    this.apiSetList.path='/new/songs?type=0'//新歌首发
+                    this.apiSetList.path='/api/new/songs?type=0'//新歌首发
                     break
                 case 2:
-                    this.apiSetList.path='/new/album?type=1&num=20'//新碟首发
+                    this.apiSetList.path='/api/new/album?type=1&num=20'//新碟首发
                     break
                 case 3:
-                    this.apiSetList.path='/top/category?showDetail=1'//排行榜
+                    this.apiSetList.path='/api/top/category?showDetail=1'//排行榜
                     break
                 case 4:
-                    this.apiSetList.path='/new/mv?type=0'//mv
+                    this.apiSetList.path='/api/new/mv?type=0'//mv
                     break
             }
 

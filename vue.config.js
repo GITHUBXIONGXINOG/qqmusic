@@ -12,7 +12,8 @@ module.exports = {
                 pathRewrite:{ //重写,把之前的清空
                     '^/api':''
                 },
-            }
+            },
+
         },
     },
 };

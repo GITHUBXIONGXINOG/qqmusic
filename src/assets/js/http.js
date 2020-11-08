@@ -2,7 +2,7 @@
 import axios from 'axios'
 //2.传教axios实例
 const http = axios.create({
-    baseURL:'/api'
+    // baseURL:'/api'
 })
 
 export default http

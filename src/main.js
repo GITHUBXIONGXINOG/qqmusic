@@ -16,6 +16,7 @@ import '@/assets/css/rotationtitle.scss'
 import '@/assets/css/rotationcontent.scss'
 import '@/assets/css/footer.scss'
 import '@/assets/css/singershow.scss'
+import '@/assets/css/digitalalbum.scss'
 import $ from 'jquery'
 //轮播图组件全局挂载
 import VueAwesomeSwiper from 'vue-awesome-swiper'
