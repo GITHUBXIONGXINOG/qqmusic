@@ -3,6 +3,7 @@
     <singer-show
 
     />
+
   </div>
 </template>
 

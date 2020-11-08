@@ -219,15 +219,6 @@ input::-webkit-input-placeholder{
   color: #31C27C!important;
 }
 
-//背景
- /*.homepage{
-   //不支持渐变时显示
-   background-color: rgb(242, 242, 242);
-   //背景 线性渐变 左上到右下
-   background-image: linear-gradient(to bottom right, rgb(242, 242, 242) , white);
-   height: 532px;
-   //border: 1px solid red;
- }*/
 
 
 
@@ -623,84 +614,6 @@ input::-webkit-input-placeholder{
   }
 }
 
-/*
-
-//vip
-.mod_header .main_header_wrap .userSet .openVipPosition   {
-  width: 122px;
-  height: 90px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.mod_header .main_header_wrap .userSet .openVip{
-  //background: blue;
-  width: 120px;
-  height: 90px;
-  //justify-content: center;
-  display: flex;
-  align-items: center;
-
-  position: relative;
-  //flex-wrap: nowrap;
-  //开通vip箭头
-
-  & img{
-    position: absolute;
-    //border: 1px solid red;
-    width: 10px;
-    height: 10px;
-    top: 0;
-    right: 5px;
-    bottom: 0;
-    margin: auto;
-  }
-  & img:last-child{
-    visibility: hidden;
-  }
-
-}
-//开通vip文字
-.mod_header .main_header_wrap .userSet .openVip a{
-  font-size: 13px;
-  border-radius: 3px;
-  background: #31C27C;
-  //height: 39.6px;
-  width: 120px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 39.6px;
-}
-
-//充值
-.mod_header .main_header_wrap .userSet .reCharge{
-  width: 83px;
-  height: 90px;
-  justify-content: center;
-  //border: 1px solid blue;
-  //display: flex;
-  align-items: center;
-  background: white;
-}
-.mod_header .main_header_wrap .userSet .reCharge a{
-
-  display: flex;
-  font-size: 15px;
-  border-radius: 3px;
-  background: white;
-  height: 39.6px;
-  width: 120px;
-  color: black;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgb(201, 201, 201);
-
-}
-
-*/
 
 
   //符号图标
@@ -766,7 +679,6 @@ input::-webkit-input-placeholder{
   }
 
 }
-
 
 
 
