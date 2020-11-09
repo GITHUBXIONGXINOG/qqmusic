@@ -21,8 +21,6 @@
                   <div class="login">
                     <a href="javascript:;">登录</a>
                   </div>
-
-
                   <div v-for="(item,index) in selectBox" :key="index"
                         :class="`select-box-${index}`"
                   >
@@ -49,18 +47,15 @@
 
                       </ul>
                   </div>
-
               </div>
-
           </div>
-
-          <div class="nav-list">
+          <div class="nav-list"> <!--导航栏:首页,歌手..-->
             <ul>
               <li
                   v-for="item of navList"
                   :key="item.name"
                   :class="['select',{'nav-active': isActive(item.path)}]"
-                  @click="navClick(item.path) "
+                  @click="navClick(item) "
               >
                 {{item.name }}
               </li>
@@ -70,16 +65,14 @@
       </div>
 
   </div>
+
+
 </template>
 
 <script>
-
 export default {
   props:{
-/*    title:{
-      type:String,
-      default:'Music'
-    }*/
+
   },
   data(){
     return{
@@ -116,9 +109,9 @@ export default {
     }
   },
   methods:{
-    navClick(path){
+    navClick(item){
       //派发事件 通知父组件被点击
-      this.$emit('nav-click',path)
+      this.$emit('nav-click',item.path)
     },
     isActive(path){
       let reg = new RegExp('^'+path+'/')
@@ -139,7 +132,6 @@ export default {
   },
 
   components:{
-
   }
 
 
