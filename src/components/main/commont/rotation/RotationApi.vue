@@ -7,18 +7,12 @@
             :slide-list="apiGetList"
             :index="index"
         />
-<!--
-        <rotation-title
-            @click-path="fetchClickPath"
-            :index="index"
-            />
--->
+
 
     </div>
 </template>
 
 <script>
-// import RotationTitle from "@/components/main/commont/rotation/RotationTitle";
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
 export default {
     props:{
@@ -238,9 +232,7 @@ export default {
         this.apiSet(this.index)
         this.fetchRecommendSwiper(this.index)
     },
-    watch(){
 
-    }
 
 }
 </script>

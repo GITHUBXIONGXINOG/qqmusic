@@ -6,28 +6,28 @@
   margin:auto ;
 }
 .rotation3d-show{
-  height: 526px;
+  height: 420.8px;
   //border: 1px solid red;
   display: flex;
   justify-content: center;
   position: relative;
   overflow: hidden;
-
+  width: 100%;
   /*图片*/
   .slide-out-wrap{
     //border: 1px solid black;
     height: 439px;
-    width: 1500px;
-    margin-top: 87px;
+    width: 1200px;
+    margin-top: 69.6px;
     overflow: hidden;
     /*ul*/
     ul{
       //border: 1px solid red;
       width: 100%;
-      height: 375px;
+      height: 300px;
       position: relative;
       img{
-        height: 375px;
+        height: 300px;
       }
       li{
         position: absolute;
@@ -39,24 +39,24 @@
           z-index: 1;
         }
         .list-1{
-          transform: translateX(280px);
+          transform: translateX(223px);
           z-index: 2;
         }
         .list-2{
-          transform: translateX(655px) scale(0.81);
+          transform: translateX(520px) scale(0.81);
           z-index: 1;
         }
         .list-3{
-          transform: translateX(1230px) scale(0.81);
+          transform: translateX(817px) scale(0.81);
           z-index: 0;
         }
         .list-4{
-          transform: translateX(1500px) scale(0.81);
+          transform: translateX(1040px) scale(0.81);
           opacity: 0;
           z-index: -1;
         }
         .list-5{
-          transform: translateX(-280px) scale(0.81);
+          transform: translateX(-223px) scale(0.81);
           opacity: 0;
           z-index: -2;
         }
@@ -65,16 +65,16 @@
     /*按钮*/
     .nav-out-wrap{
       width: 100%;
-      height: 64px;
+      height: 51.2px;
       text-align: center;
-      line-height: 64px;
+      line-height: 51.2px;
       span{
         display: inline-block;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         background: #e5e5e5;
         font-size: 10px;
-        margin: 0 13px;
+        margin: 0 10.4px;
         border-radius: 50%;
 
       }
@@ -151,4 +151,125 @@
   }
 
 }
+/*图片画廊展示*/
+.digital-album{
+  .digital-album-show{
+    height: 3500px;
+    //border: 1px solid red;
+    .content{
+        .albumlist-content-comment{
+          //border: 1px solid black;
+          width: 1200px;
+          height: 378px;
+          @extend .margin_center;
+          display: flex;
+          //justify-content: space-between;
+          flex-direction: column;
+          margin-bottom: 65px;
+          //position: relative;
+          .contentTitle-wrap{
+            //border: 1px solid green;
+            width: 1200px;
+            //height: 60px;
+            //position: absolute;
+            margin-bottom: 24px;
+            font-size: 24px;
+            .contentTitle{
+              width: 96px;
+              height: 60px;
+            }
+          }
+          .imgList-wrap{
+            width: 1200px;
+            display: flex;
+            justify-content: space-between;
+          }
+          .imgList_info{
+            //border: 1px solid blue;
+            width: 224px;
+            height: 310px;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            img{
+              width: 224px;
+            }
+
+            .album_name{
+              color: black;
+              flex: 3;
+              margin-top: 16px;
+            }
+            .singer_name{
+              flex: 3;
+
+              color: #999999;
+            }
+            .price{
+              flex: 9;
+
+              color: #999999;
+            }
+            /*立即购买按钮*/
+            button{
+              border: 1px solid #c9c9c9;
+              width: 80px;
+              height: 26.4px;
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              background: white;
+              border-radius: 3px;
+
+            }
+            & button:hover {
+              background: #ededed;
+            }
+
+            /*图片动画样式*/
+            //img:hover{
+            //  transform: scale(1.1);
+            //}
+            .img-wrap{
+              width: 224px;
+              height: 224px;
+              overflow: hidden;
+              position: relative;
+              /*图片本体*/
+              img{
+                position: absolute;
+                transition:transform .5s;
+              }
+              /*黑色背景包裹*/
+              span{
+                position: absolute;
+                width: 224px;
+                height: 224px;
+                //径向渐变
+                background-image: radial-gradient( rgba(0,0,0,0.1),  rgba(0,0,0,0.11));
+                opacity: 0;
+                transition: opacity .5s;
+              }
+              /*图片缩放*/
+              &:hover .img-info{
+                transform: scale(1.1);
+              }
+              /*显示span*/
+              &:hover span{
+                opacity: 1;
+              }
+            }
+
+
+          }
+
+        }
+    }
+  }
+}
+
+
 

@@ -22,11 +22,8 @@ export default {
     },
     data(){
         return {
-    /*        apiSetList: {
-                path:'http://localhost:3200/getDigitalAlbumLists'
-            },*/
             apiGetList: [],
-
+            contentList:[]
         }
     },
     components:{
@@ -42,8 +39,6 @@ export default {
             //console.log(this.apiSetList.path)
             const res = await this.$http.get(this.apiSetList.path)
             // console.log(res)
-            /*对应不同api的保存数据*/
-
                 this.apiGetList = res.data.response.data.banner.map(item => ({
                     img:item.picurl,
                     title:item.album_name,
@@ -51,9 +46,11 @@ export default {
                     id:item.album_id,
                     type:item.type
                 }))
+            this.contentList = res.data.response.data.content
+            // console.log(this.contentList)
 
             // console.log(this.apiGetList )
-
+            this.$emit('fetch-recommend-swiper',this.contentList )
 
         },
 
@@ -63,9 +60,6 @@ export default {
     created() {
         this.fetchRecommendSwiper()
     },
-    watch(){
-
-    }
 
 }
 </script>

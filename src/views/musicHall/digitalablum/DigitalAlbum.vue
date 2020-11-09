@@ -3,6 +3,7 @@
     <digital-album-show
 
     />
+
   </div>
 </template>
 

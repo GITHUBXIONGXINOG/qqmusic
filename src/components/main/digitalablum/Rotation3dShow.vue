@@ -120,7 +120,7 @@
                         this.index = this.index>0 ? this.index-1 : 5
                         setTimeout( ()=> {
                           this.clickFlag=0
-                        },200)
+                        },500)
                     }
 
                 }
@@ -135,7 +135,7 @@
                         // console.log(this.index)
                         setTimeout(()=>{
                             this.clickFlag=0
-                        },200)
+                        },500)
                     }
                 }
                 /*重新设置类名*/
