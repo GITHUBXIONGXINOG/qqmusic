@@ -1,9 +1,67 @@
-body{
-  min-width: 1240px;
-  overflow-y:scroll ;
 
-}
-.singer-show{
-  height: 500px;
+/*歌手页面*/
+.singer-show {
+  height: 1500px;
+  .bg_singer{
+    background: url("../../../public/img/bg_singer.jpg") no-repeat center center;
+    width: 100vw;
+    height: 378px;
+    overflow: hidden;
+    position: relative;
+    .section_inner{
+      .singer_push_tit{
+        background: url("../../../public/img/singer_tit@2x.png") no-repeat ;
+        background-size: 800px 210px;
+        width: 500px;
+        height: 60px;
+        //border: 1px solid red;
+        position: absolute;
+        top: 103px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      .singer_push_desx{
+        background: url("../../../public/img/singer_tit@2x.png") no-repeat 0px -60px ;
+        background-size: 800px 210px;
+        width: 260px;
+        height: 50px;
+        //border: 1px solid red;
+        position: absolute;
+        top: 173px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+      }
+      .singer_push_btn_login{
+        position: absolute;
+        //height: 100px;
+        border: 1px solid #3e3e3e;
+        border-radius: 3px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        width: 174px;
+        height: 48px;
+        bottom: 100px;
+        .singer_push_btn_text{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 48px;
+          border: 0px solid transparent;
+          color: white;
+          font-size: 18px;
+        }
+        //transition: border-color 2s;
+
+        & :hover{
+          //border: 1px solid #ffffff;
+
+          //transition: border-color 0.8s;
+        }
+      }
+    }
+  }
 }
 

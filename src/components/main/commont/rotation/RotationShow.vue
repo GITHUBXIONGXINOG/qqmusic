@@ -4,6 +4,9 @@
         <div class="slide-content"
              :class="`content-${index}`">
             <!--图片内容-->
+
+
+
             <div class="slide-view"
                  v-for="(page,indexPage) in pages" :key="indexPage"
                  v-show="n==indexPage"
@@ -16,12 +19,10 @@
                               :src="v.img"
                         >
                         <nav>
-                             <a href="javascript:;" class="img_cover_wrap" >
-                                 <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">
+                              <a href="javascript:;" class="img_cover_wrap" >
+                                 <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
                               </a>
                         </nav>
-
-
                     </div>
 
                     <!--图片标题内容-->
@@ -61,6 +62,9 @@
                 </div>
 
             </div>
+
+
+
             <!--后退按钮-->
             <div class="up-page checkedSyle"
                  @click="clickPage('up')"
