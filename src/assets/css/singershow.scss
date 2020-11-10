@@ -1,4 +1,10 @@
-
+.margin-center{
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
 /*歌手页面背景 立即登录*/
 .singer-show {
   .bg_singer{
@@ -65,33 +71,108 @@
 }
 
 .singer{
-  height: 1300px;
+  height: 2000px;
 
   .singer-list-show{
     //border: 1px solid red;
-    //width: 1200px;
+    //width: 1500px;
     overflow: hidden;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    //align-items 属性定义flex子项在flex容器的当前行的侧轴（纵轴）方向上的对齐方式。
+    align-items: center;
     /*导航*/
     .tags{
+      //border: 1px solid black;
       width: 1200px;
-      border: 1px solid black;
       height: 223px;
       padding: 65px 0 0 40px;
       overflow: hidden;
       .tags-ul{
-        border: 1px solid black;
+        //border: 1px solid black;
         display: flex;
+        flex-wrap: nowrap;
         font-size: 14px;
         height: 43px;
         .tags-li{
-          //border: 1px solid blue;
-          margin-right: 30px;
+          a{
+            //border: 1px solid red;
+            display: flex;
+            height: 26px;
+            left: 0;
+            right: 0;
+            justify-content: center;
+            align-content: center;
+            padding-top: 2px;
+            margin:0 6px;
+            i{
+              //border: 1px solid red;
+              padding: 1px 8px;
+            }
+          }
+          &:first-child {
+            //width: 44px;
+            margin-right: 17px;
+          }
+        }
+      }
+    }
+    .singer-list{
+      //border: 1px solid red;
+      width: 1200px;
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      justify-content: space-between;
+      /*图片展示样式*/
+      .img-show{
+        width: 224px;
+        height: 245px!important;
+        align-items: center;
+        justify-content: center;
+        .singer-wrap{
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          img{
+            border-radius: 50%;
+            transform: scale(0.94);
+          }
+          a{
+            //border: 1px solid green;
+            margin-top: 14px;
+          }
+        }
+      }
+      /*列表通用样式*/
+      .singer-out-wrap{
+        //border: 1px solid black;
+        display: flex;
+        width: 224px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        .singer-wrap{
+          display: flex;
+          justify-content: space-between;
+            img{
+              border-radius: 50%;
+              transform: scale(0.94);
+            }
+            a{
+              //border: 1px solid green;
+              font-size: 14px;
+            }
         }
       }
     }
 
+  }
+
+  /*导航点击样式*/
+  .singer-active{
+    background-color: #31c27c;
+    color: white;
   }
 }
 
