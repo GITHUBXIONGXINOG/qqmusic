@@ -17,7 +17,8 @@ module.exports = {
     'no-unused-vars': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-dupe-keys': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-useless-escape': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'vue/no-unused-components': 'off'
-
+    'vue/no-unused-components': 'off',
+    'vue/require-v-for-key': 'off',
+    'vue/no-side-effects-in-computed-properties':'off',
   }
 }

@@ -15,11 +15,11 @@
         </div>
         <div class="singer-list">
                 <div class="singer-out-wrap" v-for="(item,index) in SingerList" :key="index"
-                    :class="{'img-show':index<10}"
+                    :class="{'img-show':index<10&&currentPage==1}"
                 >
                     <div class="singer-wrap">
-                        <a href="javascript:;">
-                            <img :src="item.singer_pic" alt="" v-if="index<10"
+                        <a href="javascript:;"  v-if="index<10&&currentPage==1">
+                            <img :src="item.singer_pic" alt=""
                                  class="singer-cover">
                         </a>
 
@@ -29,11 +29,85 @@
                     </div>
                  </div>
         </div>
+        <!--<div class="page-wrap">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jiantou3"></use>
+            </svg>
+            <ul>
+                <li>1</li>
+            </ul>
+            <div class="page-window">
+                <div v-if="tagIndex<=4">
+                    <ul>
+                        <li v-for="(item,index) in pageCount" :key="index">
+                            <a v-if="index==pageCount-1">
+                                ...
+                            </a>
+                            <a v-else>
+                                {{2+index}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div v-else-if="tagIndex>4&&tagIndex<295">
+                    <ul>
+                        <li v-for="(item,index) in 7" :key="index">
+                            <a v-if="index==0 || index==6">
+                                ...
+                            </a>
+                            <a v-else >
+                                {{tagIndex-3+index}}
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div v-if="tagIndex>=295">
+                    <ul>
+                        <li v-for="(item,index) in pageCount" :key="index">
+                            <a v-if="index==0">
+                                ...
+                            </a>
+                            <a v-else-if="tagIndex<298">
+                                {{tagIndex-3+index}}
+                            </a>
+                            <a v-else>
+                                {{294+index}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <ul>
+                <li>298</li>
+            </ul>
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-jiantouyouxi"></use>
+            </svg>
+        </div>-->
+        <!--
+            使用分页组件
+            1.传入当前页码currentPage到子组件的page-index
+            2.传入页数count
+            3.传入每页条数
+            3.绑定子组件的change事件,获取来自子组件的数据,并调用pageChange接收该数据
+              子组件里用this.$emit('change', 数据内容)进行派发
+         -->
+        <paging
+            :page-index="currentPage"
+            :total="count"
+            @change="pageChange"
+        />
     </div>
 </template>
 
 <script>
+    import paging from "@/components/main/commont/paging";
     export default {
+        components:{
+            paging
+        },
     data(){
       return{
           SingerList:[],
@@ -45,6 +119,10 @@
              index:0,
              sex:0
           },
+          tagIndex:298,
+          currentPage : 1, //当前页码
+          count : 298, //总记录数
+          items : [],
 
       }
     },
@@ -53,13 +131,25 @@
              // debugger
              /*每次传入数据先清空一下*/
              this.SingerList=''
-             const res = await this.$http.get('http://localhost:3200/getSingerList', {params})
+             //在url中添加当前页面的页码数
+             let url=`http://localhost:3200/getSingerList?page=${this.currentPage}`
+             //通过传入params对象进行类别选项
+             const res = await this.$http.get(url, {params})
+
              // console.log(res)
              this.tags=res.data.response.singerList.data.tags
              // console.log(res.data.response.singerList.data.singerlist)
              this.SingerList=res.data.response.singerList.data.singerlist
 
          },
+         //从page组件传递过来的当前page
+         pageChange (page) {
+             /*修改当前的页面为接受的page*/
+             this.currentPage = page
+             /*调用数据获取函数*/
+             this.fetchApiInfo()
+         },
+
          /*点击函数 传入key(类别) index(具体点击)*/
          categoryClick(key,index){
              // 设置点击项,把活动样式activeIndex的该类别的数值设置为点击的index
@@ -81,10 +171,32 @@
              }
              this.fetchApiInfo(params)
          }
+         /*渲染*/
      },
      created() {
          this.fetchApiInfo()
-     }
+     },
+     computed:{
+        /*计算当前显示的页数范围*/
+         pageCount(){
+             // debugger
+           switch (this.tagIndex){
+               case 1:
+               case 2:
+               case 297:
+               case 298:
+                   return 4
+               case 3:
+               case 296:
+                   return 5
+               case 4:
+               case 295:
+                   return 6
+               default:
+                   return 7
+           }
+         },
+     },
 
     }
 </script>

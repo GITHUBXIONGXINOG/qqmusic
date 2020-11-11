@@ -71,7 +71,7 @@
 }
 
 .singer{
-  height: 2000px;
+  //height: 2000px;
 
   .singer-list-show{
     //border: 1px solid red;
@@ -117,6 +117,7 @@
         }
       }
     }
+    /*歌手列表*/
     .singer-list{
       //border: 1px solid red;
       width: 1200px;
@@ -166,7 +167,32 @@
         }
       }
     }
+    /*页数*/
+    .page-wrap{
+      border: 1px solid red;
+      width: 1200px;
+      height: 49.6px;
+      margin: 70px 0 60px;
+      display: flex;
+      ul{
+        display: flex;
+        position: relative;
+        li{
+          border: 1px solid red;
+        }
+      }
+      .page-window{
+        border: 1px solid red;
+        ul{
+          display: flex;
+          position: relative;
+          li{
+            border: 1px solid red;
+          }
+        }
+      }
 
+    }
   }
 
   /*导航点击样式*/
