@@ -58,7 +58,7 @@
         data(){
             return {
                 list:{
-                    path:'http://localhost:3200/getDigitalAlbumLists'
+                    path:'http://81.70.93.91:3200/getDigitalAlbumLists'
                 },
                 contentList:null,
                 contentTitle:[

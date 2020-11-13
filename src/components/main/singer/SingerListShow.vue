@@ -15,10 +15,10 @@
         </div>
         <div class="singer-list">
                 <div class="singer-out-wrap" v-for="(item,index) in SingerList" :key="index"
-                    :class="{'img-show':index<10&&currentPage==1}"
+                    :class="{'img-show':index<10&&currentPage==1&&activeIndex.index==0}"
                 >
                     <div class="singer-wrap">
-                        <a href="javascript:;"  v-if="index<10&&currentPage==1">
+                        <a href="javascript:;"  v-if="index<10&&currentPage==1&&activeIndex.index==0">
                             <img :src="item.singer_pic" alt=""
                                  class="singer-cover">
                         </a>
@@ -132,7 +132,7 @@
              /*每次传入数据先清空一下*/
              this.SingerList=''
              //在url中添加当前页面的页码数
-             let url=`http://localhost:3200/getSingerList?page=${this.currentPage}`
+             let url=`http://81.70.93.91:3200/getSingerList?page=${this.currentPage}`
              //通过传入params对象进行类别选项
              const res = await this.$http.get(url, {params})
 
