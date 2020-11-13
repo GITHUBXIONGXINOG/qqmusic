@@ -29,63 +29,7 @@
                     </div>
                  </div>
         </div>
-        <!--<div class="page-wrap">
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-jiantou3"></use>
-            </svg>
-            <ul>
-                <li>1</li>
-            </ul>
-            <div class="page-window">
-                <div v-if="tagIndex<=4">
-                    <ul>
-                        <li v-for="(item,index) in pageCount" :key="index">
-                            <a v-if="index==pageCount-1">
-                                ...
-                            </a>
-                            <a v-else>
-                                {{2+index}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div v-else-if="tagIndex>4&&tagIndex<295">
-                    <ul>
-                        <li v-for="(item,index) in 7" :key="index">
-                            <a v-if="index==0 || index==6">
-                                ...
-                            </a>
-                            <a v-else >
-                                {{tagIndex-3+index}}
-                            </a>
-                        </li>
-                    </ul>
 
-                </div>
-                <div v-if="tagIndex>=295">
-                    <ul>
-                        <li v-for="(item,index) in pageCount" :key="index">
-                            <a v-if="index==0">
-                                ...
-                            </a>
-                            <a v-else-if="tagIndex<298">
-                                {{tagIndex-3+index}}
-                            </a>
-                            <a v-else>
-                                {{294+index}}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <ul>
-                <li>298</li>
-            </ul>
-            <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-jiantouyouxi"></use>
-            </svg>
-        </div>-->
         <!--
             使用分页组件
             1.传入当前页码currentPage到子组件的page-index
@@ -169,6 +113,9 @@
                      // console.log(this.tags[item][this.activeIndex[item]])
                  params[item] = this.tags[item][this.activeIndex[item]].id
              }
+             // debugger
+             // console.log(this.tags)
+             // console.log(params)
              this.fetchApiInfo(params)
          }
          /*渲染*/

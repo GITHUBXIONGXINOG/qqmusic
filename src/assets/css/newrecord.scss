@@ -1,0 +1,160 @@
+.record{
+  height: 1500px;
+  //不支持渐变时显示
+  background-color: rgb(242, 242, 242);
+  //背景 线性渐变 左上到右下
+  background-image: linear-gradient(to bottom right, rgb(242, 242, 242) , white);
+  padding-top: 55px;
+
+  //标题
+    .new-record-show{
+      //border: 1px solid red;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      //margin-top: 55px;
+      .area-title{
+          //border: 1px solid black;
+          display: flex;
+          width: 1200px;
+          height: 40px;
+            .area-ul{
+              //border: 1px solid green;
+              width: 1150px;
+              margin-left: 55px;
+              display: flex;
+              li{
+                width: 50px;
+                height: 25px;
+                margin: 0 9px;
+                a{
+                  //border: 1px solid blue;
+                  padding: 3px 6px;
+
+                }
+              }
+              //选中tag
+              .selectIndex{
+                background: #31c27c;
+                color: white;
+                //去除a标签的默认颜色
+                &:hover{
+                  color: white;
+                }
+              }
+            }
+        }
+    }
+    //图片内容
+    .new-record-content{
+      //border: 1px solid red;
+
+      //height: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .albums-wrap{
+        //border: 1px solid black;
+        width: 1200px;
+        height: 1350px;
+        img{
+          width: 224px;
+          transition: transform .5s;
+        }
+
+
+        display: flex;
+        overflow: hidden;
+        //justify-content: space-around;
+        .albums-ul{
+          //border: 1px solid blue;
+          width: 1200px;
+          height: 340px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          li{
+            //border: 1px solid green;
+            width: 224px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            font-family: poppin,Tahoma;
+            font-width: lighter;
+            position: relative;
+            //第一个a就是图片
+            >a{
+              overflow: hidden;
+              //border: 1px solid red;
+              width: 224px;
+              height: 224px;
+              margin-bottom: 14px;
+
+            }
+            nav{
+              //border: 1px solid red;
+              position: absolute;
+              width:  224px;
+              height: 224px;
+              cursor:pointer;
+              a{
+                //border: 1px solid black;
+                position: absolute;
+                width: 70px;
+                height: 70px;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                //播放按钮
+                img{
+                  //border: 1px solid blue;
+                  width: 70px;
+                  transform: scale(0.8);
+                  opacity: 0;
+                  transition: opacity .5s ,transform .8s;
+                }
+              }
+            }
+            div{
+              padding-left: 10px;
+            }
+
+            .albums-name{
+
+            }
+            .albums-singers a,.albums-release_time i{
+                color: #9fa19f;
+            }
+            .albums-singers a{
+              &:hover{
+                color:#31c27c;
+              }
+            }
+          }
+          //图片hover
+          & :hover  .record-img{
+            transform: scale(1.07);
+          }
+          //播放按钮hover
+          & :hover  .record-img-button{
+            transform: scale(1);
+            //width: 70px;
+            opacity: 1;
+          }
+
+
+          //设置置位符号,内地为18,通过该伪元素将空的两个位置占领
+          &::after{
+            display: block;
+            content: '';
+            width: 448px;
+            height: 100%;
+            //background: #000;
+          }
+        }
+      }
+  }
+}
