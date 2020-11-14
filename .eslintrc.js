@@ -20,5 +20,6 @@ module.exports = {
     'vue/no-unused-components': 'off',
     'vue/require-v-for-key': 'off',
     'vue/no-side-effects-in-computed-properties':'off',
+    'vue/no-dupe-keys':'off',
   }
 }

@@ -1,0 +1,301 @@
+<template>
+    <div class="category-title">
+        <div class="title-wrap">
+            <ul class="title-ul-wrap" v-for="(item,index) in titleList" :key="index" >
+                <div class="title-center">
+                    <i class="title-type">{{item.type}}</i>
+                    <ul class="title-ul" :class="`title-ul-${index}`">
+
+                        <li class="title-li" v-for="(v,i) in showList[index]" :key="i">
+                            <i class="title-name" :class="{'select-title':v.id==activeIndex.category}"
+                                @click="selectTitle(v.id)"
+                            >
+                                <a href="javascript:;">{{v.name}}</a>
+                            </i>
+                        </li>
+
+                        <li @click.stop="clickShow(index)" v-if="index!=3" class="show-more"
+                            :class="{'select-title': moreIndex[index]}"
+                        >
+                            <a href="javascript:;">{{ moreInfo[index] }}</a>
+
+                            <svg class="icon jiantouxia" aria-hidden="true" v-show="!moreIndex[index]">
+                                <use xlink:href="#icon-jiantouxia"></use>
+                            </svg>
+                            <svg class="icon jiantoushang" aria-hidden="true" v-show="moreIndex[index]">
+                                <use xlink:href="#icon-jiantoushang"></use>
+                            </svg>
+
+                        </li>
+                        <div class="more-title" v-show="showIndex==index" id="contextMenuBox">
+                            <div class="title-name" v-for="(k,t) in moreList[index]" :key="t"
+                                 @click="selectTitleMore(k.id,k.name,index)"
+                                 :class="{'select-title': k.id==activeIndex.category}"
+                            >
+                                <a href="javascript:;">{{k.name}}</a>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data(){
+            return{
+                titleListAll:[],
+                titleList:[],
+                activeIndex:{
+                    category:10000000,//分类id
+                    sort:5,//5推荐,2最新
+                    pageNo:1,//页码
+                    pageSize:20//每页
+                },
+                showIndex:-1,
+                moreList:[{}],
+                showList:[[]],
+                contentList:[],
+                moreIndex:[false,false,false,false,false],
+                moreInfo:['更多','更多','更多','','更多']
+            }
+        },
+        methods: {
+            //获取api数据
+            async fetchCategory(params) {
+                // debugger
+                // console.log(params)
+                //标签
+                let urlTitle = '/api/songlist/category'
+                const res = await this.$http.get(urlTitle)
+                // console.log(res)
+                this.titleListAll = res.data.data
+                //内容
+
+                let urlContent = '/api/songlist/list'
+                const resContent = await this.$http.get(urlContent,{params})
+                this.contentList = resContent.data.data.list.map(item=>({
+                    img:item.imgurl,
+                    title:item.dissname,
+                    singers:item.creator.name,
+                    listennum:item.listennum,
+                    id:item.dissid
+                }))
+                // console.log(this.contentList)
+
+                // debugger
+                //默认显示的长度
+                let len = [5,8,8,9,8]
+                let l =this.titleListAll.length-1
+                this.titleList=this.titleListAll.slice(1)
+                // console.log(this.titleList)
+                //循环类别
+                for (let i = 0 ; i < l ;i++) {
+                    this.showList[i]=new Array()
+                    this.moreList[i]=new Object()
+                    for (let j = 0 ,m= this.titleList[i].list.length ; j < m; j++) {
+                        // console.log(this.titleList[i]);
+                        // console.log(this.titleList[i].list);
+                        // console.log(this.titleList[i].list[j]);
+                        // this.showList[0][0]=1
+                        // console.log(this.showList[0])
+                        // console.log(this.showList[i][j])
+                        if (j<len[i]){
+                            this.showList[i][j]=(this.titleList[i].list[j])
+                        }else {
+                            this.moreList[i][j]=(this.titleList[i].list[j])
+                        }
+                    }
+                }
+            },
+            //点击函数
+            selectTitle(id){
+                //index,类别 ,key具体项
+                // debugger
+                this.activeIndex['category']=id
+                // console.log( this.activeIndex)
+                // const params = {}
+                // // console.log(this.titleList)
+                // for (let item in this.titleList){
+                //     // console.log(this.titleList[item])
+                //     console.log(this.activeIndex[item])
+                //     // console.log(this.titleList[item].list[0].id)
+                //     params[item] = this.titleList[item].list[this.activeIndex[item]].id
+                // }
+                // console.log(params);
+                this.fetchCategory(this.activeIndex)
+                //清空更多上的样式
+                this.moreIndex=[false,false,false,false,false]
+                this.moreInfo=['更多','更多','更多','','更多']
+
+            },
+            selectTitleMore(id,name,index){
+                //index,类别 ,key具体项
+                debugger
+                this.activeIndex['category']=id
+                this.moreInfo=['更多','更多','更多','','更多']
+                this.moreInfo[index]=name
+                //颜色赋值
+                //清零
+                this.moreIndex=[false,false,false,false,false]
+                //赋值数据
+                this.moreIndex[index] = true
+                this.fetchCategory(this.activeIndex)
+                const contextMenuBox =document.getElementById('contextMenuBox')
+                if (contextMenuBox){
+                    contextMenuBox.style.display='none'
+                }
+            },
+
+        },
+        created() {
+            this.fetchCategory()
+
+
+
+        },
+        mounted() {
+            document.addEventListener('click',e=>{
+                const contextMenuBox = document.getElementById('contextMenuBox')
+                if (contextMenuBox){
+                    if (!contextMenuBox.contains(e.target)){
+                        // debugger
+                        // console.log(this.showIndex)
+                        this.showIndex=-1
+                        // debugger
+                        // console.log(this.moreIndex)
+                        //全部置为false
+                        // this.moreIndex=[false,false,false,false,false]
+                        // console.log( this.moreIndex)
+                        // this.moreIndex[index]= !this.moreIndex[index]
+                    }
+                }
+            })
+        },
+        computed:{
+            // word:function () {
+            //     // debugger
+            //     // this.showAll.forEach((item,index)=>{
+            //     //     if (this.showAll[index]==false){
+            //     //         return '展开全部'
+            //     //     }else {
+            //     //         return '收起'
+            //     //     }
+            //     // })
+            //
+            // }
+            //显示隐藏
+            // showList(list,index) {
+            //     // debugger
+            //     // console.log(list)
+            //     //设置显示个数
+            //     let len = 0
+            //     switch (index){
+            //         case 0:
+            //             len = 5
+            //             break
+            //         case 1:
+            //         case 2:
+            //         case 4:
+            //             len = 8
+            //             break
+            //         default:
+            //             len = 9
+            //             break
+            //     }
+            //
+            //     if (this.showAll[index] == false) {
+            //         let showList = []
+            //         for (let i = 0; i < len; i++) {
+            //             showList.push(list[i])
+            //         }
+            //         // console.log(showList)
+            //
+            //         return showList
+            //     } else {
+            //         this.moreList = []
+            //         for (let i = len; i < list.length; i++) {
+            //             this.moreList.push(list[i])
+            //         }
+            //         // debugger
+            //         console.log(this.moreList)
+            //         return this.moreList
+            //
+            //     }
+            // },
+            //显示
+            // showList(){
+            //     return function (list,index){
+            //         // debugger
+            //         // console.log(list)
+            //         //设置显示个数
+            //         let len = 0
+            //         switch (index){
+            //             case 0:
+            //                 len = 5
+            //                 break
+            //             case 1:
+            //             case 2:
+            //             case 4:
+            //                 len = 8
+            //                 break
+            //             default:
+            //                 len = 9
+            //                 break
+            //         }
+            //         let showList = []
+            //         for (let i = 0; i < len; i++) {
+            //             showList.push(list[i])
+            //         }
+            //         this.moreList = []
+            //         for (let i = len; i < list.length; i++) {
+            //             this.moreList.push(list[i])
+            //         }
+            // /*        if (this.showAll[index] != false) {
+            //             console.log(showList)
+            //             this.moreList = []
+            //             for (let i = len; i < list.length; i++) {
+            //                 this.moreList.push(list[i])
+            //             }
+            //         }*/
+            //         // if (this.showAll!==index){
+            //         //     console.log(this.showAll)
+            //         //     // this.showAll = index
+            //         // }
+            //         return showList
+            //         }
+            //     },
+            clickShow(){
+                return function (index){
+                    // debugger
+                    // console.log(this.showIndex);
+                    // if (index==this.showIndex){
+                    //     this.showIndex=-1
+                    // }else{
+                    //     //设置为显示点击所在的index
+                    //     this.showIndex=index
+                    // }
+                    //设置为显示点击所在的index
+                    this.showIndex=index
+                    //更多 数据操作
+                    //存储数据
+                    // let tempIndex = !this.moreIndex[index]
+                    // let tempIndex = this.moreIndex[index]
+                    // //清零
+                    // this.moreIndex=[false,false,false,false,false]
+                    // //赋值数据
+                    // this.moreIndex[index] = tempIndex
+                    // console.log(this.showIndex)
+                }
+            },
+
+        },
+
+        watch:{
+
+        },
+
+    }
+</script>
