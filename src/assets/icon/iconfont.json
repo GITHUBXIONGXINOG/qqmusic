@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "36566",
+      "name": "播放",
+      "font_class": "bofang2",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "2137449",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "12045850",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "16177111",
+      "name": "添加",
+      "font_class": "jiatianjiakuangxuanduoxuan-8",
+      "unicode": "e7db",
+      "unicode_decimal": 59355
+    },
+    {
+      "icon_id": "17821580",
+      "name": "批量修改",
+      "font_class": "piliangxiugai",
+      "unicode": "e787",
+      "unicode_decimal": 59271
+    },
+    {
       "icon_id": "4054310",
       "name": "错误",
       "font_class": "cuowu",

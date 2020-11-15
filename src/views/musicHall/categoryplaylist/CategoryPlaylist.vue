@@ -12,7 +12,7 @@
 <script>
     import categoryList from "@/components/main/categorylist/categoryList.vue";
     import categoryTitle from "@/components/main/categorylist/categoryTitle";
-    import  '@/assets/css/ categorylist.scss'
+    import  '@/assets/css/categorylist.scss'
     export default {
         components:{
             categoryList,
