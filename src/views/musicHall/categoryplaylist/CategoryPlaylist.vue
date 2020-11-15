@@ -1,10 +1,10 @@
 <template>
   <div class="category-playlist">
       <category-title
-
+          @contentList="contentList"
       />
       <category-list
-
+          :contentList="contentInfo"
       />
   </div>
 </template>
@@ -17,6 +17,20 @@
         components:{
             categoryList,
             categoryTitle
+        },
+        data(){
+            return{
+                contentInfo:[]
+            }
+        },
+        methods:{
+            contentList(list){
+                // debugger
+                // console.log(list)
+                this.contentInfo=list
+                // console.log(this.contentInfo)
+            }
         }
+
     }
 </script>

@@ -8,7 +8,7 @@
 
                         <li class="title-li" v-for="(v,i) in showList[index]" :key="i">
                             <i class="title-name" :class="{'select-title':v.id==activeIndex.category}"
-                                @click="selectTitle(v.id)"
+                                @click="selectTitle(v.id,v.name)"
                             >
                                 <a href="javascript:;">{{v.name}}</a>
                             </i>
@@ -39,6 +39,36 @@
                 </div>
             </ul>
         </div>
+        <div class="title-select-show">
+            <div v-if="activeIndex.category==10000000" class="title-select-default">
+                {{word}}
+            </div>
+            <div v-else class="title-select-info">
+                {{word}}
+                <div class="delete-select" @click="deleteSelect">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-cuowu"></use>
+                    </svg>
+                </div>
+            </div>
+            <div class="title-select-order">
+                <a href="javascript:;" class="order-recommend"
+                    @click="selectTitleOrder"
+                   :class="{'select-order':orderSelect}"
+                >
+                    推荐
+                </a>
+
+                <a href="javascript:;" class="order-new"
+                   @click="selectTitleOrder"
+                   :class="{'select-order':!orderSelect}"
+                >
+                    最新
+                </a>
+
+
+            </div>
+        </div>
     </div>
 </template>
 
@@ -46,20 +76,23 @@
     export default {
         data(){
             return{
-                titleListAll:[],
-                titleList:[],
+                titleListAll:[],//所有标题,包括热门
+                titleList:[],//所有标题,不包括热门
                 activeIndex:{
                     category:10000000,//分类id
                     sort:5,//5推荐,2最新
                     pageNo:1,//页码
                     pageSize:20//每页
-                },
-                showIndex:-1,
-                moreList:[{}],
-                showList:[[]],
-                contentList:[],
-                moreIndex:[false,false,false,false,false],
-                moreInfo:['更多','更多','更多','','更多']
+                },//活动点击传递
+                showIndex:-1,//显示隐藏更多展示
+                moreList:[{}],//更多展示里面的数据
+                showList:[[]],//普通展示的数据
+                contentList:[],//图片内容数据
+                moreIndex:[false,false,false,false,false],//存储该更多是否被点击,true为被点击
+                moreInfo:['更多','更多','更多','','更多'],//存储'更多'位置上显示的数据,点击后可以动态更新
+                saveSelectName:'全部歌单',//保存点击的名字,在外部输出
+                orderSelect:true
+
             }
         },
         methods: {
@@ -109,9 +142,11 @@
                         }
                     }
                 }
+                //派发
+                this.$emit('contentList',this.contentList)
             },
             //点击函数
-            selectTitle(id){
+            selectTitle(id,name){
                 //index,类别 ,key具体项
                 // debugger
                 this.activeIndex['category']=id
@@ -129,11 +164,13 @@
                 //清空更多上的样式
                 this.moreIndex=[false,false,false,false,false]
                 this.moreInfo=['更多','更多','更多','','更多']
-
+                //保存点击的名字
+                this.saveSelectName = name
+                // console.log(this.saveSelectName)
             },
             selectTitleMore(id,name,index){
                 //index,类别 ,key具体项
-                debugger
+                // debugger
                 this.activeIndex['category']=id
                 this.moreInfo=['更多','更多','更多','','更多']
                 this.moreInfo[index]=name
@@ -143,20 +180,37 @@
                 //赋值数据
                 this.moreIndex[index] = true
                 this.fetchCategory(this.activeIndex)
+                this.showIndex=-1
                 const contextMenuBox =document.getElementById('contextMenuBox')
                 if (contextMenuBox){
                     contextMenuBox.style.display='none'
                 }
+                //保存点击的名字
+                this.saveSelectName = name
             },
-
+            //删除选中
+            deleteSelect(){
+              this.activeIndex.category=10000000
+              this.moreIndex=[false,false,false,false,false]
+              this.moreInfo=['更多','更多','更多','','更多']
+              this.fetchCategory()
+            },
+            //更改排序
+            selectTitleOrder(){
+               if ( this.activeIndex.sort==5){
+                   this.activeIndex.sort=2
+               }else{
+                   this.activeIndex.sort=5
+               }
+                this.orderSelect=!this.orderSelect
+                this.fetchCategory(this.activeIndex)
+            }
         },
         created() {
             this.fetchCategory()
-
-
-
         },
         mounted() {
+            //给所有元素添加点击事件,点击更多展示之外的地方就把showIndex置为-1,达到隐藏展示的效果
             document.addEventListener('click',e=>{
                 const contextMenuBox = document.getElementById('contextMenuBox')
                 if (contextMenuBox){
@@ -271,14 +325,14 @@
                 return function (index){
                     // debugger
                     // console.log(this.showIndex);
-                    // if (index==this.showIndex){
-                    //     this.showIndex=-1
-                    // }else{
-                    //     //设置为显示点击所在的index
-                    //     this.showIndex=index
-                    // }
+                    if (index==this.showIndex){
+                        this.showIndex=-1
+                    }else{
+                        //设置为显示点击所在的index
+                        this.showIndex=index
+                    }
                     //设置为显示点击所在的index
-                    this.showIndex=index
+                    // this.showIndex=index
                     //更多 数据操作
                     //存储数据
                     // let tempIndex = !this.moreIndex[index]
@@ -290,7 +344,15 @@
                     // console.log(this.showIndex)
                 }
             },
-
+            word:function (){
+                if (this.activeIndex.category==10000000){
+                    return '全部歌单'
+                }else{
+                    // debugger
+                    // console.log(this.$refs.vName.value)
+                    return this.saveSelectName
+                }
+            },
         },
 
         watch:{
