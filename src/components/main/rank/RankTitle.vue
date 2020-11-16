@@ -23,11 +23,9 @@
                 resTitleList:[],
                 activeIndex:{
                     id:4,
-                    pageSize:100,
+                    pageSize:20,
                 },
                 resContentList:[],
-
-
             }
         },
         methods:{
@@ -50,14 +48,15 @@
 
                 //详细
                 let urlContent = '/api/top'
+                //为空,初始化
+                if (!params){
+                    params= {id:4,pageSize:20}
+                }
                 const resContent = await this.$http.get(urlContent,{params})
+                // debugger
+                // console.log(params)
                 // console.log(resContent.data.data)
-              /*  this.resContentList = resContent.data.data(item=>({
-                    title:item.info.title,
-                    update:item.update,
-                    listenNum:item.listenNum,
-                    list:item.list
-                }))*/
+
                 // debugger
                 this.resContentList = resContent.data.data
                 // console.log(this.resContentList)
@@ -66,16 +65,22 @@
                 //获取评论
                 let urlComment = `/api/comment?biztype=4&id=${this.activeIndex.id}`
                 const CommentList = await this.$http.get(urlComment)
+                let commentlist = CommentList.data.data.comment
+                // debugger
                 // console.log(CommentList.data.data.comment)
                 //将评论数传递
                 this.resContentList.commenttotal = CommentList.data.data.comment.commenttotal
                 // console.log( this.resContentList)
-                //派发事件
+                //派发事件 派发内容
                 this.$emit('res-content-list',this.resContentList)
+                //派发评论
+                this.$emit('res-comment-list',commentlist)
             },
             //点击切换
             selectTitle(id){
+                // debugger
                 this.activeIndex.id=id
+                // console.log(this.activeIndex)
                 this.fetchApi(this.activeIndex)
             }
         },

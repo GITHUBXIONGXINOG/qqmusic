@@ -5,8 +5,8 @@ module.exports = {
         // lintOnSave: false, //是否开启eslint
         proxy:{
             '/api':{ //匹配 /api
-                target:'https://api.qq.jsososo.com', //匹配 /api 后转换的地址
-                // target:'http://www.cqxiong.ml:3300', //匹配 /api 后转换的地址
+                // target:'https://api.qq.jsososo.com', //匹配 /api 后转换的地址
+                target:'http://www.cqxiong.ml:3300', //匹配 /api 后转换的地址
                 changeOrigin: true,//运行跨域
                 ws:true,
                 secure:false,
