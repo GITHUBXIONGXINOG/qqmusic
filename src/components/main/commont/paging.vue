@@ -55,8 +55,8 @@
         -->
         <li
             class="paging-item"
-            v-show="index<total-2"
-            @click="last">{{total}}</li>
+            v-show="index<pageNum-2"
+            @click="last">{{pageNum}}</li>
 
         <!--
             next 下一页
@@ -64,7 +64,7 @@
         -->
         <li
             class="paging-item  paging-item-change"
-            v-show="index != total"
+            v-show="index != pageNum"
             @click="next">
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-jiantouyouxi"></use>
@@ -92,18 +92,33 @@ export default {
             default : 1
         },
 
-/*        //每页显示条数
+        //每页显示条数
         pageSize : {
             type : Number,
-            default : 10
-        },*/
+            default : 20
+        },
 
-        //总记录数
+        //总页数
         total : {
             type : Number,
             default : 1
         },
 
+        //总记录数
+        totalAll:{
+            type: Number,
+            default : 20
+        }
+
+    },
+    data () {
+        return {
+            index : this.pageIndex, //当前页码
+            limit : this.pageSize, //每页显示条数
+            pageNum : this.total || 1, //总页数
+            showPrevMore : false,
+            showNextMore : false
+        }
     },
     methods : {
         /*上一页*/
@@ -114,7 +129,7 @@ export default {
         },
         /*下一页*/
         next(){
-            if (this.index < this.total) {
+            if (this.index < this.pageNum) {
               this.go(this.index + 1)
             }
         },
@@ -126,12 +141,13 @@ export default {
         },
         /*末页*/
         last(){
-            if (this.index != this.pages) {
-                this.go(this.total)
+            if (this.index != this.pageNum) {
+                this.go(this.pageNum)
             }
         },
         /*页面执行*/
         go (page) {
+
             /*
                 go函数执行页面跳转的操作,一切点击都会调用该函数
                 this.index是当前的页面,page是点击后传入的页面,当两者不同时就说明要发生跳转
@@ -147,7 +163,7 @@ export default {
     },
     computed : {
 
-        /*        //计算总页码
+          /*      //计算总页码
                 pages(){
                      return Math.ceil(this.size / this.limit)
                 },*/
@@ -159,7 +175,7 @@ export default {
             /*可见页码 5*/
             const perPages = this.perPages
             /*总共页码 298*/
-            const pageCount = this.total
+            const pageCount = this.pageNum
             /*当前页码*/
             let current = this.index
             /*前后的位置,可以页码为5的话,前后都为2*/
@@ -224,15 +240,7 @@ export default {
             return array
         }
     },
-    data () {
-        return {
-            index : this.pageIndex, //当前页码
-            // limit : this.pageSize, //每页显示条数
-            // size : this.total || 1, //总记录数
-            showPrevMore : false,
-            showNextMore : false
-        }
-    },
+
     // watch，它可以用来监测Vue实例上的数据变动
     watch : {
         /*
@@ -241,14 +249,26 @@ export default {
            就将本组件的this.index当前页码数置为传入的数据,如果为空,就设置为1
            total同理
         */
+        //当前页数
         pageIndex(val) {
              this.index = val || 1
         },
-        // pageSize(val) {
-        //      this.limit = val || 10
-        // },
+        //每页显示
+        pageSize(val) {
+             this.limit = val || 20
+        },
+        //总页数
         total(val) {
-              this.size = val || 1
+              this.pageNum = val || 1
+        },
+        //总数据数
+        totalAll(val) {
+                //通过总数据数和每页显示的数据,计算出总共的页数
+                // this.pageNum = Math.ceil(val /this.limit) || 1
+                //由于api错误,这里使用的api最后一页获取不到,这里使用floor去除掉最后一页
+
+                this.pageNum =  val<this.limit ? 1 : Math.floor(val /this.limit)
+
         }
     }
 }

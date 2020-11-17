@@ -18,6 +18,12 @@
 
 <script>
     export default {
+        props:{
+            currentPage: {
+              type: Number,
+              default: 1
+          }
+        },
         data(){
             return{
                 resTitleList:[],
@@ -26,6 +32,7 @@
                     pageSize:20,
                 },
                 resContentList:[],
+                pageNo: 1,//页数
             }
         },
         methods:{
@@ -63,7 +70,8 @@
 
                 //评论
                 //获取评论
-                let urlComment = `/api/comment?biztype=4&id=${this.activeIndex.id}`
+                // debugger
+                let urlComment = `/api/comment?biztype=4&pageSize=25&id=${this.activeIndex.id}&pageNo=${this.pageNo}`
                 const CommentList = await this.$http.get(urlComment)
                 let commentlist = CommentList.data.data.comment
                 // debugger
@@ -86,6 +94,13 @@
         },
         created() {
             this.fetchApi()
+        },
+        watch:{
+            currentPage(val){
+                debugger
+                this.pageNo = val
+                this.fetchApi()
+            }
         }
 
     }

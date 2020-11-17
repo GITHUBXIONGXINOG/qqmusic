@@ -1,5 +1,5 @@
 <template>
-    <div class="rank-comment">
+    <div class="rank-comment" id="rank-comment">
         <div class="user-comment">
             <div class="user-comment-title">
                  <span class="comment-head">评论</span>
@@ -39,20 +39,28 @@
                         <!--名字-->
                         <span class="nick"><a href="javascript:;" >{{item.nick}}</a></span>
                         <!--评论-->
-                        <span class="comment-content">{{item.rootcommentcontent}}</span>
+                        <div class="comment-content">
+                           <span v-if="item.middlecommentcontent==null">
+                                {{item.rootcommentcontent}}
+                           </span>
+                            <span v-else class="comment-reply">
+                                <i>回复
+                                    <a href="javascript:;">{{item.middlecommentcontent[0].replyednick}}</a>:&nbsp;
+                                </i>
+                                <i>{{item.middlecommentcontent[0].subcommentcontent}}</i>
+                                <br>
+                                <i class="comment-source">{{item.rootcommentcontent}}</i>
+                            </span>
+                        </div>
                         <!--更多-->
                         <div class="comment-more">
                             <span>{{timeConversion(item.time)}}</span>
                             <div class="operating">
-                                <a class="comment-report" v-show="index==isReportShow">举报</a>
-                                <span class="comment-like">
-                                       <a href="javascript:;">
-                                           <svg class="icon" aria-hidden="true">
-                                                <use xlink:href="#icon-zan"></use>
-                                           </svg>
-                                       </a>
+                                <a class="comment-report" v-show="index+1==isReportShow">举报</a>
+                                <div class="comment-like">
+                                    <a href="javascript:;"  class="iconfont icon-zan"></a>
                                        <i>{{item.praisenum}}</i>
-                                </span>
+                                </div>
 
                                 <a href="javascript:;">
                                     <span class="iconfont icon-pinglun1"></span>
@@ -64,11 +72,20 @@
 
                 </li>
             </ul>
+
         </div>
+        <!--分页-->
+        <paging
+            :pageIndex="pageIndex"
+            :totalAll="commentTotal"
+            :pageSize="pageSize"
+            @change="changeIndex"
+        />
     </div>
 </template>
 
 <script>
+    import paging from "@/components/main/commont/paging";
     export default {
         props:{
             commentList:{
@@ -82,7 +99,9 @@
                 comments:[],//评论列表
                 remWord:300,//剩余文字
                 isReportShow:'',//显示举报
-                desc:'',
+                desc:'',//双向数据绑定
+                pageIndex:1,//当前页数
+                pageSize:25,//每页显示条数
             }
         },
         methods:{
@@ -92,11 +111,18 @@
             },
             //悬浮显示切换
             reportShow(index){
-                if (index){
-                    this.isReportShow=index
+                // 加1 避免传入index为0时进行错误判断
+                if (index+1){
+                    this.isReportShow=index+1
                 }else{
                     this.isReportShow=''
                 }
+            },
+            //改变页数
+            changeIndex(val){
+                // debugger
+                this.pageIndex=val
+                this.$emit('change',this.pageIndex)
             }
         },
         computed:{
@@ -142,7 +168,14 @@
                 }))*/
                 // console.log(this.commentTotal)
                 // console.log(this.comments)
-            }
+            },
+
+        },
+        components:{
+            paging
+        },
+        mounted() {
+            // document.addEventListener('mo')
         }
     }
 </script>

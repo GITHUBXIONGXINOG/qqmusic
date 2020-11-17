@@ -2,15 +2,20 @@
   <div class="rank">
       <div class="rank-in-wrap">
           <!--    rank排行榜-->
+          <!--标题-->
           <rank-title
             @res-content-list="contentList"
             @res-comment-list="commentList"
+            :currentPage="storageCurrentPage"
           />
+          <!--内容-->
           <rank-content
             :contentList="storageList"
           />
+          <!--评论-->
           <rank-comment
             :commentList="storageComment"
+            @change="changePage"
           />
       </div>
 
@@ -27,6 +32,7 @@
             return{
                 storageList:{},
                 storageComment:{},
+                storageCurrentPage:1,
             }
         },
         components:{
@@ -43,6 +49,9 @@
             },
             commentList(list){
                 this.storageComment=list
+            },
+            changePage(index){
+                this.storageCurrentPage=index
             }
 
         }

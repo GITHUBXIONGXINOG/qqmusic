@@ -16,13 +16,13 @@
                 </div>
             </nav>
             <ul class="userOpera">
-                <li v-for="(item,index) in userOperating" :key="index">
+                <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index">
                     <span :class="['iconfont ',`${iconList[index]}`]"></span>
                     <span>
                         {{item}}
                         <i v-if="index==4">({{contentList.commenttotal}})</i>
                     </span>
-                </li>
+                </a>
             </ul>
         </div>
         <div class="rank-wrap">
@@ -97,6 +97,13 @@
                     'jia',
                     'xiazai',
                     'fenxiang'
+                ],
+                userOperaUrl:[
+                    'javascript:;',
+                    'javascript:;',
+                    'javascript:;',
+                    'javascript:;',
+                    '#rank-comment',
                 ],
                 songOperatingShow:'',
 
