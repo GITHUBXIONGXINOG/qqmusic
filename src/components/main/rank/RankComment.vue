@@ -5,25 +5,7 @@
                  <span class="comment-head">评论</span>
                  <span class="comment-total">共{{commentTotal}}条评论</span>
             </div>
-            <div class="user-comment-op">
-                <textarea name="comment" class="comment-textarea"
-                          cols="100" rows="4"  maxlength="300"
-                          @input="descInput" v-model="desc"
-                          placeholder="期待你的神评论..."
-                ></textarea>
-                <span class="remaining-word">
-                    <i>剩余</i>
-                    <i class="rem-word">{{remWord}}</i>
-                    <i>字</i>
-                </span>
-                <div class="comment-submit-wrap">
-                    <a href="javscript:;" class="comment-submit">
-                        <i>发表评论</i>
-                    </a>
-                    <span class="iconfont icon-biaoqing1"></span>
-                </div>
-            </div>
-
+            <Comment />
         </div>
         <div class="comment-new-wrap">
             <div class="comment-new-title">
@@ -63,11 +45,15 @@
                                 </div>
 
                                 <a href="javascript:;">
-                                    <span class="iconfont icon-pinglun1"></span>
+                                    <span class="iconfont icon-pinglun1" @click="ReplyButton(index)">
+                                    </span>
                                 </a>
+
                             </div>
 
                         </div>
+                        <Comment v-if="isReply==index" :name="item.nick" @commentCancel="commentCancel"/>
+
                     </div>
 
                 </li>
@@ -86,6 +72,7 @@
 
 <script>
     import paging from "@/components/main/commont/paging";
+    import Comment from "@/components/main/commont/comment/Comment";
     export default {
         props:{
             commentList:{
@@ -99,16 +86,13 @@
                 comments:[],//评论列表
                 remWord:300,//剩余文字
                 isReportShow:'',//显示举报
-                desc:'',//双向数据绑定
                 pageIndex:1,//当前页数
                 pageSize:25,//每页显示条数
+                isReply:-1,//回复
             }
         },
         methods:{
-            descInput(){
-              let txtVal = this.desc.length
-              this.remWord = 300 - txtVal
-            },
+
             //悬浮显示切换
             reportShow(index){
                 // 加1 避免传入index为0时进行错误判断
@@ -123,6 +107,14 @@
                 // debugger
                 this.pageIndex=val
                 this.$emit('change',this.pageIndex)
+            },
+            //回复
+            ReplyButton(index){
+              this.isReply=index
+            },
+            //取消回复
+            commentCancel(val){
+              this.isReply=val
             }
         },
         computed:{
@@ -146,36 +138,15 @@
                 // console.log(this.commentList)
                 this.commentTotal=this.commentList.commenttotal
                 this.comments=this.commentList.commentlist
-                    /*.map(item=>({
-                    avatarurl:item.avatarurl,
-                    commentid:item.commentid,
-                    commit_state:item.commit_state,
-                    enable_delete:item.enable_delete,
-                    encrypt_rootcommentuin:item.encrypt_rootcommentuin,
-                    encrypt_uin:item.encrypt_uin,
-                    identity_pic:item.identity_pic,
-                    is_hot:item.is_hot,
-                    is_hot_cmt:item.is_hot_cmt,
-                    nick:item.nick,
-                    permission:item.permission,
-                    rootcommentcontent:item.rootcommentcontent,
-                    rootcommentid:item.rootcommentid,
-                    rootcommentnick:item.rootcommentnick,
-                    score:item.score,
-                    time:item.time,
-                    user_type:item.user_type,
-                    vipicon:item.vipicon,
-                }))*/
-                // console.log(this.commentTotal)
-                // console.log(this.comments)
             },
 
         },
         components:{
-            paging
+            paging,
+            Comment
         },
         mounted() {
-            // document.addEventListener('mo')
+
         }
     }
 </script>

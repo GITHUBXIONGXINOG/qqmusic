@@ -379,6 +379,8 @@
         }
         //评论操作
         .user-comment-op{
+          border: 1px solid red;
+
           position: relative;
           //文本框
           .comment-textarea{
@@ -406,7 +408,7 @@
           .comment-submit-wrap{
             //border: 1px solid red;
             display: flex;
-            flex-direction: row-reverse;
+            justify-content: flex-end;
             align-items: center;
             margin: 10px 0;
             span{
@@ -449,13 +451,13 @@
             width: 990px;
             //height: 109px;
             display: flex;
-            align-items: center;
+            //align-items: center;
             //头像
             .comment-user-img{
               border-radius: 50%;
               width: 35px;
               height: 35px;
-
+              margin-top: 30px;
             }
             .comment-user-about{
               display: flex;
@@ -517,8 +519,17 @@
                   }
                   .icon-pinglun1{
                     display: inline-block;
-                    transform:scaleX(-1);
+                    //transform:scaleX(-1);
                   }
+
+                }
+              }
+              //点击评论
+              .comment-wrap{
+                //border: 1px solid red;
+                width: 940px;
+                textarea{
+                  width: 100%;
                 }
               }
             }
