@@ -1,0 +1,143 @@
+.radioStation{
+  display: flex;
+  //height: 1200px;
+  justify-content: center;
+  //不支持渐变时显示
+  background-color: rgb(242, 242, 242);
+  //背景 线性渐变 左上到右下
+  background-image: linear-gradient(to bottom right, rgb(242, 242, 242) , white);
+  .radio-station-inner{
+    //border: 1px solid red;
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+  }
+  .radio-station-title{
+    //border: 1px solid black;
+    width: 100px;
+    height: 525.6px;
+    display: flex;
+    left: 150px;
+    font-size: 15px;
+    .title-wrap{
+      //border: 1px solid green;
+      width: 100px;
+      height: 490px;
+      display: flex;
+      flex-direction: column;
+      //position: fixed;
+      padding-top: 20px;
+      background: url("../../assets/img/radio_sidebar.png") no-repeat 0% 20px;
+      .title-info{
+        //border: 1px solid blue;
+        display: flex;
+        justify-content: flex-end;
+        margin: 19.5px 0;
+        position: relative;
+        a{
+          //border: 1px solid black;
+
+        }
+
+      }
+      //选中标题
+      .selectTitle{
+        color: #31c27c;
+        &:before{
+          display:block;
+          content: '';
+          width: 37px;
+          height: 1px;
+          position: absolute;
+          background: #31c27c;
+          left: 0;
+          top: 0;
+          bottom: 1px;
+          margin: auto 0;
+        }
+      }
+    }
+
+  }
+  .radio-station-content{
+    //border: 1px solid blue;
+    width: 955px;
+    font-size: 14px;
+    padding-top: 45px;
+    overflow: hidden;
+     .content-wrap{
+       //border: 1px solid black;
+       width: 975px;
+       display: flex;
+       flex-wrap: wrap;
+       //justify-content: space-between;
+       //分类标题
+       .content-wrap-title{
+         //border: 1px solid black;
+         width: 100%;
+         color: #999;
+         margin-bottom: 45px;
+         position: relative;
+         //分割线
+         &:after{
+           content: '';
+           display: block;
+           width: 90%;
+           height: 1px;
+           background: #e6e6e6;
+           position: absolute;
+            top: 0px;
+            bottom: 0px;
+           left: 45px;
+           margin: auto ;
+         }
+       }
+       //具体图片信息
+       .content-info{
+         //border: 1px solid black;
+         width: 25%;
+         //width: 225px;
+         height: 275px;
+         display: flex;
+         flex-direction: column;
+         margin-bottom: 50px;
+         //图片组件外框
+         .content-img{
+           //border: 1px solid red;
+           margin-bottom:10px ;
+           //设置图片组件的长宽
+           .picture-show{
+             width: 223px;
+             height: 223px;
+           }
+         }
+         //内容标题
+         .content-title{
+
+         }
+         //播放量
+         .content-listenNum{
+           //border: 1px solid black;
+           color: #999;
+         }
+       }
+     }
+  }
+  //是否固定
+  .isFixed{
+    position:fixed;
+    background-color:#Fff;
+    top:0;
+    z-index:999;
+    display: flex;
+
+  }
+  //是否最后
+  .isEnd{
+    position: absolute;
+    bottom: 0px;
+
+  }
+
+}
