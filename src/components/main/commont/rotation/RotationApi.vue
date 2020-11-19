@@ -72,21 +72,20 @@ export default {
             /*对应不同api的保存数据*/
             if (index==0){
                 this.apiGetList = res.data.data.list.map(item => ({
+                    id:item.content_id,
                     img:item.cover,
                     title:item.title,
-                    username:item.username,
-                    id:item.content_id,
+                    singer:item.username,
                     listen_num:item.listen_num,
                     type:item.type
                 }))
             }
             else if (index==1){
                 this.apiGetList = res.data.data.list.map(item => ({
+                    id:item.album.id,
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
                     title:item.title,
-                    subtitle:item.subtitle,
-                    username:item.singer[0].name,
-                    id:item.album.id,
+                    singer:item.singer[0].name,
                     // listen_num:item.listen_num,
                     type:item.type
                 }))
@@ -96,47 +95,39 @@ export default {
             }
             else if (index==2){
                 this.apiGetList = res.data.data.list.map(item => ({
+                    id:item.id,
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
                     title:item.name,
                     // subtitle:item.subtitle,
-                    username:item.singers[0].name,
-                    id:item.id,
+                    singer:item.singers[0].name,
                     // listen_num:item.listen_num,
                     type:item.type
                 }))
             }
             else if (index==3){//排行榜
 
-                // console.log(res.data)
-                // debugger
-                // console.log(res.data.data)
-                // console.log(res.data.data[0].list.map(item=>item))
                 this.apiGetList = res.data.data[0].list.map(item => ({
+                    id:item.topId,
+                    img:item.picUrl,
                     label:item.label,
                     song:item.song,
-                    id:item.topId,
                     listen_num:item.listenNum,
                     // type:item.type
-                    img:item.picUrl,
 
                 }))
-               // debugger
-  /*               console.log(res)*/
-                // console.log(this.apiGetList.map(item=>item))
+
             }
             else if (index==4){
                 this.apiGetList = res.data.data.list.map(item => ({
+                    id:item.mvid,
                     img:item.picurl,
                     title:item.mvtitle,
                     // subtitle:item.subtitle,
-                    username:item.singername,
-                    id:item.mvid,
+                    singer:item.singername,
                     listen_num:item.listennum,
                     type:item.mvtitle
                 }))
-/*                debugger
-                console.log(res)
-                console.log(this.apiGetList.map(item=>item))*/
+
             }
 
 
@@ -168,7 +159,7 @@ export default {
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
                     title:item.title,
                     subtitle:item.subtitle,
-                    username:item.singer[0].name,
+                    singer:item.singer[0].name,
                     id:item.album.id,
                     // listen_num:item.listen_num,
                     type:item.type
@@ -182,7 +173,7 @@ export default {
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
                     title:item.name,
                     // subtitle:item.subtitle,
-                    username:item.singers[0].name,
+                    singer:item.singers[0].name,
                     id:item.id,
                     // listen_num:item.listen_num,
                     type:item.type
@@ -198,7 +189,7 @@ export default {
                     label:item.label,
                     song:item.song,
                     id:item.topId,
-                    listen_num:item.listenNum,
+                    singer:item.listenNum,
                     // type:item.type
                     img:item.picUrl,
 
@@ -212,7 +203,7 @@ export default {
                     img:item.picurl,
                     title:item.mvtitle,
                     // subtitle:item.subtitle,
-                    username:item.singername,
+                    singer:item.singername,
                     id:item.mvid,
                     listen_num:item.listennum,
                     type:item.mvtitle

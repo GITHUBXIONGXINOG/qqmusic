@@ -4,16 +4,14 @@
         <div class="slide-content"
              :class="`content-${index}`">
             <!--图片内容-->
-
-
-
             <div class="slide-view"
-                 v-for="(page,indexPage) in pages" :key="indexPage"
+                 v-for="(page,indexPage) in pageAll" :key="indexPage"
                  v-show="n==indexPage"
             >
                 <div class="slide-img  " v-for="(v,i) in page" :key="i"
                      :class="`slide-img-${i}`"
                 >
+                    <!--图片内容和悬浮播放按钮-->
                     <div class="img-wrap ">
                         <img  class="img-info  checkedSyle"
                               :src="v.img"
@@ -27,10 +25,57 @@
 
                     <!--图片标题内容-->
                     <div class="text-info" >
-                        <a href="javascript:;" :setTitle="setTitle(v)">{{title}}</a>
-                        <div :setContent="setContent(v)">
+                        <a href="javascript:;">{{v.title}}</a>
+
+                        <!--歌单推荐-->
+                        <div v-if="index==0">
+                            <span>播放量:</span>
+                            {{numToTenThousand(v.listen_num)}}
+                        </div>
+                        <!--新歌/碟首发-->
+                        <div v-else-if="index==1||index==2">
+                            {{v.singer}}
+                        </div>
+
+                        <!--排行榜-->
+                        <div v-else-if="index==3">
+                            <div class="isRank">
+                                <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
+                                    <div class="rank-title-wrap">
+                                        <span class="rank-number">
+                                            {{v.song[p].rank}}
+                                        </span>
+                                        <a class="rank-title" href="javascript:;">
+                                            <!--                                            {{v.song[p].title}}-->
+                                            {{v.song[p].title.length>10
+                                          ? v.song[p].title.slice(0,9)+'...'
+                                          : v.song[p].title}}
+                                        </a>
+                                    </div>
+                                    <!--隐藏超出的文字-->
+                                    <a class="rank-singerName" href="javascript:;" >
+                                        {{v.song[p].singerName.length>18
+                                      ? v.song[p].singerName.slice(0,17)+'...'
+                                      : v.song[p].singerName}}
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--mv-->
+                        <div v-else>
+                            <a href="javascript:;">{{v.singer}}</a>
+                            <!--播放图标-->
+                            <span v-if="index==4" class="iconfont">&#xe6c2;&nbsp;</span>
+                            {{numToTenThousand(v.listen_num)}}
+                        </div>
+<!--                                                {{v}}-->
+
+                        <!--                        <a href="javascript:;" :setTitle="setTitle(v)">{{title}}</a>-->
+               <!--         <div >
                             {{content}}
-                            <!--如果是排行榜-->
+                            &lt;!&ndash;如果是排行榜&ndash;&gt;
                             <div v-if="v.song" class="isRank">
                                 <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
                                     <div class="rank-title-wrap">
@@ -38,13 +83,13 @@
                                             {{v.song[p].rank}}
                                         </span>
                                         <a class="rank-title" href="javascript:;">
-<!--                                            {{v.song[p].title}}-->
+&lt;!&ndash;                                            {{v.song[p].title}}&ndash;&gt;
                                             {{v.song[p].title.length>10
                                             ? v.song[p].title.slice(0,9)+'...'
                                             : v.song[p].title}}
                                         </a>
                                     </div>
-                                    <!--隐藏超出的文字-->
+                                    &lt;!&ndash;隐藏超出的文字&ndash;&gt;
                                         <a class="rank-singerName" href="javascript:;" >
                                         {{v.song[p].singerName.length>18
                                             ? v.song[p].singerName.slice(0,17)+'...'
@@ -54,8 +99,9 @@
 
                             </div>
 
-                        </div>
-                        <span v-if="setNumber(v)" class="iconfont">&#xe6c2;&nbsp;{{number}}</span>
+                        </div>-->
+                        <!--播放图标-->
+<!--                        <span v-if="index==4" class="iconfont">&#xe6c2;&nbsp;{{number}}</span>-->
 
                     </div>
 
@@ -68,22 +114,22 @@
             <!--后退按钮-->
             <div class="up-page checkedSyle"
                  @click="clickPage('up')"
-                 v-if="pages.length>1"
+                 v-if="pageAll.length>1"
             >
                 <span class="iconfont icon-jiantou3"></span>
             </div>
             <!--前进按钮-->
             <div class="next-page checkedSyle"
                  @click="clickPage('next')"
-                 v-if="pages.length>1"
+                 v-if="pageAll.length>1"
             >
                 <span class="iconfont icon-jiantouyouxi"></span>
             </div>
             <!--导航按钮-->
             <ul class="slide-index"
-                v-if="pages.length>1"
+                v-if="pageAll.length>1"
             >
-                <li v-for="(v,i) in pages" :key="i"
+                <li v-for="(v,i) in pageAll" :key="i"
                     class=" checkedSyle"
                     @click="clickNav(i)"
 
@@ -117,6 +163,7 @@
         },
         data(){
             return{
+                pageAll:[],
                 n:0,
                 interId:null,
                 upToPage:null,
@@ -124,18 +171,63 @@
                 p:0,
                 title:null,
                 content:null,
-                subtitle:null,
+                subtitle:null,//图片标题
                 number:null,
                 rankList:null
             }
         },
         methods:{
+/*            //数据处理
+            setData(val){
+                // console.log(val)
+                let saveVal = []
+                let tempVal = []
+               /!* tempVal = val.map(item=>{
+                    id : item.id
+                    img : item.img
+                    listen_num : item.listen_num
+                    title : item.title
+                    type : item.type
+                    username : item.username
+                })*!/
+
+
+                // console.log(val)
+            },*/
+            //页数
+            pages () {
+                // debugger
+                const pages = []
+                this.setPage(this.index)
+                //savePage为保留页数,只保留slideList为5倍数的页数
+                const savePage = Math.floor(this.slideList.length/this.p)
+                this.slideList.forEach((item, index) => {
+                    // debugger
+                    //Math.floor() 返回小于或等于一个给定数字的最大整数
+                    const page = Math.floor(index / this.p)
+                    //page是页数,5是每页可完整显示的数据,如果index是5,说明有6条数据,剩下的一条将被放在下一张轮播图中
+
+                    // debugger
+                    if (!pages[page]  && page<savePage) {
+                        pages[page] = []
+                    }
+                    if (pages[page]){
+                        pages[page].push(item)
+                    }
+                })
+                this.pageAll =  pages
+                // this.pageAll =  this.setData(pages)
+                // console.log(this.pageAll)
+                // debugger
+            },
+
+
             //点击按钮
             clickPage(str){
                 if (str === 'up'){
                     this.n--
                     if (this.n<0){
-                        this.n = this.pages.length-1
+                        this.n = this.pageAll.length-1
                     }
                 }
                 if (str === 'next'){
@@ -179,6 +271,7 @@
                         break
                 }
                  },
+
             //设置标题
             setTitle(v){
                 switch (this.index){
@@ -187,21 +280,23 @@
                         break
                     case 1:
                     case 2:
-
                         this.subtitle = v.subtitle
-
                 }
-                if (!this.subtitle){
-                    this.title = v.title
-                }else {
+
+                if (v.subtitle){
+                    // this.title = v.title
+                    console.log(this.subtitle)
+                }
+
+               /* else {
                     this.title=v.title+this.subtitle
                 }
-
-
+*/
                 // console.log(v)
             },
+
             //设置文字
-            setContent(v){
+          /*  setContent(v){
                 if (this.index==0){
                     // this.content='播放量: '+this.numToTenThousand(v.listen_num)
                     this.content='播放量: '+this.numToTenThousand(v.listen_num)
@@ -211,29 +306,24 @@
                         // console.log(content)
                 }
                 else if (this.index==3){
-                    /*         debugger
-                             console.log(v)*/
+                    /!*         debugger
+                             console.log(v)*!/
                     // this.content=v.song[0]
                     // +this.numToTenThousand(v.listen_num)
                     this.isRank(v)
                 }
                 else if (this.index==4){
-           /*         debugger
-                    console.log(v)*/
+           /!*         debugger
+                    console.log(v)*!/
                     this.content=v.username
                         // +this.numToTenThousand(v.listen_num)
 
                 }
-                // debugger
-            /*    if (!v.listen_num){
-                    console.log(v)
-                }*/
 
-            },
+            },*/
             //设置播放量数字
             setNumber(v){
                 if (this.index==4){
-                    // debugger
                     this.number=this.numToTenThousand(v.listen_num)
                     // console.log(this.number)
                     return true
@@ -266,35 +356,38 @@
             // this.setWord(this.index)
         },
         computed:{
-            //页数
-            pages () {
-                // debugger
-                const pages = []
-                this.setPage(this.index)
-                //savePage为保留页数,只保留slideList为5倍数的页数
-                const savePage = Math.floor(this.slideList.length/this.p)
-                this.slideList.forEach((item, index) => {
-                    // debugger
-                    //Math.floor() 返回小于或等于一个给定数字的最大整数
-                    const page = Math.floor(index / this.p)
-                    //page是页数,5是每页可完整显示的数据,如果index是5,说明有6条数据,剩下的一条将被放在下一张轮播图中
+/*            setData(){
+                return function (val) {
+                    debugger
+                    console.log(val)
+                    let tempArray = []
+                    tempArray = val.map(item=>{
+                        item.forEach(i=>{
+                            id : i.id
+                            img : i.img
+                            listen_num : i.listen_num
+                            title : i.title
+                            type : i.type
+                            username : i.username
+                        })
+                    })
+                    console.log(tempArray)
+                }
+            },*/
 
-                    // debugger
-                        if (!pages[page]  && page<savePage) {
-                            pages[page] = []
-                        }
-                        if (pages[page]){
-                            pages[page].push(item)
-                        }
-                    //进行判断
-                    //如果page是0,给pages添加一个下标为0的数组,即5条数据
-                    //forEach循环,0-4经过Math.floor后都为0,即page为0
-                    //再把对应的item入栈push到pages[0]里面
-                    //5-9 经过Math.floor后都为1,即page为1
-                    //再把对应的item入栈push到pages[1]里面
-                })
-                return pages
+        },
+        created() {
+
+        },
+        watch:{
+            //监听到传入内容数组,进行分页处理
+            slideList(){
+                // this.setData(this.slideList)
+                this.pages()
             },
+            //页面设置后,监听到页面变化,对页面进行处理
+
+
         }
     }
 
