@@ -1,0 +1,157 @@
+.mv{
+  //border: 1px solid red;
+  //height: 2000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  padding: 55px 0 0 0;
+  //标题
+  .mv-title{
+    //border: 1px solid red;
+    width: 1200px;
+    //区域
+    .title-area-wrap,.title-version-wrap{
+      //border: 1px solid black;
+      width: 100%;
+      height: 40.6px;
+      display: flex;
+      //分类标题 区域,版本
+      .area-tit,.version-tit{
+        //border: 1px solid blue;
+        width: 65px;
+        height: 25.6px;
+      }
+
+    }
+
+  }
+  //内容
+  .mv-content{
+    //border: 1px solid red;
+    width: 1200px;
+    //display: flex;
+    overflow: hidden;
+    .content-wrap{
+      //border: 1px solid black;
+      width: 1220px;
+      display: flex;
+      flex-wrap: wrap;
+      .content{
+        //border: 1px solid black;
+        width: 305px;
+        height: 284.95px;
+        .picture-show{
+          width: 285px;
+          height: 161px;
+          margin-bottom: 20px;
+        }
+        //mv标题
+        .content-title{
+
+        }
+        //mv歌手
+        .content-name{
+          margin: 5px 0 ;
+          a{
+            color: #999999;
+
+          }
+        }
+        .content-more{
+          display: flex;
+          color: #999999;
+          span{
+            padding-right:6px ;
+          }
+          i{
+            padding-right: 10px;
+          }
+
+        }
+      }
+
+    }
+    .paging{
+       margin-top: 0;
+    }
+  }
+  //选中显示
+  .title-select-show{
+    //border: 1px solid red;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    //默认显示
+    .title-select-default{
+      //border: 1px solid red;
+      font-size: 24px;
+      line-height: 58px;
+      float: left;
+    }
+    //选中显示
+    .title-select-wrap{
+      display: flex;
+      .title-select-info{
+        border: 1px solid #c9c9c9;
+        border-radius: 2px;
+        //width: 100px;
+        display: flex;
+        padding: 10px 10px;
+        //line-height: 58px;
+        height: 40px;
+        margin-left:7px ;
+        align-items: center;
+        &:hover{
+          background: #37c27c;
+          color: white;
+          .delete-select{
+            color: white;
+            cursor: pointer;
+          }
+        }
+        .delete-select{
+          font-size: 10px;
+          padding-left:5px ;
+          color: #5a5a5a;
+          :hover{
+            background-color: rgba(225,225,225,.3);
+            border-radius: 12px;
+          }
+        }
+      }
+    }
+
+    //排序
+    .title-select-order{
+      //border: 1px solid red;
+      display: flex;
+      a{
+        height: 38px;
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        color: #31c27c;
+      }
+      .order-recommend{
+        border: 1px solid #c9c9c9;
+        border-right: none;
+        border-radius: 2px 0 0 2px;
+
+      }
+      .order-new{
+        border: 1px solid #c9c9c9;
+        border-left: none;
+        border-radius: 0 2px 2px 0;
+
+      }
+      .select-order{
+        background: #31c27c;
+        color: white;
+        border: none;
+      }
+    }
+  }
+
+}

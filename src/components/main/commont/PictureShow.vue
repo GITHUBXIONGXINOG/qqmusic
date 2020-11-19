@@ -1,14 +1,6 @@
 <template>
     <div class="picture-show"  :style="{'--width':imgWidth,'--height':imgHeight}">
 
-<!--            <img  class="img-info"
-                  :src="imgUrl"
-            >
-            <nav class="img-cover-wrap">
-&lt;!&ndash;                <a href="javascript:;" class="img_cover" >&ndash;&gt;
-                    <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
-&lt;!&ndash;                </a>&ndash;&gt;
-            </nav>-->
         <div class="img-wrap ">
             <img  class="img-info  checked-style"
                   :src="imgUrl"

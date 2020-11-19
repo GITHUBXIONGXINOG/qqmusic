@@ -43,6 +43,7 @@
             <div v-if="activeIndex.category==10000000" class="title-select-default">
                 {{word}}
             </div>
+            <!--显示当前选中-->
             <div v-else class="title-select-info">
                 {{word}}
                 <div class="delete-select" @click="deleteSelect">

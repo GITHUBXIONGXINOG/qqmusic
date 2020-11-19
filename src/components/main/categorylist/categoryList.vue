@@ -1,11 +1,3 @@
-<!--<template>
-    <div class="category-list">
-        <div v-for="item in contentList">
-            {{item}}
-        </div>
-
-    </div>
-</template>-->
 <template>
     <div class="category-list">
         <div class="category-wrap">
