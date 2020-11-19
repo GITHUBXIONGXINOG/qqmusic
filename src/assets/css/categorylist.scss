@@ -234,6 +234,7 @@
           display: flex;
           flex-wrap: wrap;
           justify-content: space-between;
+          //每一个图片内容
           li{
             //border: 1px solid green;
             width: 224px;
@@ -253,6 +254,7 @@
               margin-bottom: 14px;
 
             }
+            //图片悬浮播放按钮
             nav{
               //border: 1px solid red;
               position: absolute;
@@ -279,11 +281,21 @@
                 }
               }
             }
+            //图片信息 标题作者播放量
             div{
               padding-left: 10px;
             }
-
-            .category-name{
+            //图片标题
+            .category-title{
+              //border: 1px solid red;
+              //标题文字
+              a{
+                width: 220px;
+                display: block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              }
 
             }
             .category-singers a,.category-release_time i,.category-listennum{

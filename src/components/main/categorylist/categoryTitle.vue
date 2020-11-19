@@ -75,6 +75,11 @@
 
 <script>
     export default {
+        props:{
+            changePageInfo:{
+                type: Number
+            }
+        },
         data(){
             return{
                 titleListAll:[],//所有标题,包括热门
@@ -357,8 +362,12 @@
         },
 
         watch:{
-
+            changePageInfo(page){
+                this.activeIndex.pageNo=page
+                this.fetchCategory(this.activeIndex)
+            }
         },
+
 
     }
 </script>

@@ -2,9 +2,12 @@
   <div class="category-playlist">
       <category-title
           @contentList="contentList"
+          :changePageInfo="changePageInfo"
       />
       <category-list
           :contentList="contentInfo"
+          @changePage="changePage"
+
       />
   </div>
 </template>
@@ -20,7 +23,8 @@
         },
         data(){
             return{
-                contentInfo:[]
+                contentInfo:[],//内容信息
+                changePageInfo:1,//页码改变信息
             }
         },
         methods:{
@@ -29,8 +33,12 @@
                 // console.log(list)
                 this.contentInfo=list
                 // console.log(this.contentInfo)
+            },
+            changePage(page){
+                this.changePageInfo=page
             }
-        }
+        },
+
 
     }
 </script>

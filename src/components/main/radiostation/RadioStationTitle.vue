@@ -56,57 +56,65 @@
           },
           //滚动事件
           handleScroll(){
-              let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-              let offsetTop = document.querySelector("#station-nav").offsetTop+150
-             // console.log(scrollTop)
-             //  console.log(offsetTop)
-              if (scrollTop>offsetTop){
-                  this.stationNavFixed = true
-                  if (scrollTop<=this.themeTop){
-                      this.activeIndex=0
-                  }else if (scrollTop>this.themeTop&&scrollTop<=this.moodTop){
-                      this.activeIndex=1
-                  }else if (scrollTop>this.moodTop&&scrollTop<=this.scenesTop){
-                      this.activeIndex=2
-                  }else if (scrollTop>this.scenesTop&&scrollTop<=this.genreTop){
-                      this.activeIndex=3
-                  }else if (scrollTop>this.genreTop&&scrollTop<=this.languageTop){
-                      this.activeIndex=4
+              //条件判断 获取到dom元素才执行
+              if (document.querySelector("#station-nav")){
+                  let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+                  let offsetTop = document.querySelector("#station-nav").offsetTop+150
 
-                  }else if (scrollTop>this.languageTop&&scrollTop<=this.crowdTop){
-                      this.activeIndex=5
-
-                  }else if (scrollTop>this.crowdTop&&scrollTop<=this.instrumentTop){
-                      this.activeIndex=6
-
-                  }else if (scrollTop>this.instrumentTop){
-                      this.activeIndex=7
+                  if (scrollTop>offsetTop){
                       this.stationNavFixed = true
-                      this.stationNavEnd = false
-                      if (scrollTop>this.endTop){
-                          this.stationNavFixed = false
-                          this.stationNavEnd = true
+                      if (scrollTop<=this.themeTop){
+                          this.activeIndex=0
+                      }else if (scrollTop>this.themeTop&&scrollTop<=this.moodTop){
+                          this.activeIndex=1
+                      }else if (scrollTop>this.moodTop&&scrollTop<=this.scenesTop){
+                          this.activeIndex=2
+                      }else if (scrollTop>this.scenesTop&&scrollTop<=this.genreTop){
+                          this.activeIndex=3
+                      }else if (scrollTop>this.genreTop&&scrollTop<=this.languageTop){
+                          this.activeIndex=4
+
+                      }else if (scrollTop>this.languageTop&&scrollTop<=this.crowdTop){
+                          this.activeIndex=5
+
+                      }else if (scrollTop>this.crowdTop&&scrollTop<=this.instrumentTop){
+                          this.activeIndex=6
+
+                      }else if (scrollTop>this.instrumentTop){
+                          this.activeIndex=7
+                          this.stationNavFixed = true
+                          this.stationNavEnd = false
+                          if (scrollTop>this.endTop){
+                              this.stationNavFixed = false
+                              this.stationNavEnd = true
+                          }
+
                       }
 
+
+                  }else  if (scrollTop<=offsetTop){
+                      this.stationNavFixed = false
                   }
-
-
-              }else  if (scrollTop<=offsetTop){
-                  this.stationNavFixed = false
               }
+
+
+
           },
           //设置各个分类的top位置
           setTitleTop(){
-              //为了滚动到半页左右触发条件,修改高度减少400,否则原先该元素头部到顶了才会触发
-              this.hotTop = document.querySelector('#hot').offsetTop
-              this.themeTop = document.querySelector('#theme').offsetTop-400
-              this.moodTop = document.querySelector('#mood').offsetTop-400
-              this.scenesTop = document.querySelector('#scenes').offsetTop-400
-              this.genreTop = document.querySelector('#genre').offsetTop-400
-              this.languageTop = document.querySelector('#language').offsetTop-400
-              this.crowdTop = document.querySelector('#crowd').offsetTop-400
-              this.instrumentTop = document.querySelector('#instrument').offsetTop-400
-              this.endTop = this.instrumentTop+750
+              if (document.querySelector('#hot')){
+                  //为了滚动到半页左右触发条件,修改高度减少400,否则原先该元素头部到顶了才会触发
+                  this.hotTop = document.querySelector('#hot').offsetTop
+                  this.themeTop = document.querySelector('#theme').offsetTop-400
+                  this.moodTop = document.querySelector('#mood').offsetTop-400
+                  this.scenesTop = document.querySelector('#scenes').offsetTop-400
+                  this.genreTop = document.querySelector('#genre').offsetTop-400
+                  this.languageTop = document.querySelector('#language').offsetTop-400
+                  this.crowdTop = document.querySelector('#crowd').offsetTop-400
+                  this.instrumentTop = document.querySelector('#instrument').offsetTop-400
+                  this.endTop = this.instrumentTop+750
+              }
+
           },
           //标题点击事件
           selectCurrentTitle(index){
