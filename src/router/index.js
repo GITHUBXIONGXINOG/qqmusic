@@ -15,7 +15,7 @@ import RadioStation from './musichall/radiostation'
 import Mv from './musichall/mv/'
 import DigitalAlbum from './musichall/digitalablum'
 import Ticketing from './musichall/ticketing'
-
+import Search from '@/views/musicHall/search/Search'
 
 export default new VueRouter({
   mode:'history',
@@ -35,7 +35,9 @@ export default new VueRouter({
           RadioStation,
           Mv,
           DigitalAlbum,
-          Ticketing
+          // Ticketing,
+          { path: '/search',component: Search},
+
       ]
     },
 

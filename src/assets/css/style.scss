@@ -117,7 +117,7 @@ i{
   position: relative;
   left: 40px;
   top: 25px;
-
+  z-index: 9;
 }
 
 //搜索框
@@ -129,8 +129,130 @@ i{
   border: none;
   //padding: 0 0 0 10px;
   margin: 0  50px 0  10px ;
-
+  z-index: 2;
+  cursor:text;
 }
+//搜索框面报
+.mod_header .searchInput .searchPanel{
+  border: 1px solid #c9c9c9;
+  border-top: none;
+  position: absolute;
+  top: 37px;
+  left: -1px;
+  width: 220px;
+  //height: 238px;
+  z-index: 1;
+  color: black;
+  background: white;
+  font-size: 14px;
+  //热搜面报ul
+  .hotSearch-ul{
+    //border: 1px solid red;
+    //margin: 15px 0;
+    //热搜li
+    .hotSearch-li{
+      //border: 1px solid black;
+      margin: 10px 0;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px 0 0;
+      cursor: pointer;
+      &:hover{
+        background: #31c27c;
+        i,a,span{
+          color: white;
+        }
+      }
+      //热搜排名
+      .hotSearch-rank{
+        color: red;
+        margin: 10px;
+      }
+      //热搜名字
+      .hotSearch-name{
+        //border: 1px solid black;
+        flex: 1;
+      }
+      //热搜量
+      .hotSearch-number{
+          color: #999999;
+      }
+
+    }
+
+
+  }
+  //搜索历史
+  .searchHistory{
+    padding: 0 0px 8px ;
+    .history-title{
+      color: #999999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      .content{
+
+      }
+    }
+    //历史列表
+    .history-list{
+      //border: 1px solid red;
+      cursor: pointer;
+      padding:0 6px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      //padding: 0px 10px;
+      &:hover{
+        background: #31c27c;
+       a,span{
+         color: white;
+       }
+      }
+      //历史记录列表文字
+      a{
+        height: 30px;
+        //padding: 10px 10px;
+        //margin: 20px 0;
+        //display: flex;
+        line-height: 30px;
+        padding: 0 0 0 10px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+      }
+      //删除
+      span{
+          font-size: 14px;
+          //line-height: 30px;
+        width: 22px;
+        height: 22px;
+        //border: 1px solid red;
+        cursor:pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover{
+          background: rgba(0,0,0,.05);
+          border-radius:50% ;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
 //提示文字样式
 input::-webkit-input-placeholder{
   font-size: 14px;

@@ -11,10 +11,53 @@
               </div>
               <div class="searchInput">
                   <div class="searchAndIcon">
-                      <input type="text" placeholder="搜索音乐、MV、歌单、用户">
-                      <a href="javascript:;" class="iconfont searchIcon">
+                      <input type="text" placeholder="搜索音乐、MV、歌单、用户"
+                        @focus="isShowHot=true"
+                        @blur="isShowHot=false"
+                        @click="fetchApi()"
+                        v-model="inputSearch"
+                        @keyup.enter="searchSong(inputSearch)"
+                      >
+                      <!--搜索按钮-->
+                      <a href="javascript:;" class="iconfont searchIcon"
+                         @click="searchSong(inputSearch)"
+                        >
                           <i></i>
                       </a>
+
+                  </div>
+                  <div class="searchPanel" v-show="isShowHot">
+                      <!--热搜-->
+                      <ul class="hotSearch-ul">
+                          <li v-for="(item,index) in hotSearch" v-show="index<5" :key="index"
+                              class="hotSearch-li"
+                              @click="searchSong(item.name)"
+                          >
+
+                              <i class="hotSearch-rank">{{index+1}}</i>
+                              <span class="hotSearch-name">
+                                  <a href="javascript:;">{{item.name}}</a>
+                              </span>
+                              <span class="hotSearch-number">
+                                   {{item.number}}
+                              </span>
+
+
+                          </li>
+                      </ul>
+                      <!--搜索历史-->
+                      <div class="searchHistory">
+                          <nav class="history-title">
+                              <i class="content">搜索历史</i>
+                              <a href="javascript:;" class="iconfont icon-lajixiangzizhi"
+                                @click="deleteAll"
+                              ></a>
+                          </nav>
+                          <div v-for="(item,index) in searchHistory" :key="index" class="history-list">
+                              <a href="javascript:;">{{item}}</a>
+                              <span class="iconfont icon-cuowu" @click="deleteOne(index)"></span>
+                          </div>
+                      </div>
                   </div>
               </div>
               <div class="userSet">
@@ -88,7 +131,7 @@ export default {
         { path:'/radiostation',name:'电台'},
         { path:'/mv',name:'MV'},
         { path:'/digitalalbum',name:'数字专辑'},
-        { path:'/ticketing',name:'票务'},
+        // { path:'/ticketing',name:'票务'},
       ],
         selectBox:[
             '开通vip',
@@ -104,8 +147,10 @@ export default {
                 '充值饭票'
             ]
         ],
-
-
+        isShowHot:false,//展示热搜词
+        hotSearch:[],//热搜词列表
+        inputSearch:'',//搜索
+        searchHistory:[],//搜索历史
     }
   },
   methods:{
@@ -125,14 +170,73 @@ export default {
         return true
       }
       return false
-    }
+    },
+      async fetchApi(){
+        let urlHot =  '/api/search/hot'
+           const resHot = await this.$http.get(urlHot)
+          // debugger
+          // console.log(resHot.data.data)
+          this.hotSearch = resHot.data.data.map(item=>({
+              name:item.k,
+              number:this.numToTenThousand(item.n)
+          }))
+          // console.log(this.hotSearch)
+
+      },
+      //转换位数
+      numToTenThousand(num){
+          if (num < 10000){
+              return num
+          }
+          let res = num / 10000
+          //  toFixed 四舍五入 保留指定小数位数
+          return res.toFixed(1)+'万'
+      },
+      //搜索
+      searchSong(item){
+        // debugger
+        //通过传入的数据作为输入数据
+        if ( this.inputSearch!=item){
+            // console.log(item)
+            this.inputSearch=item
+        }
+        //通过双向数据绑定inputSearch获取搜索数据
+        // 正则表达式,存在的历史不再次记录
+          const reg = new RegExp(`^${this.inputSearch}$`)
+          let flag = true;
+          this.searchHistory.forEach(item=>{
+              if (item.match(reg)){
+                 flag = false
+              }
+          })
+          if (flag&&this.inputSearch){
+              this.searchHistory.push(this.inputSearch)
+          }
+          //只保留最新的5个记录
+          if ( this.searchHistory.length>5){
+              this.deleteOne(0)
+          }
+      },
+      //删除一项
+      deleteOne(index){
+        this.searchHistory.splice(index,1)
+      },
+      //删除所有历史记录
+      deleteAll(){
+        this.searchHistory=[]
+      }
   },
   created() {
 
   },
 
   components:{
-  }
+  },
+    watch:{
+/*        inputSearch(val){
+
+        }*/
+    }
 
 
 }
