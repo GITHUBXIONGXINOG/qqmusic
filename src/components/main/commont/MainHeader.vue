@@ -52,8 +52,10 @@
                                 @click="deleteAll"
                               ></a>
                           </nav>
-                          <div v-for="(item,index) in searchHistory" :key="index" class="history-list">
-                              <a href="javascript:;">{{item}}</a>
+                          <div v-for="(item,index) in searchHistory" :key="index" class="history-list"
+                               @click="searchSong(item)"
+                          >
+                              <i>{{item}}</i>
                               <span class="iconfont icon-cuowu" @click="deleteOne(index)"></span>
                           </div>
                       </div>
@@ -215,6 +217,14 @@ export default {
           if ( this.searchHistory.length>5){
               this.deleteOne(0)
           }
+          debugger
+         this.isShowHot=false
+          this.$router.push({
+              path:"/search",
+              query:{
+                  inputSearch: this.inputSearch
+              }
+          })
       },
       //删除一项
       deleteOne(index){

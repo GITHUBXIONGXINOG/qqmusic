@@ -36,11 +36,21 @@ export default new VueRouter({
           Mv,
           DigitalAlbum,
           // Ticketing,
-          { path: '/search',component: Search},
+          {
+              path: '/search',
+              name: 'search',
+              component: Search
+          },
 
       ]
     },
 
   ]
+
 })
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
 
