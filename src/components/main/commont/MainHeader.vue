@@ -9,18 +9,17 @@
               <div v-for="(item,index) in titleAll" :key="index" class="title">
                   <a href="javascript:;">{{item}}</a>
               </div>
-              <div class="searchInput">
+              <div class="searchInput" id="searchInput">
                   <div class="searchAndIcon">
                       <input type="text" placeholder="搜索音乐、MV、歌单、用户"
                         @focus="isShowHot=true"
-                        @blur="isShowHot=false"
-                        @click="fetchApi()"
+                        @click.stop="fetchApi()"
                         v-model="inputSearch"
                         @keyup.enter="searchSong(inputSearch)"
                       >
                       <!--搜索按钮-->
                       <a href="javascript:;" class="iconfont searchIcon"
-                         @click="searchSong(inputSearch)"
+                         @mousedown.stop="searchSong(inputSearch)"
                         >
                           <i></i>
                       </a>
@@ -31,7 +30,7 @@
                       <ul class="hotSearch-ul">
                           <li v-for="(item,index) in hotSearch" v-show="index<5" :key="index"
                               class="hotSearch-li"
-                              @click="searchSong(item.name)"
+                              @click.stop="searchSong(item.name)"
                           >
 
                               <i class="hotSearch-rank">{{index+1}}</i>
@@ -236,6 +235,16 @@ export default {
 /*        inputSearch(val){
 
         }*/
+    },
+    mounted() {
+      document.addEventListener('click',e=>{
+            const searchBox = document.getElementById('searchInput')
+          if (searchBox){
+              if (!searchBox.contains(e.target)){
+                  this.isShowHot=false
+              }
+          }
+      })
     }
 
 
