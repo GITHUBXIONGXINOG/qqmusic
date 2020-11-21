@@ -455,6 +455,7 @@
     .imgList-#{$i}{
         transform: translateX((1200px * $i)-1200px);
         //opacity: 0;
+        z-index: -3;
     }
 }
 

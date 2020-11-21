@@ -1,12 +1,21 @@
 <template>
     <div class="search">
-        Search.vue
-        {{inputSearch}}
+<!--        {{inputSearch}}-->
+        <search-title />
+        <search-content />
     </div>
 </template>
 
 <script>
+    import '@/assets/css/search.scss'
+    import SearchTitle from '@/components/main/search/SearchTitle'
+    import SearchContent from '@/components/main/search/SearchContent'
+
     export default {
+        components:{
+            SearchTitle,
+            SearchContent
+        },
         data(){
             return{
                 inputSearch:'',//搜索词

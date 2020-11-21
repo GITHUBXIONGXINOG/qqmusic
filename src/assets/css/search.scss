@@ -1,0 +1,26 @@
+.search{
+  border: 1px solid red;
+  height: 1200px;
+
+  //搜索标题
+  .search-title{
+    border: 1px solid red;
+    background: url("../img/bg_search.jpg");
+    //background-size:  1526.4px 247px;
+    height: 247px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    //搜索组件
+    .search-bar{
+
+    }
+
+
+  }
+  //搜索内容
+  .search-content{
+    border: 1px solid red;
+
+  }
+}

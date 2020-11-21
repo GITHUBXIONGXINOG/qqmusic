@@ -217,7 +217,7 @@ export default {
           if ( this.searchHistory.length>5){
               this.deleteOne(0)
           }
-          debugger
+          // debugger
          this.isShowHot=false
           this.$router.push({
               path:"/search",
