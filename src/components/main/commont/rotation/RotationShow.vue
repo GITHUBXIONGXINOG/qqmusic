@@ -8,37 +8,35 @@
                  v-for="(page,indexPage) in pageAll" :key="indexPage"
                  v-show="n==indexPage"
             >
-                <div class="slide-img  " v-for="(v,i) in page" :key="i"
-                     :class="`slide-img-${i}`"
-                >
-                    <!--图片内容和悬浮播放按钮-->
-                    <div class="img-wrap ">
-                        <img  class="img-info  checkedSyle"
-                              :src="v.img"
-                        >
-                        <nav>
-                              <a href="javascript:;" class="img_cover_wrap" >
-                                 <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
-                              </a>
-                        </nav>
-                    </div>
+                <div v-if="index!=3">
+                    <rotation-pic
+                      :set-img-list="slideList"
+                      :set-page-size="p"
+                      :numberPart="index"
+                    />
+                </div>
 
-                    <!--图片标题内容-->
-                    <div class="text-info" >
-                        <a href="javascript:;">{{v.title}}</a>
 
-                        <!--歌单推荐-->
-                        <div v-if="index==0">
-                            <span>播放量:</span>
-                            {{numToTenThousand(v.listen_num)}}
-                        </div>
-                        <!--新歌/碟首发-->
-                        <div v-else-if="index==1||index==2">
-                            {{v.singer}}
+                <div v-if="index==3" class="rank">
+                    <div class="slide-img  " v-for="(v,i) in page" :key="i"
+                         :class="`slide-img-${i}`"
+                    >
+                        <!--图片内容和悬浮播放按钮-->
+                        <div class="img-wrap ">
+                            <img  class="img-info  checkedSyle"
+                                  :src="v.img"
+                            >
+                            <nav>
+                                <a href="javascript:;" class="img_cover_wrap" >
+                                    <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
+                                </a>
+                            </nav>
                         </div>
 
-                        <!--排行榜-->
-                        <div v-else-if="index==3">
+                        <!--图片标题内容-->
+                        <div class="text-info" >
+                            <a href="javascript:;">{{v.title}}</a>
+                            <!--排行榜-->
                             <div class="isRank">
                                 <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
                                     <div class="rank-title-wrap">
@@ -59,73 +57,108 @@
                                       : v.song[p].singerName}}
                                     </a>
                                 </div>
-
-                            </div>
-                        </div>
-
-                        <!--mv-->
-                        <div v-else>
-                            <a href="javascript:;">{{v.singer}}</a>
-                            <!--播放图标-->
-                            <span v-if="index==4" class="iconfont">&#xe6c2;&nbsp;</span>
-                            {{numToTenThousand(v.listen_num)}}
-                        </div>
-<!--                                                {{v}}-->
-
-                        <!--                        <a href="javascript:;" :setTitle="setTitle(v)">{{title}}</a>-->
-               <!--         <div >
-                            {{content}}
-                            &lt;!&ndash;如果是排行榜&ndash;&gt;
-                            <div v-if="v.song" class="isRank">
-                                <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
-                                    <div class="rank-title-wrap">
-                                        <span class="rank-number">
-                                            {{v.song[p].rank}}
-                                        </span>
-                                        <a class="rank-title" href="javascript:;">
-&lt;!&ndash;                                            {{v.song[p].title}}&ndash;&gt;
-                                            {{v.song[p].title.length>10
-                                            ? v.song[p].title.slice(0,9)+'...'
-                                            : v.song[p].title}}
-                                        </a>
-                                    </div>
-                                    &lt;!&ndash;隐藏超出的文字&ndash;&gt;
-                                        <a class="rank-singerName" href="javascript:;" >
-                                        {{v.song[p].singerName.length>18
-                                            ? v.song[p].singerName.slice(0,17)+'...'
-                                            : v.song[p].singerName}}
-                                        </a>
-                                </div>
-
                             </div>
 
-                        </div>-->
-                        <!--播放图标-->
-<!--                        <span v-if="index==4" class="iconfont">&#xe6c2;&nbsp;{{number}}</span>-->
+
+
+                        </div>
 
                     </div>
 
                 </div>
 
+
+
+
+                <!--
+
+                                <div class="slide-img  " v-for="(v,i) in page" :key="i"
+                                     :class="`slide-img-${i}`"
+                                >
+                                    &lt;!&ndash;图片内容和悬浮播放按钮&ndash;&gt;
+                                    <div class="img-wrap ">
+                                        <img  class="img-info  checkedSyle"
+                                              :src="v.img"
+                                        >
+                                        <nav>
+                                              <a href="javascript:;" class="img_cover_wrap" >
+                                                 <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
+                                              </a>
+                                        </nav>
+                                    </div>
+
+                                    &lt;!&ndash;图片标题内容&ndash;&gt;
+                                    <div class="text-info" >
+                                        <a href="javascript:;">{{v.title}}</a>
+
+                                        &lt;!&ndash;歌单推荐&ndash;&gt;
+                                        <div v-if="index==0">
+                                            <span>播放量:</span>
+                                            {{numToTenThousand(v.listen_num)}}
+                                        </div>
+                                        &lt;!&ndash;新歌/碟首发&ndash;&gt;
+                                        <div v-else-if="index==1||index==2">
+                                            {{v.singer}}
+                                        </div>
+
+                                        &lt;!&ndash;排行榜&ndash;&gt;
+                                        <div v-else-if="index==3">
+                                            <div class="isRank">
+                                                <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
+                                                    <div class="rank-title-wrap">
+                                                        <span class="rank-number">
+                                                            {{v.song[p].rank}}
+                                                        </span>
+                                                        <a class="rank-title" href="javascript:;">
+                                                            &lt;!&ndash;                                            {{v.song[p].title}}&ndash;&gt;
+                                                            {{v.song[p].title.length>10
+                                                          ? v.song[p].title.slice(0,9)+'...'
+                                                          : v.song[p].title}}
+                                                        </a>
+                                                    </div>
+                                                    &lt;!&ndash;隐藏超出的文字&ndash;&gt;
+                                                    <a class="rank-singerName" href="javascript:;" >
+                                                        {{v.song[p].singerName.length>18
+                                                      ? v.song[p].singerName.slice(0,17)+'...'
+                                                      : v.song[p].singerName}}
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        &lt;!&ndash;mv&ndash;&gt;
+                                        <div v-else>
+                                            <a href="javascript:;">{{v.singer}}</a>
+                                            &lt;!&ndash;播放图标&ndash;&gt;
+                                            <span v-if="index==4" class="iconfont">&#xe6c2;&nbsp;</span>
+                                            {{numToTenThousand(v.listen_num)}}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                -->
+
             </div>
 
 
-
-            <!--后退按钮-->
+<!--
+            &lt;!&ndash;后退按钮&ndash;&gt;
             <div class="up-page checkedSyle"
                  @click="clickPage('up')"
                  v-if="pageAll.length>1"
             >
                 <span class="iconfont icon-jiantou3"></span>
             </div>
-            <!--前进按钮-->
+            &lt;!&ndash;前进按钮&ndash;&gt;
             <div class="next-page checkedSyle"
                  @click="clickPage('next')"
                  v-if="pageAll.length>1"
             >
                 <span class="iconfont icon-jiantouyouxi"></span>
             </div>
-            <!--导航按钮-->
+            &lt;!&ndash;导航按钮&ndash;&gt;
             <ul class="slide-index"
                 v-if="pageAll.length>1"
             >
@@ -140,12 +173,14 @@
                     </svg>
                 </li>
             </ul>
+            -->
         </div>
 
     </div>
 </template>
 
 <script>
+    import RotationPic from "@/components/main/commont/rotation/RotationPic";
 
     export default {
        /*
@@ -177,23 +212,7 @@
             }
         },
         methods:{
-/*            //数据处理
-            setData(val){
-                // console.log(val)
-                let saveVal = []
-                let tempVal = []
-               /!* tempVal = val.map(item=>{
-                    id : item.id
-                    img : item.img
-                    listen_num : item.listen_num
-                    title : item.title
-                    type : item.type
-                    username : item.username
-                })*!/
 
-
-                // console.log(val)
-            },*/
             //页数
             pages () {
                 // debugger
@@ -272,55 +291,9 @@
                 }
                  },
 
-            //设置标题
-            setTitle(v){
-                switch (this.index){
-                    case 0:
-                        this.subtitle = null
-                        break
-                    case 1:
-                    case 2:
-                        this.subtitle = v.subtitle
-                }
 
-                if (v.subtitle){
-                    // this.title = v.title
-                    console.log(this.subtitle)
-                }
 
-               /* else {
-                    this.title=v.title+this.subtitle
-                }
-*/
-                // console.log(v)
-            },
 
-            //设置文字
-          /*  setContent(v){
-                if (this.index==0){
-                    // this.content='播放量: '+this.numToTenThousand(v.listen_num)
-                    this.content='播放量: '+this.numToTenThousand(v.listen_num)
-                }
-                else if (this.index==1 || this.index==2){
-                    this.content=v.username
-                        // console.log(content)
-                }
-                else if (this.index==3){
-                    /!*         debugger
-                             console.log(v)*!/
-                    // this.content=v.song[0]
-                    // +this.numToTenThousand(v.listen_num)
-                    this.isRank(v)
-                }
-                else if (this.index==4){
-           /!*         debugger
-                    console.log(v)*!/
-                    this.content=v.username
-                        // +this.numToTenThousand(v.listen_num)
-
-                }
-
-            },*/
             //设置播放量数字
             setNumber(v){
                 if (this.index==4){
@@ -356,24 +329,7 @@
             // this.setWord(this.index)
         },
         computed:{
-/*            setData(){
-                return function (val) {
-                    debugger
-                    console.log(val)
-                    let tempArray = []
-                    tempArray = val.map(item=>{
-                        item.forEach(i=>{
-                            id : i.id
-                            img : i.img
-                            listen_num : i.listen_num
-                            title : i.title
-                            type : i.type
-                            username : i.username
-                        })
-                    })
-                    console.log(tempArray)
-                }
-            },*/
+
 
         },
         created() {
@@ -388,6 +344,9 @@
             //页面设置后,监听到页面变化,对页面进行处理
 
 
+        },
+        components:{
+            RotationPic
         }
     }
 

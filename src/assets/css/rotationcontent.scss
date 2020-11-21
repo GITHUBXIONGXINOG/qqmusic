@@ -35,6 +35,22 @@
     }
 
   }
+  .rotation-pic{
+    //展示窗口
+    .imgShowStation{
+      //轮播图外框
+      .imgList-wrap{
+        justify-content: space-between;
+        //轮播图内框
+        //justify-content: normal;
+        .imgList-inner{
+          //图片
+          .picture-show{
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -108,7 +124,42 @@
     }
   }
   .slide-index{
-    //bottom: 0;
+
+  }
+  .rotation-pic{
+    //border: 1px solid red;
+    //展示窗口
+    .imgShowStation{
+      display: flex;
+      //轮播图外框
+      .imgList-wrap{
+        //border: 1px solid black;
+        top: 10px;
+        height: 350px;
+        flex-wrap: wrap;
+        //justify-content: space-between;
+        //轮播图内框
+        //justify-content: normal;
+        .imgList-inner{
+          //border: 1px solid red;
+          width: 399px;
+          height: 111px;
+          //flex: 0 0 410px;
+          display: flex;
+          align-items: center;
+          //图片
+          .picture-show{
+            width:86px ;
+            height: 86px;
+          }
+          //文字
+          .text-info{
+            margin-left:15px ;
+            width: 250px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -190,6 +241,41 @@
   .slide-index{
     //border: 1px solid red;
 
+  }
+  .rotation-pic{
+    //border: 1px solid red;
+    height: 620px;
+    //展示窗口
+    .imgShowStation{
+      display: flex;
+      //轮播图外框
+      .imgList-wrap{
+        //border: 1px solid black;
+        top: 10px;
+        height: 620px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        //轮播图内框
+        //justify-content: normal;
+        .imgList-inner{
+
+          //border: 1px solid blue;
+          width: 224px;
+          height: 307px;
+          //height: 111px;
+          //flex: 0 0 410px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+
+          //图片
+          .picture-show{
+            width:224px ;
+            height: 224px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -321,7 +407,12 @@
         }
       }
     }
-
+    .rank{
+      //border: 1px solid red;
+      display: flex;
+      width: 1200px;
+      justify-content: space-between;
+    }
   }
   //排行榜背景颜色
   .slide-img-0{
@@ -432,13 +523,55 @@
 
     }
   }
-  .up-page{
+  .rotation-pic{
     //border: 1px solid red;
-    //top: 100px!important;
+    height: 620px;
+    //展示窗口
+    .imgShowStation{
+      display: flex;
+      //轮播图外框
+      .imgList-wrap{
+        //border: 1px solid black;
+        top: 80px;
+        //height: 620px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        //轮播图内框
+        //justify-content: normal;
+        .imgList-inner{
 
-  }
-  .slide-index{
-    //border: 1px solid red;
+          //border: 1px solid blue;
+          width: 224px;
+          height: 231px;
+          //height: 111px;
+          //flex: 0 0 410px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
 
+          //图片
+          .picture-show{
+            width:224px ;
+            height: 126.6px;
+          }
+          //文字
+          .text-info{
+            >div{
+              //display: flex;
+              //flex-direction: column;
+              height: 20px;
+              a{
+                width: 100%;
+                color: #999999;
+              }
+              span{
+                //width: 100%;
+                bottom: 0;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
