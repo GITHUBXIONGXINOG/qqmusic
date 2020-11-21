@@ -120,6 +120,15 @@ i{
   z-index: 9;
 }
 
+.main_header_wrap{
+  .search-bar{
+    width: 179px;
+    height: 36px;
+    z-index: 5;
+  }
+}
+
+
 //搜索框
 .mod_header .searchInput input{
   position: absolute;
@@ -141,7 +150,6 @@ i{
   left: -1px;
   width: 220px;
   //height: 238px;
-  z-index: 1;
   color: black;
   background: white;
   font-size: 14px;

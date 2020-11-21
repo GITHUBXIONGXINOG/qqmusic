@@ -49,7 +49,6 @@
                                    {{item.number}}
                               </span>
 
-
                 </li>
             </ul>
             <!--搜索历史-->
@@ -73,6 +72,11 @@
 
 <script>
     export default {
+        props:{
+            setSearchWord:{
+                type: String
+            }
+        },
         data(){
           return{
               isShowHot:false,//展示热搜词
@@ -105,7 +109,12 @@
                     name:item.k,
                     number:this.numToTenThousand(item.n)
                 }))
+                //只保留前5项
+                this.hotSearch =  this.hotSearch.slice(0,5)
                 // console.log(this.hotSearch)
+
+                //派发事件
+                this.$emit('getHotSearch', this.hotSearch)
 
             },
             //转换位数
@@ -119,6 +128,8 @@
             },
             //搜索
             searchSong(item){
+                //未输入不跳转
+                if (!item) return false
                 // debugger
                 //通过传入的数据作为输入数据
                 if ( this.inputSearch!=item){
@@ -182,6 +193,9 @@
 
             },
         },
+        created() {
+            this.fetchApi()
+        },
         mounted() {
             document.addEventListener('click',e=>{
                 const searchBox = document.getElementById('searchInput')
@@ -193,6 +207,17 @@
             })
             //滚动监听事件
             document.addEventListener('scroll',this.handleScroll)
+        },
+        watch:{
+            // setSearchWord(val){
+            //     this.searchSong(val)
+            // }
+            setSearchWord:{
+                handler:function (val, oldVal) {
+                    this.searchSong(val)
+                }
+            },
+            deep:true
         },
         destroyed () {
             //离开页面移除监听事件
@@ -214,7 +239,7 @@
             width: 100%;
             height: 100%;
             position: relative;
-            z-index: 10;
+            z-index: 2;
             transition: width .6s;
 
             //搜索框
@@ -252,7 +277,7 @@
             border: 1px solid #c9c9c9;
             border-top: none;
             position: absolute;
-            top: 49px;
+            //top: 49px;
             //left: -1px;
             width: 100%;
             //width: 220px;

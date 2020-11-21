@@ -195,6 +195,7 @@ export default {
       },
       //搜索
       searchSong(item){
+        if (!item) return false
         // debugger
         //通过传入的数据作为输入数据
         if ( this.inputSearch!=item){

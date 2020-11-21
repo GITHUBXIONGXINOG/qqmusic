@@ -1,8 +1,11 @@
 <template>
     <div class="search">
-<!--        {{inputSearch}}-->
-        <search-title />
-        <search-content />
+        <search-title
+
+        />
+        <search-content
+            :setSearchWord="inputSearch"
+        />
     </div>
 </template>
 
@@ -30,7 +33,9 @@
 
                 if (this.$route.query)
                    this.inputSearch = this.$route.query.inputSearch
+
             },
+
 
 
         },
@@ -41,12 +46,15 @@
                     // debugger
                     if (val.path=='/search'){
                         this.inputSearch = val.query.inputSearch
-                        console.log(  this.inputSearch )
+                        // console.log(  this.inputSearch )
                     }
                 },
                 // 深度观察监听
                 deep: true
-            }
+            },
+
+
+
 
         }
     }

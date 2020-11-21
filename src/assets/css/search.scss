@@ -1,26 +1,227 @@
 .search{
-  border: 1px solid red;
-  height: 1200px;
-
+  //border: 1px solid red;
+  //height: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 50px 0;
   //搜索标题
   .search-title{
-    border: 1px solid red;
+    //border: 1px solid red;
     background: url("../img/bg_search.jpg");
     //background-size:  1526.4px 247px;
+    width: 100%;
     height: 247px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     //搜索组件
     .search-bar{
-
+        margin: 0 0 20px 0;
     }
+    //热门搜索
+    .hotSearch{
+      //border: 1px solid red;
 
+      display: flex;
+      color: white;
+      .hotSearch-title{
+          margin: 0 13px 0 0 ;
+      }
+      .hotSearch-ul{
+
+        display: flex;
+        flex-wrap: nowrap;
+        li{
+          margin: 0 20px 0 0 ;
+          cursor:pointer;
+        }
+      }
+    }
 
   }
   //搜索内容
   .search-content{
     border: 1px solid red;
+    width: 1200px;
+    //种类
+    .search-type-ul{
+      display: flex;
+      margin: 20px 0 0 0;
+      li{
+        //border: 1px solid red;
+        //padding: 0 10px;
+        margin: 0 52px 0 0;
+      }
+      //选中样式
+      .selectType{
+        a{
+          color: #31c27c;
+
+        }
+      }
+    }
+    //用户操作
+    .userOpera{
+      //border: 1px solid red;
+      width: 100%;
+      height: 38px;
+      display: flex;
+      margin: 30px 0 20px;
+      a{
+        border: 1px solid #ddd;
+        padding: 0px 23px;
+        margin-right: 6px;
+        background: white;
+        border-radius: 2px;
+        line-height: 38px;
+        cursor: pointer;
+        &:hover{
+          background-color: #ededed;
+          color: #000;
+        }
+      }
+
+    }
+
+    //内容标题
+ /*   .song-label{
+      display: flex;
+      //border: 1px solid red;
+      width: 100%;
+      height: 50px;
+      background: #f7f7f7;
+      padding: 0 72px 0 20px;
+      li{
+        //border: 1px solid red;
+        line-height: 50px;
+        color: #999999;
+        width: 100%;
+        &:first-child{
+          //border: 1px solid red;
+          width: 504.5px;
+        }
+        &:nth-child(2),&:nth-child(3){
+          //border: 1px solid red;
+          width: 270px;
+          padding-left: 15px;
+        }
+        &:nth-child(4){
+          //border: 1px solid red;
+          width: 50px;
+          padding-left: 15px;
+
+        }
+      }
+    }
+*/
+    //内容
+    .content-info{
+      //border: 1px solid red;
+      font-size: 14px;
+      .content-info-ul{
+        //border: 1px solid red;
+        height: 50px;
+        &:nth-child(odd){
+          background: white;
+        }
+        &:nth-child(even){
+          background: #f7f7f7;
+        }
+
+        .content-info-li{
+          //border: 1px solid red;
+          height: 100%;
+          display: flex;
+          //align-items: center;
+          padding: 0 30px 0 20px;
+
+          //歌曲信息
+          .song-title-wrap{
+            //flex: 1;
+            width: 502px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            //歌曲名字
+            .song-title{
+              //border: 1px solid red;
+              margin: 0 5px 0 0 ;
+            }
+            .song-isonly{
+              color: #31c27c;
+              //border: 1px solid red;
+              margin: 0 3px;
+            }
+            .song-ismv{
+              color: #31c27c;
+              font-size: 30px;
+              top: 10px;
+              //border: 1px solid red;
+
+            }
+            //用户操作
+            .song-operating{
+              //border: 1px solid red;
+              display: flex;
+              position: absolute;
+              right: 10px;
+              background: transparent;
+              & :hover{
+                color: #3fc785;
+                border-color: #3fc785;
+                cursor: pointer;
+
+              }
+              li{
+                width: 36px;
+                height: 36px;
+                border-radius: 36px;
+                border: 1px solid #cecece;
+                color: #a2a2a2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 0 5px;
+
+              }
+
+            }
+          }
+
+          //歌手名字专辑
+          .content-singerName,.content-albumname{
+            //border: 1px solid red;
+            width: 269.5px;
+            padding-left: 15px;
+            line-height: 50px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          .content-singerName{
+            a{
+              margin: 0 2px;
+            }
+          }
+
+          //时长
+          .content-time{
+            //border: 1px solid red;
+            width: 50px;
+            padding-left: 15px;
+            color: #999999;
+            //margin: 0 10px 0;
+          }
+        }
+      }
+      //高亮文本
+      .c_tx_highlight{
+        color: #31c27c;
+      }
+    }
 
   }
 }

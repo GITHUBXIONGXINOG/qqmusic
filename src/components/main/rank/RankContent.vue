@@ -15,6 +15,7 @@
                     </div>
                 </div>
             </nav>
+            <!--用户操作按钮-->
             <ul class="userOpera">
                 <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index">
                     <span :class="['iconfont ',`${iconList[index]}`]"></span>
@@ -37,6 +38,7 @@
                 <ul v-for="(item,index) in storageContent" :key="index" class="rank-info-ul" >
                     <li class="rank-info-li">
                         <i class="rank-num" :class="{'rank-num-top':index<3}">{{item.rank}}</i>
+                        <!--输出排名-->
                         <span class="rank-value">
                             <i :class="['iconfont',`${rankInfo(item.rankValue)}`]"></i>
                             <i>{{item.rankValue}}</i>
@@ -83,29 +85,29 @@
                 storageContent:[],
                 ruleActive:false,
                 ruleMsg:'',
-                userOperating:['播放全部','添加到','下载','批量操作','评论'],
+                userOperating:['播放全部','添加到','下载','批量操作','评论'],//用户操作
                 iconList:[
                     'icon-bofang2',
                     'icon-jiatianjiakuangxuanduoxuan-8',
                     'icon-xiazai',
                     'icon-piliangxiugai',
                     'icon-pinglun'
-                ],
+                ],//操作对应的图标
                 contentNav:['歌曲','歌手','时长'],
                 operatingList:[
                     'bofang2',
                     'jia',
                     'xiazai',
                     'fenxiang'
-                ],
+                ],//用户歌曲操作图标
                 userOperaUrl:[
                     'javascript:;',
                     'javascript:;',
                     'javascript:;',
                     'javascript:;',
                     '#rank-comment',
-                ],
-                songOperatingShow:'',
+                ],//操作对应的链接
+                songOperatingShow:'',//显示操作标识
 
             }
         },
