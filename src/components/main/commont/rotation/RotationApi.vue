@@ -87,7 +87,8 @@ export default {
                     title:item.title,
                     singer:item.singer[0].name,
                     // listen_num:item.listen_num,
-                    type:item.type
+                    type:item.type,
+                    mid:item.mid
                 }))
                 // debugger
                 // console.log(this.apiGetList.map(item=>item))

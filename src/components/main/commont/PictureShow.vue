@@ -6,9 +6,9 @@
                   :src="imgUrl"
             >
             <nav>
-                <a href="javascript:;" class="img_cover_wrap" >
+                <router-link :to="`/player/`+songId"   class="img_cover_wrap" >
                     <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">
-                </a>
+                </router-link>
             </nav>
         </div>
 
@@ -18,7 +18,13 @@
 <script>
     export default {
         props:{
+            //图片地址
             imgUrl:{
+                type: String,
+                require: true
+            },
+            //对应的歌曲id
+            songId:{
                 type: String,
                 require: true
             }
@@ -43,9 +49,9 @@
           },
         },
         watch:{
-            imgUrl(val){
+         /*   imgUrl(val){
                 this.url = val
-            }
+            }*/
         },
         created() {
             this.getImgInfo()

@@ -9,7 +9,9 @@
                      :class="`slide-img-${i}`"
                 >
                     <!--图片-->
-                    <picture-show :imgUrl="v.img"/>
+                    <picture-show :imgUrl="v.img"
+                                  :songId="v.mid"
+                    />
                     <!--图片标题内容-->
                     <div class="text-info" >
                         <a href="javascript:;">{{v.title}}</a>

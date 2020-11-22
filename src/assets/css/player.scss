@@ -1,0 +1,246 @@
+.player-page{
+  border: 1px solid red;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  //播放列表
+  .player-list{
+    border: 1px solid black;
+
+  }
+  //正在播放
+  .player-now{
+    border: 1px solid black;
+
+  }
+  //播放控制组件
+  .player-bar{
+    background: grey;
+    border: 1px solid black;
+    position: fixed;
+    bottom: 0;
+    width: 85%;
+    height: 75.68px;
+    .audio-panel{
+      //border: 1px solid blue;
+      height: 100%;
+      .audio-control{
+        width: 100%;
+        height: 100%;
+        //border: 1px solid blue;
+        display: flex;
+        align-items: center;
+        //播放按钮
+        .play-btns{
+          //border: 1px solid green;
+          width: 160px;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin: 0 50px 0 0 ;
+          //background: #000;
+
+          span{
+            display: flex;
+            align-items: center;
+            i{
+              display: flex;
+
+            }
+          }
+          .back{
+            width: 30px;
+            height: 100%;
+
+            //background: #000;
+            i{
+              width: 22px;
+              height: 21px;
+              background: url("../img/player@2x.png") no-repeat  0px -30px;
+              background-size:132px 1000px;
+
+            }
+          }
+          .startAndStop{
+            width: 30px;
+            height: 100%;
+            //background: #000;
+            i{
+              width: 25px;
+              height: 30px;
+              background: #000;
+              background: url("../img/player@2x.png") no-repeat  0px 0px;
+              background-size:132px 1000px;
+            }
+
+          }
+          .next{
+            width: 30px;
+            height: 100%;
+            //background: #000;
+            i{
+              background: #000;
+              width: 22px;
+              height: 23px;
+              background: url("../img/player@2x.png") no-repeat  0px -51px;
+              background-size:132px 1000px;
+            }
+          }
+        }
+        //进度条
+        .progress{
+          //border: 1px solid blue;
+          width: 50%;
+          height: 2px;
+          //margin:0px 35px 0px 50px ;
+          position: relative;
+
+          //进度条总长度
+          .bgSlot{
+            height: 2px;
+            width: 100%;
+            //background: #000;
+            background: rgba(255,255,255,.3);
+
+          }
+          //已播放长度
+          .overTime{
+            //border: 1px solid black;
+            width: 100px;
+            background: white;
+            height: 2px;
+            position: absolute;
+            top: 0;
+          }
+          //当前进度指示原点
+          .currentTime{
+            width: 10px;
+            height: 10px;
+            background: white;
+            position: absolute;
+            top: -4px;
+            margin-left: 40px ;
+            border-radius: 50%;
+
+          }
+        }
+        //更多操作
+        .moreOpera{
+          //border: 1px solid red;
+          height: 100%;
+          width: 280px;
+          display: flex;
+          justify-content: space-between;
+          margin: 0 0 0 35px;
+          span{
+            display: flex;
+            align-items: center;
+            i{
+              display: flex;
+              //border: 1px solid red;
+              background: url("../img/player@2x.png") no-repeat ;
+              background-size:132px 1000px;
+
+            }
+          }
+          //列表循环
+          .listCycle{
+            width: 30px;
+            height: 100%;
+            i{
+              width: 29px;
+              height: 27px;
+              background-position:  0px -204px;
+            }
+          }
+          //喜欢
+          .loveSelect{
+            width: 26px;
+            height: 100%;
+            i{
+              width: 29px;
+              height: 25px;
+              background-position:  0px -95px;
+            }
+          }
+          //下载
+          .downloadSelect{
+            width: 30px;
+            height: 100%;
+            i{
+              width: 24px;
+              height: 25px;
+              background-position:  0px -119px;
+            }
+          }
+          //评论
+          .commentSelect{
+            width: 30px;
+            height: 100%;
+            i{
+              width: 26px;
+              height: 27px;
+              background-position:  0px -400px;
+            }
+          }
+          //纯净
+          .openPure{
+            width: 80px;
+            height: 100%;
+            i{
+              width: 78px;
+              height: 30px;
+              background-position:  0px -281px;
+            }
+          }
+        }
+        //音量
+        .volume{
+          //border: 1px solid red;
+          width: 100px;
+          height: 100%;
+          margin: 0 0 0 15px;
+          display: flex;
+          //background: #000;
+          align-items: center;
+          //音量图标
+          .volumeLog{
+            //border: 1px solid red;
+            width: 30px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            i{
+              //border: 1px solid red;
+              width: 30px;
+              height: 25px;
+              background: url("../img/player@2x.png") no-repeat 0px -142px;
+              background-size:132px 1000px;
+            }
+          }
+          //进度条总长度
+          .bgSlot{
+            width: 70px;
+            height: 2px;
+            position: relative;
+            //border: 1px solid black;
+            background: rgba(255,255,255,.3);
+          }
+          //已播放长度
+          .overTime{
+            width: 10px;
+            background: white;
+            height: 2px;
+            position: absolute;
+            top: 0;
+          }
+          //当前进度指示原点
+          .currentTime{
+
+          }
+        }
+      }
+    }
+  }
+}

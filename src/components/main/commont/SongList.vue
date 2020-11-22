@@ -63,7 +63,7 @@
                             <div v-else-if="contentType==8">
                                 <a href="javascript:;" v-html="item.singerName"></a>
                             </div>
-                            <div v-else-if="contentType==2&&item.creator.name">
+                            <div v-else-if="contentType==2&&item.creator">
                                 <a href="javascript:;" v-html="item.creator.name"></a>
                             </div>
 

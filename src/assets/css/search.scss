@@ -19,7 +19,7 @@
     align-items: center;
     //搜索组件
     .search-bar{
-        margin: 0 0 20px 0;
+      margin: 0 0 20px 0;
     }
     //热门搜索
     .hotSearch{
@@ -28,7 +28,7 @@
       display: flex;
       color: white;
       .hotSearch-title{
-          margin: 0 13px 0 0 ;
+        margin: 0 13px 0 0 ;
       }
       .hotSearch-ul{
 
@@ -44,7 +44,7 @@
   }
   //搜索内容
   .search-content{
-    border: 1px solid red;
+    //border: 1px solid red;
     width: 1200px;
     //种类
     .search-type-ul{

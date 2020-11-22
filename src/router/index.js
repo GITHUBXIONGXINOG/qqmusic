@@ -14,36 +14,42 @@ import CategoryPlaylist from './musichall/categoryplaylist'
 import RadioStation from './musichall/radiostation'
 import Mv from './musichall/mv/'
 import DigitalAlbum from './musichall/digitalablum'
-import Ticketing from './musichall/ticketing'
 import Search from '@/views/musicHall/search/Search'
-
+import Player from '@/views/musicHall/playrer/PlayerPage'
 export default new VueRouter({
   mode:'history',
   base:process.env.BASE_URL,
-  routes:[
-    { path:'/',
-      component:Main,
-      redirect:'/homepage',
-      children:[
-          { path:'',component:Homepage,redirect:'/homepage'},
-          { path:'/homepage',component:Homepage},
-          // Homepage,
-          Singer,
-          CategoryPlaylist,
-          NewRecord,
-          Rank,
-          RadioStation,
-          Mv,
-          DigitalAlbum,
-          // Ticketing,
-          {
-              path: '/search',
-              name: 'search',
-              component: Search
-          },
+    routes:[
+        { path:'/',
+            component:Main,
+            redirect:'/homepage',
+            children:[
+                { path:'',component:Homepage,redirect:'/homepage'},
+                { path:'/homepage',component:Homepage},
+                // Homepage,
+                Singer,
+                CategoryPlaylist,
+                NewRecord,
+                Rank,
+                RadioStation,
+                Mv,
+                DigitalAlbum,
+                // Ticketing,
+                {
+                    path: '/search',
+                    name: 'search',
+                    component: Search,
+                },
 
-      ]
-    },
+            ]
+        },
+        {
+            path: '/player/:songId',
+            name: 'Player',
+            component: Player,
+            props: true
+
+        }
 
   ]
 
