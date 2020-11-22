@@ -1,5 +1,15 @@
 <template>
     <div class="song-list">
+        <!--用户操作-->
+        <ul class="userOpera" v-if="contentType==0">
+            <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index"
+              >
+                <span :class="['iconfont ',`${iconList[index]}`]"></span>
+                <span>
+                        {{item}}
+                    </span>
+            </a>
+        </ul>
         <div :class="contentType==2||contentType==8 ? 'song-label-three' : 'song-label-four'">
             <ul class="song-label">
                 <li v-for="item in labelList">
@@ -208,6 +218,28 @@
     //border: 1px solid red;
     font-size: 14px;
     //margin: -50px 0 50px ;
+    //用户操作
+    .userOpera{
+        //border: 1px solid red;
+        width: 100%;
+        height: 38px;
+        display: flex;
+        margin: 30px 0 20px;
+        a{
+            border: 1px solid #ddd;
+            padding: 0px 23px;
+            margin-right: 6px;
+            background: white;
+            border-radius: 2px;
+            line-height: 38px;
+            cursor: pointer;
+            &:hover{
+                background-color: #ededed;
+                color: #000;
+            }
+        }
+
+    }
     .content-info-ul{
         //border: 1px solid red;
         height: 50px;
@@ -351,7 +383,7 @@
         color: #31c27c;
     }
     .song-label-three{
-        margin: -50px 0 50px ;
+        margin: 30px 0 50px ;
 
         .song-label{
             padding: 0;

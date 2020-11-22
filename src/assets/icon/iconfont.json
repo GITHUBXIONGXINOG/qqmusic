@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6506542",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "e6f0",
+      "unicode_decimal": 59120
+    },
+    {
+      "icon_id": "12242436",
+      "name": "加号",
+      "font_class": "plus",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
       "icon_id": "2845313",
       "name": "垃圾箱",
       "font_class": "lajixiangzizhi",

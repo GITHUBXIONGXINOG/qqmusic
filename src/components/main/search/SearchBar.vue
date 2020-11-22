@@ -447,63 +447,7 @@
             }
         }
         .topSearchFixed{
-/*            position: fixed;
-            top: 0;
-            border: 1px solid red;
-            height: 67px;
-            left: 0;
-            display: flex;
-            background-color: #fff;
-            border-bottom: 1px solid #dddbdb;
-            box-shadow: 0 0 10px rgba(183,183,183,.65);
-            z-index: 99;
-            overflow: hidden;
-            line-height: 999px;
-                   input{
-           padding: 0 160px;
-           font-size: 18px;
-           width: 71%;
-           border: none;
-           transition: width 3s;
 
-       }
-       //修改placeholder属性
-       input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-           color: #666;
-           font-size: 18px;
-       }
-       input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-           color: #666;
-           font-size: 18px;
-       }
-       input::-moz-placeholder, textarea::-moz-placeholder {
-           color: #666;
-           font-size: 18px;
-       }
-       input:-moz-placeholder, textarea:-moz-placeholder {
-           color: #666;
-           font-size: 18px;
-       }
-
-
-       span{
-           //border: 1px solid red;
-           border-top:none ;
-           height: 100%;
-           width: 4.5%;
-           padding: 10px;
-           display: flex;
-           justify-content: center;
-           align-items: center;
-           background: #31c27c;
-           color: white;
-           font-size: 24px;
-           &:hover{
-               color: white;
-               background: #2caf6f;
-           }
-
-       }*/
             width: 120%;
 
         }

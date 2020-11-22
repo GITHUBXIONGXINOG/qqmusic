@@ -11,7 +11,7 @@
 
         </ul>
         <!--用户操作-->
-        <ul class="userOpera">
+       <!-- <ul class="userOpera">
             <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index"
                v-show="activeIndex.t==0">
                 <span :class="['iconfont ',`${iconList[index]}`]"></span>
@@ -19,18 +19,30 @@
                         {{item}}
                     </span>
             </a>
-        </ul>
-
+        </ul>-->
         <song-list
-            :setContentList="contentList"
-            :setContentType="activeIndex.t"
+          v-if="activeIndex.t!=7 &&activeIndex.t!=12"
+          :setContentList="contentList"
+          :setContentType="activeIndex.t"
         />
+        <!--歌词-->
+        <search-lyrics
+          v-if="activeIndex.t==7 "
+          :setContentList="contentList"
 
+        />
+    <!--    <search-mv
+          v-if="activeIndex.t==12 "
+          :setContentList="contentList"
+        />
+-->
     </div>
 </template>
 
 <script>
     import SongList from '@/components/main/commont/SongList'
+    import SearchLyrics from '@/components/main/search/SearchLyrics'
+    import SearchMv from './SearchMv'
     export default {
         props:{
             setSearchWord:{
@@ -48,10 +60,10 @@
                         name:'专辑',
                         t:8
                     },
-                    {
-                        name:'MV',
-                        t:12
-                    },
+                    // {
+                    //     name:'MV',
+                    //     t:12
+                    // },
                     {
                         name:'歌单',
                         t:2
@@ -138,8 +150,6 @@
                 }*/
                 this.activeIndex.t = t
                 this.fetchSearchApi()
-
-
             },
             //悬浮显示切换
             OperateChange(index){
@@ -182,6 +192,7 @@
                     if (val.path=='/search'){
                         // debugger
                         this.activeIndex.key = val.query.inputSearch
+                        this.activeIndex.t=0
                         this.fetchSearchApi(this.activeIndex)
                         // console.log(this.activeIndex)
                     }
@@ -199,7 +210,9 @@
         },
 
         components:{
-            SongList
+            SongList,
+            SearchLyrics,
+            SearchMv
         }
     }
 </script>
