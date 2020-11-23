@@ -19,10 +19,10 @@
                     <!--已播放长度-->
                     <div class="overTime" ref="overTime" @click="clickProgress()"></div>
                     <!--当前进度指示原点-->
-                    <div class="currentTime" ref="currentTime"  v-drag="{data:bgSlotWidth,set:ChangeWidth}"
-
+                    <div class="currentTime" ref="currentTime"
+                         @mousedown="move"
                     ></div>
-<!--                    v-drag="{data:bgSlotWidth}"-->
+
                     <!--歌曲信息-->
                     <div class="songInfo">
                         <!--歌曲名字和作者-->
@@ -75,55 +75,7 @@
 </template>
 
 <script>
-    import ProgressMain from './ProgressMain'
     export default {
-        //局部注册指令
-        directives:{
-            // 拖拽指令
-            drag:{
-
-                update(el,binding){
-                    let isDragStart = false//拖拽标识符
-                    let disX = 0
-                    // let disY = 0
-                    el.addEventListener('mousedown',e =>{
-                        //e.clientX 鼠标点击的视口水平方向位置
-                        //el.offsetLeft 鼠标点击的距离父元素的水平位置
-                        //disx 视口位置-父元素位置 = 父元素左侧距离视口左侧的距离
-                        disX = e.clientX - el.offsetLeft
-                        // disY = e.clientY - el.offsetTop
-
-                        isDragStart = true
-                        e.preventDefault()
-                    })
-
-                    document.addEventListener('mousemove',e =>{
-                        if (isDragStart){
-                                //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
-                                let x = e.clientX - disX
-                                // let y = e.clientY - disY
-                                //父元素的边界处理
-                                if (x<=0){
-                                    x = 0
-                                }else if (x>=binding.value.data){
-                                    x = binding.value.data
-                                }
-                                el.style.left = x + 'px'
-                                // el.style.top = y + 'px'
-                                binding.value.set(x)
-
-                        }
-                    })
-
-                    document.addEventListener('mouseup',e=>{
-                        isDragStart = false
-                    })
-
-                },
-
-            }
-
-        },
         props:{
             //设置歌曲播放地址
             playerUrl:{
@@ -151,10 +103,36 @@
                 currentTime:'00:00',//当前时间格式化
                 bgSlotWidth:0,//当前背景区域的宽度
                 isStop:false,//是否可以停止
+                dragFlag:false,//拖动flag
             }
         },
 
         methods:{
+            //拖拽事件
+            move(e){
+                let el = e.target
+                let disX = e.clientX - el.offsetLeft;
+                disX = e.clientX - el.offsetLeft
+                this.dragFlag=true
+                e.preventDefault()
+                document.onmousemove = (e)=>{       //鼠标按下并移动的事件
+                    if (this.dragFlag){
+                        //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
+                        let x = e.clientX - disX
+                        // let y = e.clientY - disY
+                        //父元素的边界处理
+                        if (x<=0){
+                            x = 0
+                        }else if (x>=this.bgSlotWidth){
+                            x = this.bgSlotWidth
+                        }
+                        e.style.left = x + 'px'
+                    }
+                };
+                document.onmouseup = (e) => {
+                    this.dragFlag=false
+                };
+            },
             //获取总时间
             getDuration() {
               /*  debugger
@@ -165,8 +143,12 @@
             },
             //获取当前播放时间
             updateTime(e) {
-                this.currentTimeOriginal = e.target.currentTime
-                this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
+                // console.log(this.dragFlag)
+                if (!this.dragFlag){
+                    this.currentTimeOriginal = e.target.currentTime
+                    this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
+                }
+
             },
             //播放暂停歌曲
             changeSongStatus(){
@@ -272,7 +254,6 @@
 
         },
         components:{
-            ProgressMain
         }
     }
 </script>
