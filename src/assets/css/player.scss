@@ -1,27 +1,32 @@
 .player-page{
-  border: 1px solid red;
-  height: 650px;
+  //border: 1px solid red;
+  height: 760px;
   display: flex;
   justify-content: center;
   position: relative;
+  background:rgba(0,0,0,.8);
+  font-size: 14px;
   //播放列表
   .player-list{
     border: 1px solid black;
-
+    z-index: 2;
   }
   //正在播放
   .player-now{
     border: 1px solid black;
+    z-index: 2;
 
   }
   //播放控制组件
   .player-bar{
-    background: grey;
+    //background: grey;
     border: 1px solid black;
     position: fixed;
-    bottom: 0;
+    bottom: 32px;
     width: 85%;
+    min-width: 50%;
     height: 75.68px;
+    z-index: 3;
     .audio-panel{
       //border: 1px solid blue;
       height: 100%;
@@ -34,8 +39,9 @@
         //播放按钮
         .play-btns{
           //border: 1px solid green;
-          width: 160px;
-          height: 100%;
+          //width: 160px;
+          height: 100px;
+          min-width: 160px;
           display: flex;
           justify-content: space-between;
           margin: 0 50px 0 0 ;
@@ -46,7 +52,12 @@
             align-items: center;
             i{
               display: flex;
-
+              cursor: pointer;
+              opacity: .8;
+              &:hover{
+                color: black;
+                opacity: 1;
+              }
             }
           }
           .back{
@@ -91,27 +102,35 @@
         //进度条
         .progress{
           //border: 1px solid blue;
-          width: 50%;
-          height: 2px;
+          //width: 50%;
+          height: 8px;
           //margin:0px 35px 0px 50px ;
           position: relative;
-
+          top: 13px;
+          &:hover{
+            cursor: pointer;
+          }
           //进度条总长度
           .bgSlot{
             height: 2px;
             width: 100%;
             //background: #000;
             background: rgba(255,255,255,.3);
-
+            &:hover{
+              cursor: pointer;
+            }
           }
           //已播放长度
           .overTime{
             //border: 1px solid black;
-            width: 100px;
+            //width: 100px;
             background: white;
             height: 2px;
             position: absolute;
             top: 0;
+            &:hover{
+              cursor: pointer;
+            }
           }
           //当前进度指示原点
           .currentTime{
@@ -120,19 +139,61 @@
             background: white;
             position: absolute;
             top: -4px;
-            margin-left: 40px ;
+            left: -5px;
+            //margin-left: 40px ;
             border-radius: 50%;
+            &:hover{
+              cursor: pointer;
+            }
 
           }
+          //歌曲信息
+          .songInfo{
+            position: absolute;
+            width: 100%;
+            top: -30px;
+            display: flex;
+            justify-content: space-between;
+            color: rgba(225,225,225,.8);
+            //歌曲名字和作者
+            .songTitle{
+              //border: 1px solid red;
+              max-width: 80%;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+             span{
+               &:hover{
+                 color: #bdbdbe;
+                 cursor: pointer;
+               }
+              }
+            }
+            //时间信息
+            .songTime{
+              //border: 1px solid red;
+              display: flex;
+              //当前时间
+              .currentTimeText{
+
+              }
+              //总时间
+              .durationTimeText{
+
+              }
+            }
+          }
+
         }
         //更多操作
         .moreOpera{
           //border: 1px solid red;
           height: 100%;
-          width: 280px;
+          min-width: 280px;
           display: flex;
           justify-content: space-between;
           margin: 0 0 0 35px;
+
           span{
             display: flex;
             align-items: center;
@@ -141,7 +202,11 @@
               //border: 1px solid red;
               background: url("../img/player@2x.png") no-repeat ;
               background-size:132px 1000px;
-
+              opacity: .8;
+              &:hover{
+                    cursor: pointer;
+                    opacity: 1;
+                  }
             }
           }
           //列表循环
@@ -217,30 +282,69 @@
               height: 25px;
               background: url("../img/player@2x.png") no-repeat 0px -142px;
               background-size:132px 1000px;
+              opacity: .8;
+              &:hover{
+                opacity: 1;
+                cursor: pointer;
+              }
             }
           }
-          //进度条总长度
-          .bgSlot{
-            width: 70px;
-            height: 2px;
+          .progress{
             position: relative;
-            //border: 1px solid black;
-            background: rgba(255,255,255,.3);
-          }
-          //已播放长度
-          .overTime{
-            width: 10px;
-            background: white;
-            height: 2px;
-            position: absolute;
             top: 0;
-          }
-          //当前进度指示原点
-          .currentTime{
+            //进度条总长度
+            .bgSlot{
+              width: 70px;
+              height: 2px;
+              position: relative;
+              //border: 1px solid black;
+              background: rgba(255,255,255,.3);
+              top: 0px;
+              bottom: 10px;
+            }
+            //已播放长度
+            .overTime{
+              width: 10px;
+              background: white;
+              height: 2px;
+              position: absolute;
+              top: 0;
+            }
+            //当前进度指示原点
+            .currentTime{
 
+            }
           }
+
         }
       }
     }
+  }
+
+  //背景图片
+  .background-picture{
+    border: 1px solid blue;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: block;
+    background: #000;
+    //高斯模糊
+    filter: blur(80px);
+    //图片信息
+    img{
+      width: 100%;
+      transform: scale(1.2);
+      position: absolute;
+      top: -40%;
+      //图片亮度
+      filter: brightness(60%);
+      background: #000;
+      //阻止默认事件
+      pointer-events:none;
+    }
+
+
   }
 }
