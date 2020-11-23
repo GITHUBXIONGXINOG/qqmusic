@@ -6,7 +6,10 @@
                 <!--控制按钮-->
                 <div class="play-btns">
                     <span class="back"><i></i></span>
-                    <span class="startAndStop"  @click="changeSongStatus()"><i></i></span>
+                    <span class="startAndStop"
+                          @click="changeSongStatus()"
+                          :class="{stopButton:isStop}"
+                    ><i></i></span>
                     <span class="next"><i></i></span>
                 </div>
                 <!--进度条-->
@@ -16,7 +19,10 @@
                     <!--已播放长度-->
                     <div class="overTime" ref="overTime" @click="clickProgress()"></div>
                     <!--当前进度指示原点-->
-                    <div class="currentTime" ref="currentTime"></div>
+                    <div class="currentTime" ref="currentTime"  v-drag="{data:bgSlotWidth,set:ChangeWidth}"
+
+                    ></div>
+<!--                    v-drag="{data:bgSlotWidth}"-->
                     <!--歌曲信息-->
                     <div class="songInfo">
                         <!--歌曲名字和作者-->
@@ -54,13 +60,13 @@
                     <!--音量图标-->
                     <span class="volumeLog"><i></i></span>
                     <!--进度条-->
-                    <div class="progress">
+                    <div class="progressVolume">
                         <!--进度条总长度-->
-                        <div class="bgSlot"></div>
+                        <div class="bgSlotVolume"></div>
                         <!--已播放长度-->
                         <div class="overTime"></div>
                         <!--当前进度指示原点-->
-                        <div class="currentTime"></div>
+                        <div class="currentTimeVolume" v-drag="{data:70,set:ChangeVolume}"></div>
                     </div>
                 </div>
             </div>
@@ -69,7 +75,55 @@
 </template>
 
 <script>
+    import ProgressMain from './ProgressMain'
     export default {
+        //局部注册指令
+        directives:{
+            // 拖拽指令
+            drag:{
+
+                update(el,binding){
+                    let isDragStart = false//拖拽标识符
+                    let disX = 0
+                    // let disY = 0
+                    el.addEventListener('mousedown',e =>{
+                        //e.clientX 鼠标点击的视口水平方向位置
+                        //el.offsetLeft 鼠标点击的距离父元素的水平位置
+                        //disx 视口位置-父元素位置 = 父元素左侧距离视口左侧的距离
+                        disX = e.clientX - el.offsetLeft
+                        // disY = e.clientY - el.offsetTop
+
+                        isDragStart = true
+                        e.preventDefault()
+                    })
+
+                    document.addEventListener('mousemove',e =>{
+                        if (isDragStart){
+                                //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
+                                let x = e.clientX - disX
+                                // let y = e.clientY - disY
+                                //父元素的边界处理
+                                if (x<=0){
+                                    x = 0
+                                }else if (x>=binding.value.data){
+                                    x = binding.value.data
+                                }
+                                el.style.left = x + 'px'
+                                // el.style.top = y + 'px'
+                                binding.value.set(x)
+
+                        }
+                    })
+
+                    document.addEventListener('mouseup',e=>{
+                        isDragStart = false
+                    })
+
+                },
+
+            }
+
+        },
         props:{
             //设置歌曲播放地址
             playerUrl:{
@@ -96,8 +150,10 @@
                 duration:'00:00',//总时间格式化
                 currentTime:'00:00',//当前时间格式化
                 bgSlotWidth:0,//当前背景区域的宽度
+                isStop:false,//是否可以停止
             }
         },
+
         methods:{
             //获取总时间
             getDuration() {
@@ -105,6 +161,7 @@
                 console.log(this.$refs.audio.duration); //此时可以获取到duration*/
                 this.durationOriginal = this.$refs.audio.duration
                 this.duration = this.timeFormat(this.durationOriginal);
+                this.isStop=true
             },
             //获取当前播放时间
             updateTime(e) {
@@ -116,8 +173,11 @@
                 let audio =this.$refs.audio//获取audio
                 if (audio.paused){//如果暂停状态
                     audio.play()  //调用播放
+                    this.isStop=true
                 }else {             //如果播放状态
                         audio.pause()   //调用暂停
+                    this.isStop=false
+
                 }
             },
             //当前进度条
@@ -144,11 +204,26 @@
             },
             //进度条初始化
             progressInit(){
-                this.bgSlotWidth = (document.body.clientWidth)*.425
+                this.bgSlotWidth = (document.body.clientWidth)*.424
                 this.$refs.bgSlot.style.width=  this.bgSlotWidth + 'px'
 
             },
-
+            //接收自定义组件传递的数据
+            ChangeWidth(val){
+                // this.$refs.audio.pause()
+                // debugger
+                // console.log(val)
+                this.$refs.overTime.style.width=val+'px'
+                this.$refs.audio.currentTime=(val/this.bgSlotWidth)*this.durationOriginal
+            },
+            //接收自定义组件传递的数据
+            ChangeVolume(val){
+                // this.$refs.audio.pause()
+                // debugger
+                // console.log(val)
+                this.$refs.overTime.style.width=val+'px'
+                this.$refs.audio.currentTime=(val/this.bgSlotWidth)*this.durationOriginal
+            },
 
 
 
@@ -191,7 +266,13 @@
                     this.currentProgress()
                 })
             },
+            ChangeWidth(){
+
+            }
 
         },
+        components:{
+            ProgressMain
+        }
     }
 </script>

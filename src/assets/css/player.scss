@@ -98,6 +98,11 @@
               background-size:132px 1000px;
             }
           }
+          .stopButton{
+            i{
+              background-position-x: -30px;
+            }
+          }
         }
         //进度条
         .progress{
@@ -139,7 +144,7 @@
             background: white;
             position: absolute;
             top: -4px;
-            left: -5px;
+            //left: -5px;
             //margin-left: 40px ;
             border-radius: 50%;
             &:hover{
@@ -289,11 +294,11 @@
               }
             }
           }
-          .progress{
+          .progressVolume{
             position: relative;
             top: 0;
             //进度条总长度
-            .bgSlot{
+            .bgSlotVolume{
               width: 70px;
               height: 2px;
               position: relative;
@@ -311,8 +316,18 @@
               top: 0;
             }
             //当前进度指示原点
-            .currentTime{
-
+            .currentTimeVolume{
+              width: 10px;
+              height: 10px;
+              background: white;
+              position: absolute;
+              top: -4px;
+              //left: -5px;
+              //margin-left: 40px ;
+              border-radius: 50%;
+              &:hover{
+                cursor: pointer;
+              }
             }
           }
 
