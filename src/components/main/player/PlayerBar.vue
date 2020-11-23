@@ -1,7 +1,8 @@
 <template>
     <div class="player-bar" ref="playerBar">
         <div class="audio-panel">
-            <audio  @canplay="getDuration" @timeupdate="updateTime"  :src="playerUrl"  ref="audio"></audio>
+            <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
+                    :src="playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
                 <div class="play-btns">
@@ -58,15 +59,19 @@
                 <!--音量-->
                 <div class="volume">
                     <!--音量图标-->
-                    <span class="volumeLog"><i></i></span>
-                    <!--进度条-->
+                    <span class="volumeLog" @click="clickMuted"
+                        :class="{'mutedStyle':isMuted}"
+                    ><i></i></span>
+                    <!--音量条-->
                     <div class="progressVolume">
-                        <!--进度条总长度-->
-                        <div class="bgSlotVolume"></div>
+                        <!--总长度-->
+                        <div class="bgSlotVolume" ref="bgSlotVolume" @click="clickProgressVolume"></div>
                         <!--已播放长度-->
-                        <div class="overTime"></div>
+                        <div class="overTimeVolume" ref="overTimeVolume" @click="clickProgressVolume"></div>
                         <!--当前进度指示原点-->
-                        <div class="currentTimeVolume" v-drag="{data:70,set:ChangeVolume}"></div>
+                        <div class="currentTimeVolume" ref="currentTimeVolume"
+                            @mousedown="moveVolume"
+                        ></div>
                     </div>
                 </div>
             </div>
@@ -104,6 +109,8 @@
                 bgSlotWidth:0,//当前背景区域的宽度
                 isStop:false,//是否可以停止
                 dragFlag:false,//拖动flag
+                isMuted:false,//是否静音
+                volumeLen:0,//音量长度
             }
         },
 
@@ -126,11 +133,57 @@
                         }else if (x>=this.bgSlotWidth){
                             x = this.bgSlotWidth
                         }
-                        e.style.left = x + 'px'
+                        if (e.style){
+                            if (x<10){
+                                e.style.left = 0 + 'px'
+
+                            }else if (x>10&&x<=this.bgSlotWidth-10){
+                                e.style.left = x + 'px'
+                            }else{
+                                e.style.left = this.bgSlotWidth-10 + 'px'
+                            }
+
+                        }
                     }
                 };
                 document.onmouseup = (e) => {
                     this.dragFlag=false
+                };
+            },
+            //音量拖拽
+            moveVolume(e){
+                let el = e.target
+                let disX = e.clientX - el.offsetLeft;
+                let isGragFlag = true
+                e.preventDefault()
+                document.onmousemove = (e)=>{
+                    if (isGragFlag){
+                        //鼠标按下并移动的事件
+                        //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
+                        let x = e.clientX - disX
+                        // let y = e.clientY - disY
+                        //父元素的边界处理
+                        if (x<=0){
+                            x = 0
+                        }else if (x>=70){
+                            x = 70
+                        }
+                        if (el.style){
+                           this.volumeLen=x
+                            if (x<=60&&x>=10){
+                                el.style.left =x + 'px'
+                            }else if (x<10){
+                                el.style.left =0 + 'px'
+                            }else{
+                                el.style.left =60 + 'px'
+                            }
+
+                            this.currentProgressVolume()
+                        }
+                    }
+                };
+                document.onmouseup = (e) => {
+                    isGragFlag=false
                 };
             },
             //获取总时间
@@ -140,6 +193,8 @@
                 this.durationOriginal = this.$refs.audio.duration
                 this.duration = this.timeFormat(this.durationOriginal);
                 this.isStop=true
+                //获取音量
+                this.getVolume()
             },
             //获取当前播放时间
             updateTime(e) {
@@ -149,6 +204,10 @@
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                 }
 
+            },
+            //结束操作
+            endOpera(){
+                this.isStop=false
             },
             //播放暂停歌曲
             changeSongStatus(){
@@ -171,7 +230,7 @@
                     over.style.width=length+'px'
                 //指示圆点
                 let currentTime = this.$refs.currentTime
-                    currentTime.style.left=(length-5)+'px'
+                    currentTime.style.left=length+'px'
             },
             //点击进度条
             clickProgress(event){
@@ -179,32 +238,51 @@
                 let through = (e.offsetX/this.bgSlotWidth)*100
                 this.$refs.overTime.style.width=e.offsetX+'px'
                 this.$refs.currentTime.style.left=(e.offsetX-5)+'px'
-              /*  this.$refs.audio.currentTime = (e.offsetX/this.bgSlotWidth)
-                debugger
-                console.log(this.$refs.audio.currentTime);*/
                 this.$refs.audio.currentTime=(through/100)*this.durationOriginal
+                this.$refs.audio.play()
             },
             //进度条初始化
             progressInit(){
-                this.bgSlotWidth = (document.body.clientWidth)*.424
+                this.bgSlotWidth = (document.body.clientWidth)*.423
                 this.$refs.bgSlot.style.width=  this.bgSlotWidth + 'px'
 
             },
-            //接收自定义组件传递的数据
-            ChangeWidth(val){
-                // this.$refs.audio.pause()
-                // debugger
-                // console.log(val)
-                this.$refs.overTime.style.width=val+'px'
-                this.$refs.audio.currentTime=(val/this.bgSlotWidth)*this.durationOriginal
+            //音量条初始化
+            getVolume(){
+                this.$refs.bgSlotVolume.style.width=70+'px';
+                this.$refs.overTimeVolume.style.width=this.$refs.audio.volume* 70 + 'px'
+                this.$refs.currentTimeVolume.style.left=this.$refs.overTimeVolume.style.width
             },
-            //接收自定义组件传递的数据
-            ChangeVolume(val){
-                // this.$refs.audio.pause()
+            //点击音量
+            clickProgressVolume(event){
+                const e = event || window.event
+                this.$refs.overTimeVolume.style.width=e.offsetX+'px'
+                this.$refs.currentTimeVolume.style.left=(e.offsetX)+'px'
+                this.$refs.audio.volume=e.offsetX/70
+            },
+            //静音
+            clickMuted(){
+                if (this.isMuted){
+                    this.$refs.audio.muted=false
+                    this.isMuted=false
+                }else {
+                    this.$refs.audio.muted=true
+                    this.isMuted=true
+
+
+                }
+            },
+            //当前音乐进度条
+            currentProgressVolume(){
                 // debugger
-                // console.log(val)
-                this.$refs.overTime.style.width=val+'px'
-                this.$refs.audio.currentTime=(val/this.bgSlotWidth)*this.durationOriginal
+                this.$refs.overTimeVolume.style.width=this.volumeLen+'px'
+                this.$refs.audio.volume=this.volumeLen/70
+                if (this.volumeLen==0){
+                    this.isMuted = true
+                }else {
+                    this.isMuted = false
+
+                }
             },
 
 
@@ -248,9 +326,7 @@
                     this.currentProgress()
                 })
             },
-            ChangeWidth(){
 
-            }
 
         },
         components:{

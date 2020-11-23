@@ -144,7 +144,7 @@
             background: white;
             position: absolute;
             top: -4px;
-            left: -5px;
+            //left: -5px;
             //margin-left: 40px ;
             border-radius: 50%;
             &:hover{
@@ -274,6 +274,7 @@
           display: flex;
           //background: #000;
           align-items: center;
+          position: relative;
           //音量图标
           .volumeLog{
             //border: 1px solid red;
@@ -294,9 +295,19 @@
               }
             }
           }
+          .mutedStyle{
+            i{
+              background-position-y: -180px;
+            }
+          }
           .progressVolume{
+            //border: 1px solid red;
+            height: 8px;
             position: relative;
-            top: 0;
+            top: 2px;
+            &:hover{
+              cursor: pointer;
+            }
             //进度条总长度
             .bgSlotVolume{
               width: 70px;
@@ -308,7 +319,7 @@
               bottom: 10px;
             }
             //已播放长度
-            .overTime{
+            .overTimeVolume{
               width: 10px;
               background: white;
               height: 2px;
