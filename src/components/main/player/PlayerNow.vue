@@ -4,7 +4,7 @@
             <div class="songPicture-wrap">
                 <img :src="songPicture" alt="">
             </div>
-            <ul class="songCreateInfo">
+            <ul class="songCreateInfo" v-show="songTitle">
                 <li><span>歌曲名:&nbsp;</span><i>{{songTitle}}</i></li>
                 <li><span>歌手名:&nbsp;</span><i>{{singer}}</i></li>
                 <li><span>专辑名:&nbsp;</span><i>{{albumName}}</i></li>

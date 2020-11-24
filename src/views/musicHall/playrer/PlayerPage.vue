@@ -1,18 +1,21 @@
 <template>
     <div class="player-page">
 <!--        播放: {{songId}}-->
-        <!--播放列表-->
-        <player-list />
-        <!--正在播放-->
-        <player-now
-          :songPicture="songPicture"
-          :songTitle="songTitle"
-          :singer="singer"
-          :albumName="albumName"
-          :songId="songId"
-          :currentTime="currentTime"
-          :durationTime="durationTime"
-        />
+        <div class="pageInfo">
+            <!--播放列表-->
+            <player-list />
+            <!--正在播放-->
+            <player-now
+              :songPicture="songPicture"
+              :songTitle="songTitle"
+              :singer="singer"
+              :albumName="albumName"
+              :songId="songId"
+              :currentTime="currentTime"
+              :durationTime="durationTime"
+            />
+        </div>
+
         <!-- 播放控制组件-->
         <player-bar
             :playerUrl="songPlayerUrl"

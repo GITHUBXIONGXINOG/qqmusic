@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10475096",
+      "name": "清空",
+      "font_class": "qingkong",
+      "unicode": "e739",
+      "unicode_decimal": 59193
+    },
+    {
+      "icon_id": "13887194",
+      "name": "收 藏",
+      "font_class": "shoucang",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
       "icon_id": "6506542",
       "name": "复制",
       "font_class": "fuzhi",
