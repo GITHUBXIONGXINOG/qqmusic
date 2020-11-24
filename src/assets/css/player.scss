@@ -15,6 +15,48 @@
   .player-now{
     border: 1px solid black;
     z-index: 2;
+    font-size: 14px;
+    color: #bdbdbe;
+
+    .songInfo{
+      border: 1px solid blue;
+
+      .songPicture-wrap{
+        border: 1px solid yellow;
+        width: 210px;
+        height: 185px;
+        background: url("../img/album_cover_player.png") no-repeat 6px 0px;
+        img{
+          //height: 186px;
+          height: 100%;
+        }
+
+      }
+      .songCreateInfo{
+        border: 1px solid pink;
+        width: 185px;
+         li{
+           display: flex;
+            justify-content: center;
+           margin: 12px 0 0 0;
+           i{
+             margin: 0 10px;
+             &:hover{
+               color: rgba(225,225,225,.8);
+               cursor: pointer;
+             }
+           }
+
+         }
+
+
+
+      }
+
+    }
+    .songLyric{
+
+    }
 
   }
   //播放控制组件

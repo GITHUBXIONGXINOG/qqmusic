@@ -128,7 +128,6 @@
                 let disX = e.clientX - el.offsetLeft;
                 this.dragFlag=true
                 e.preventDefault()
-
                     document.onmousemove = (e)=>{       //鼠标按下并移动的事件
                         if (this.dragFlag){
                             //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
@@ -163,11 +162,7 @@
                         el = null
                         disX = null
                         this.dragFlag=false
-                        // this.$refs.audio.currentTime=(this.progressLen/this.bgSlotWidth)*this.durationOriginal
-
                     };
-
-
             },
             //音量拖拽
             moveVolume(e){
@@ -211,20 +206,18 @@
                 console.log(this.$refs.audio.duration); //此时可以获取到duration*/
                 this.durationOriginal = this.$refs.audio.duration
                 this.duration = this.timeFormat(this.durationOriginal);
-
+                this.$emit('durationTime',this.durationOriginal)
                 //获取音量
                 this.getVolume()
                 this.$refs.audio.play()
             },
             //获取当前播放时间
             updateTime(e) {
-                // console.log(this.dragFlag)
-
                 if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
+                    this.$emit('currentTime',this.currentTimeOriginal)
                 }
-
             },
             //结束操作
             endOpera(){

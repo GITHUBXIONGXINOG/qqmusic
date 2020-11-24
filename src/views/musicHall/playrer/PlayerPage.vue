@@ -4,12 +4,22 @@
         <!--播放列表-->
         <player-list />
         <!--正在播放-->
-        <player-now />
+        <player-now
+          :songPicture="songPicture"
+          :songTitle="songTitle"
+          :singer="singer"
+          :albumName="albumName"
+          :songId="songId"
+          :currentTime="currentTime"
+          :durationTime="durationTime"
+        />
         <!-- 播放控制组件-->
         <player-bar
             :playerUrl="songPlayerUrl"
             :songTitle="songTitle"
             :singer="singer"
+            @currentTime="setCurrentTime"
+            @durationTime="setDurationTime"
         />
         <div class="background-picture">
             <img :src="songPicture" alt="" @click.prevent>
@@ -37,6 +47,10 @@
                 songPicture:'',//歌曲图片
                 songTitle:'',//歌曲标题
                 singer:'',//歌手
+                albumName:'',//专辑名
+                songLyric:'',//歌词
+                currentTime:0,//当前播放的时间
+                durationTime:0,//总时间
             }
         },
         methods:{
@@ -54,8 +68,20 @@
               this.songPicture =  `https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.songInfoUrl.track_info.album.mid}.jpg`
               this.songTitle =  this.songInfoUrl.track_info.title
               this.singer =  this.songInfoUrl.track_info.singer[0].name
-          },
+              this.albumName = this.songInfoUrl.track_info.album.name
 
+
+
+
+          },
+            //当前时间
+            setCurrentTime(val){
+              this.currentTime = val
+            },
+            //总时间
+            setDurationTime(val){
+              this.durationTime=val
+            }
 
         },
         created() {
