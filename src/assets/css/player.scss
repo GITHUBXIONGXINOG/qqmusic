@@ -20,7 +20,9 @@
 
     .songInfo{
       border: 1px solid blue;
-
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       .songPicture-wrap{
         border: 1px solid yellow;
         width: 210px;

@@ -1,9 +1,11 @@
 <template>
     <div class="lyric-parsing">
           <div class="lyric-wrap" ref="lyricWrap">
-              <p v-for="(item,key,index) in songLyric" :key="index"
-                :class="{'currentLyric':currentTime>key&&currentTime<allKeys[index+1]}"
-              >{{item}}</p>
+              <span v-for="(item,key,index) in songLyric" :key="index"
+              :class="{'currentLyric':currentTime>key&&currentTime<allKeys[index+1]
+              }"
+              >{{item}}</span>
+
           </div>
     </div>
 </template>
@@ -60,6 +62,7 @@
                 }
                 this.songLyric = lyrArr
                 this.getALlKeys(lyrArr)
+                console.log(lyrArr)
             },
             //得到所有的Keys
             getALlKeys(lyrArr){
@@ -84,6 +87,9 @@
         },
         mounted() {
 
+        },
+        computed:{
+
         }
 
     }
@@ -94,17 +100,45 @@
     border: 1px solid red;
     //overflow: hidden;
     height: 110px;
-    .lyric-wrap{
+    width: 250px;
+    &::before{
+        content: '';
+        position: absolute;
+        width: 250px;
+        height: 20px;
+        top: 40px;
         border: 1px solid red;
-        height: 110px;
+    }
+    .lyric-wrap{
+        //border: 1px solid red;
+        width: 100%;
+        height: 100px;
         //overflow: hidden;
         position: absolute;
-        transform: translateY(50px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1px 0 0 0 ;
+        transform: translateY(33px);
+        span{
+            border: 1px solid red;
+            margin: 6px 0;
+        }
      }
     .currentLyric{
         color: #31c27c;
         //position: absolute;
 
+
+
+    }
+}
+
+@for $i from 0 through 80
+{
+    .item-#{$i}
+    {
+        transform: translateY(-33px*$i+33px) !important;
     }
 }
 
