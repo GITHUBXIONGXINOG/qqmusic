@@ -1,12 +1,11 @@
 <template>
     <div class="lyric-parsing">
-          <div class="lyric-wrap" ref="lyricWrap">
+          <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap">
               <span v-for="(item,key,index) in songLyric" :key="index"
-              :class="{'currentLyric':currentTime>key&&currentTime<allKeys[index+1]
-              }"
-              >{{item}}</span>
-
+              :class="classObject(item,key,index)"
+               >{{item}}</span>
           </div>
+
     </div>
 </template>
 
@@ -30,6 +29,7 @@
             return{
                 songLyric:{},//歌词时间对象
                 allKeys:[],//所有key
+                lyricIndex:0,//当前显示歌词的索引
             }
         },
         methods:{
@@ -39,7 +39,7 @@
                 let songLyricUrl = '/api/lyric?songmid='+this.songId
                 const resOfSongLyric = await this.$http.get(songLyricUrl)
                 let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-                // console.log(this.songLyric)
+                // console.log(resOfSongLyric)
                 // debugger
                 //歌词对象
                 let lyrArr = {}
@@ -55,14 +55,18 @@
                     let second = Number(t.match(/:\d*/).toString().slice(1))
                     //歌词文本
                     let content = lyrics[i].replace(timerRegExpArr,"")
-                    //计算时间
-                    let time = min*60+second
-                    //时间对应文本
-                    lyrArr[time] = content
+                    //处理版权问题,比如官方翻译无法获取到
+                    if (content){
+                        //计算时间
+                        let time = min*60+second
+                        //时间对应文本
+                        lyrArr[time] = content
+                    }
+
                 }
                 this.songLyric = lyrArr
                 this.getALlKeys(lyrArr)
-                console.log(lyrArr)
+                // console.log(lyrArr)
             },
             //得到所有的Keys
             getALlKeys(lyrArr){
@@ -73,7 +77,8 @@
             },
             //歌词移动
             lyricMove(){
-                this.$refs.lyricWrap.style.transform="translateY("+100+")"
+                // debugger
+                this.$refs.lyricWrap.style.transform="translateY("+(33-this.lyricIndex*32)+"px)"
             }
         },
         created() {
@@ -89,7 +94,15 @@
 
         },
         computed:{
-
+            classObject() {
+                return function (item,key,index) {
+                    if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
+                        //当前的歌词位置,即行数
+                        this.lyricIndex=index
+                        return 'currentLyric'
+                    }
+                }
+            }
         }
 
     }
@@ -97,17 +110,21 @@
 <style lang="scss">
 .lyric-parsing{
     position: relative;
-    border: 1px solid red;
-    //overflow: hidden;
+    //border: 1px solid red;
+    overflow: hidden;
     height: 110px;
-    width: 250px;
+    width: 340px;
+    filter: glow(white,10);
+    //box-shadow: inset 2px 1px 5px 1px rgba(0, 0, 0, .1);
+
+    //box-shadow:inset 0 0 10px .1px #c9c9c9;
     &::before{
         content: '';
         position: absolute;
         width: 250px;
         height: 20px;
         top: 40px;
-        border: 1px solid red;
+        //border: 1px solid red;
     }
     .lyric-wrap{
         //border: 1px solid red;
@@ -121,8 +138,9 @@
         padding: 1px 0 0 0 ;
         transform: translateY(33px);
         span{
-            border: 1px solid red;
+            //border: 1px solid red;
             margin: 6px 0;
+            height: 20px;
         }
      }
     .currentLyric{
@@ -134,12 +152,6 @@
     }
 }
 
-@for $i from 0 through 80
-{
-    .item-#{$i}
-    {
-        transform: translateY(-33px*$i+33px) !important;
-    }
-}
+
 
 </style>

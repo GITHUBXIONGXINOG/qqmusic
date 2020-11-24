@@ -13,18 +13,22 @@
   }
   //正在播放
   .player-now{
-    border: 1px solid black;
+    //border: 1px solid black;
     z-index: 2;
     font-size: 14px;
     color: #bdbdbe;
-
+    position: absolute;
+    right: 10%;
+    margin: 5% 0 0 0;
     .songInfo{
-      border: 1px solid blue;
+      //border: 1px solid blue;
       display: flex;
       flex-direction: column;
       align-items: center;
+      width: 340px;
+      //box-shadow: 0px 10px 5px -5px rgba(0,0,0,.19);
       .songPicture-wrap{
-        border: 1px solid yellow;
+        //border: 1px solid yellow;
         width: 210px;
         height: 185px;
         background: url("../img/album_cover_player.png") no-repeat 6px 0px;
@@ -35,12 +39,14 @@
 
       }
       .songCreateInfo{
-        border: 1px solid pink;
-        width: 185px;
+        //border: 1px solid pink;
+        width: 340px;
+        margin: 0 0 40px 0;
          li{
            display: flex;
             justify-content: center;
            margin: 12px 0 0 0;
+           height: 20px;
            i{
              margin: 0 10px;
              &:hover{
@@ -64,7 +70,7 @@
   //播放控制组件
   .player-bar{
     //background: grey;
-    border: 1px solid black;
+    //border: 1px solid black;
     position: fixed;
     bottom: 32px;
     width: 85%;
