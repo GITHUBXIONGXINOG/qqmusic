@@ -2,6 +2,7 @@
     <div class="player-bar" ref="playerBar">
         <div class="audio-panel">
             <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
+                    @playing="setPlaying"
                     :src="playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
@@ -9,12 +10,12 @@
                     <span class="back"><i></i></span>
                     <span class="startAndStop"
                           @click="changeSongStatus()"
-                          :class="{stopButton:isStop}"
+                          :class="{stopButton:isCanStop}"
                     ><i></i></span>
                     <span class="next"><i></i></span>
                 </div>
                 <!--进度条-->
-                <div class="progress" @click="clickProgress()">
+                <div class="progress" >
                     <!--进度条总长度-->
                     <div class="bgSlot" ref="bgSlot" @click="clickProgress()"></div>
                     <!--已播放长度-->
@@ -107,10 +108,12 @@
                 duration:'00:00',//总时间格式化
                 currentTime:'00:00',//当前时间格式化
                 bgSlotWidth:0,//当前背景区域的宽度
-                isStop:false,//是否可以停止
+                isCanStop:false,//是否可以停止
+                isStarting:false,//额外处理,刷新后的情况
                 dragFlag:false,//拖动flag
                 isMuted:false,//是否静音
                 volumeLen:0,//音量长度
+                progressLen:0//进度条长度
             }
         },
 
@@ -119,36 +122,46 @@
             move(e){
                 let el = e.target
                 let disX = e.clientX - el.offsetLeft;
-                disX = e.clientX - el.offsetLeft
                 this.dragFlag=true
                 e.preventDefault()
-                document.onmousemove = (e)=>{       //鼠标按下并移动的事件
-                    if (this.dragFlag){
-                        //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
-                        let x = e.clientX - disX
-                        // let y = e.clientY - disY
-                        //父元素的边界处理
-                        if (x<=0){
-                            x = 0
-                        }else if (x>=this.bgSlotWidth){
-                            x = this.bgSlotWidth
-                        }
-                        if (e.style){
-                            if (x<10){
-                                e.style.left = 0 + 'px'
 
-                            }else if (x>10&&x<=this.bgSlotWidth-10){
-                                e.style.left = x + 'px'
-                            }else{
-                                e.style.left = this.bgSlotWidth-10 + 'px'
+                    document.onmousemove = (e)=>{       //鼠标按下并移动的事件
+                        if (this.dragFlag){
+                            //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
+                            let x = e.clientX - disX
+                            // console.log(x)
+                            // let y = e.clientY - disY
+                            //父元素的边界处理
+                            if (x<=0){
+                                x = 0
+                            }else if (x>=this.bgSlotWidth){
+                                x = this.bgSlotWidth
+                            }
+                            if (el.style){
+                                this.progressLen=x
+                            // console.log(this.progressLen)
+                            if (x<=10){
+                                el.style.left = 10 + 'px'
+
+                            }else if (x>10&&x<this.bgSlotWidth-10){
+                                el.style.left = x + 'px'
+
+                            }else {
+                                el.style.left =  (this.bgSlotWidth-10)+ 'px'
+                            }
+                            this.dragProgress()
                             }
 
                         }
-                    }
-                };
-                document.onmouseup = (e) => {
-                    this.dragFlag=false
-                };
+                    };
+                    document.onmouseup = (e) => {
+                        e = null
+                        el = null
+                        disX = null
+                        this.dragFlag=false
+                    };
+
+
             },
             //音量拖拽
             moveVolume(e){
@@ -157,7 +170,7 @@
                 let isGragFlag = true
                 e.preventDefault()
                 document.onmousemove = (e)=>{
-                    if (isGragFlag){
+                    if (isGragFlag&&!this.dragFlag){
                         //鼠标按下并移动的事件
                         //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
                         let x = e.clientX - disX
@@ -170,9 +183,9 @@
                         }
                         if (el.style){
                            this.volumeLen=x
-                            if (x<=60&&x>=10){
+                            if (x<=60&&x>=5){
                                 el.style.left =x + 'px'
-                            }else if (x<10){
+                            }else if (x<5){
                                 el.style.left =0 + 'px'
                             }else{
                                 el.style.left =60 + 'px'
@@ -192,45 +205,65 @@
                 console.log(this.$refs.audio.duration); //此时可以获取到duration*/
                 this.durationOriginal = this.$refs.audio.duration
                 this.duration = this.timeFormat(this.durationOriginal);
-                this.isStop=true
                 //获取音量
                 this.getVolume()
+                this.$refs.audio.play()
             },
             //获取当前播放时间
             updateTime(e) {
                 // console.log(this.dragFlag)
-                if (!this.dragFlag){
+
+                // if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
-                }
+                // }
 
             },
             //结束操作
             endOpera(){
-                this.isStop=false
+                this.isCanStop=false
+            },
+            //播放标志
+            setPlaying(){
+                this.isCanStop=true
             },
             //播放暂停歌曲
             changeSongStatus(){
                 let audio =this.$refs.audio//获取audio
                 if (audio.paused){//如果暂停状态
                     audio.play()  //调用播放
-                    this.isStop=true
+                    this.isCanStop=true
                 }else {             //如果播放状态
                         audio.pause()   //调用暂停
-                    this.isStop=false
+                    this.isCanStop=false
 
                 }
             },
             //当前进度条
-            currentProgress(){
-                // debugger
-                //走过长度
-                let length = (this.currentTimeOriginal/this.durationOriginal)*this.bgSlotWidth
-                let over = this.$refs.overTime
+            currentProgress(flag){
+                if (!flag){
+                    let length = (this.currentTimeOriginal/this.durationOriginal)*this.bgSlotWidth
+                    let over = this.$refs.overTime
                     over.style.width=length+'px'
-                //指示圆点
-                let currentTime = this.$refs.currentTime
+                    //指示圆点
+                    let currentTime = this.$refs.currentTime
                     currentTime.style.left=length+'px'
+                }
+
+
+            },
+            //拖拽进度条
+            dragProgress(){
+                // debugger
+                // console.log(this.progressLen)
+                if (this.dragFlag){
+                    //走过时间
+                    this.$refs.overTime.style.width=this.progressLen+'px'
+                    //指示圆点
+                    this.$refs.currentTime.style.left = this.progressLen+'px'
+                    this.$refs.audio.currentTime=(this.progressLen/this.bgSlotWidth)*this.durationOriginal
+                }
+
             },
             //点击进度条
             clickProgress(event){
@@ -286,7 +319,6 @@
             },
 
 
-
         },
         created() {
 
@@ -314,18 +346,28 @@
 
         },
         watch:{
-            playerUrl(){
+        /*    playerUrl(){
                 this.$nextTick(()=>{
                     //通过$refs获取到audio标签,并使用play()进行播放
                     this.$refs.audio.play()
                 })
-            },
+            },*/
             //监视当前时间变化
             currentTime(val){
-                this.$nextTick(item=>{
+                // this.$nextTick(item=>{
+                if (!this.dragFlag){
                     this.currentProgress()
-                })
+                }
+
             },
+
+            progressLen:{
+                handler:function () {
+                    this.dragProgress()
+
+                },
+                deep:true
+            }
 
 
         },
