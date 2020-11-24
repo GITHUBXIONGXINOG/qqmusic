@@ -2,7 +2,7 @@
     <div class="player-bar" ref="playerBar">
         <div class="audio-panel">
             <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
-                    @playing="setPlaying"
+                    @playing="setStart"
                     :src="playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
@@ -10,7 +10,7 @@
                     <span class="back"><i></i></span>
                     <span class="startAndStop"
                           @click="changeSongStatus()"
-                          :class="{stopButton:isCanStop}"
+                          :class="{stopButton:isPaused}"
                     ><i></i></span>
                     <span class="next"><i></i></span>
                 </div>
@@ -108,7 +108,7 @@
                 duration:'00:00',//总时间格式化
                 currentTime:'00:00',//当前时间格式化
                 bgSlotWidth:0,//当前背景区域的宽度
-                isCanStop:false,//是否可以停止
+                isPaused:true,//是否暂停
                 isStarting:false,//额外处理,刷新后的情况
                 dragFlag:false,//拖动flag
                 isMuted:false,//是否静音
@@ -118,6 +118,10 @@
         },
 
         methods:{
+            //播放器开始标志
+            setStart(){
+                this.isPaused=false
+            },
             //拖拽事件
             move(e){
                 let el = e.target
@@ -159,6 +163,8 @@
                         el = null
                         disX = null
                         this.dragFlag=false
+                        // this.$refs.audio.currentTime=(this.progressLen/this.bgSlotWidth)*this.durationOriginal
+
                     };
 
 
@@ -205,6 +211,7 @@
                 console.log(this.$refs.audio.duration); //此时可以获取到duration*/
                 this.durationOriginal = this.$refs.audio.duration
                 this.duration = this.timeFormat(this.durationOriginal);
+
                 //获取音量
                 this.getVolume()
                 this.$refs.audio.play()
@@ -213,31 +220,32 @@
             updateTime(e) {
                 // console.log(this.dragFlag)
 
-                // if (!this.dragFlag){
+                if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
-                // }
+                }
 
             },
             //结束操作
             endOpera(){
-                this.isCanStop=false
+                this.isPaused=false
             },
-            //播放标志
-            setPlaying(){
-                this.isCanStop=true
-            },
+
             //播放暂停歌曲
             changeSongStatus(){
+                // debugger
                 let audio =this.$refs.audio//获取audio
+
                 if (audio.paused){//如果暂停状态
                     audio.play()  //调用播放
-                    this.isCanStop=true
+                    this.isPaused=false
                 }else {             //如果播放状态
                         audio.pause()   //调用暂停
-                    this.isCanStop=false
+                    this.isPaused=true
 
                 }
+                // console.log('audio暂停状态:'+audio.paused)
+                // console.log('是否暂停:'+this.isPaused)
             },
             //当前进度条
             currentProgress(flag){
@@ -261,7 +269,9 @@
                     this.$refs.overTime.style.width=this.progressLen+'px'
                     //指示圆点
                     this.$refs.currentTime.style.left = this.progressLen+'px'
+                    this.currentTime = this.timeFormat((this.progressLen/this.bgSlotWidth)*this.durationOriginal);  //获取audio当前播放时间
                     this.$refs.audio.currentTime=(this.progressLen/this.bgSlotWidth)*this.durationOriginal
+
                 }
 
             },
@@ -272,7 +282,6 @@
                 this.$refs.overTime.style.width=e.offsetX+'px'
                 this.$refs.currentTime.style.left=(e.offsetX-5)+'px'
                 this.$refs.audio.currentTime=(through/100)*this.durationOriginal
-                this.$refs.audio.play()
             },
             //进度条初始化
             progressInit(){
@@ -346,12 +355,7 @@
 
         },
         watch:{
-        /*    playerUrl(){
-                this.$nextTick(()=>{
-                    //通过$refs获取到audio标签,并使用play()进行播放
-                    this.$refs.audio.play()
-                })
-            },*/
+
             //监视当前时间变化
             currentTime(val){
                 // this.$nextTick(item=>{
