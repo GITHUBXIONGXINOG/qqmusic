@@ -88,8 +88,8 @@ export default {
                     type:item.type,
                     mid:item.mid
                 }))
-                debugger
-                console.log(this.apiGetList.map(item=>item))
+                // debugger
+                // console.log(this.apiGetList.map(item=>item))
 
             }
             else if (index==2){
