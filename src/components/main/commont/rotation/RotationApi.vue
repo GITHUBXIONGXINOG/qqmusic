@@ -23,10 +23,7 @@ export default {
             type: Number,
             required: true
         },
-/*        clickPath:{
-            type: String,
-            default: 'clickPath'
-        }*/
+
     },
     data(){
         return {
@@ -80,6 +77,7 @@ export default {
                     type:item.type
                 }))
             }
+            //新歌首发
             else if (index==1){
                 this.apiGetList = res.data.data.list.map(item => ({
                     id:item.album.id,
@@ -90,8 +88,8 @@ export default {
                     type:item.type,
                     mid:item.mid
                 }))
-                // debugger
-                // console.log(this.apiGetList.map(item=>item))
+                debugger
+                console.log(this.apiGetList.map(item=>item))
 
             }
             else if (index==2){
@@ -156,6 +154,7 @@ export default {
                 console.log(this.apiGetList.map(item=>item))*/
             }
             else if (index==1){
+                // debugger
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
                     title:item.title,
@@ -163,7 +162,8 @@ export default {
                     singer:item.singer[0].name,
                     id:item.album.id,
                     // listen_num:item.listen_num,
-                    type:item.type
+                    type:item.type,
+                    mid:item.mid
                 }))
                 // debugger
                 // console.log(this.apiGetList.map(item=>item))

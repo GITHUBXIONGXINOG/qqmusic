@@ -157,30 +157,7 @@ export default {
             this.$refs.api.clickPath(path,index)
             this.clickFlag=clickIndex
         },
- /*       //点击切换获取地址
-        clickPath(path){
-            this.$emit('click-path',path)
-        },*/
-   /*     isActive(path){
-/!*            if (this.index==3){
-                return false
-            }
-            // debugger
-            if (path === this.$route.path){
-                return true
-            }
-            if (path === '/recommend' && this.$route.path === '/homepage' ){
-                return true
-            }
-            if (path === '/homepage/recommend' && this.$route.path === '/homepage' ){
-                return true
-            }*!/
-            return false
-        },*/
-/*        ClickSetFlag(clickIndex){
-            // console.log(path)
-            this.clickFlag=clickIndex
-        },*/
+
         isClickFlag(flag){
            return  flag==this.clickFlag ? true :false
         },
@@ -215,10 +192,7 @@ export default {
     }
 
 }
-/*window.onload=function () {
-   var iList = document.querySelectorAll('.select > i')
-    console.log(iList)
-}*/
+
 </script>
 
 

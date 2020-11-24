@@ -39,7 +39,7 @@
                 let songLyricUrl = '/api/lyric?songmid='+this.songId
                 const resOfSongLyric = await this.$http.get(songLyricUrl)
                 let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-                // console.log(resOfSongLyric)
+                console.log(resOfSongLyric)
                 // debugger
                 //歌词对象
                 let lyrArr = {}
