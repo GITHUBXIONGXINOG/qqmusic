@@ -1,11 +1,11 @@
 <template>
     <div class="lyric-parsing">
           <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap">
-              <span v-for="(item,key,index) in songLyric" :key="index"
+              <span v-for="(item,key,index) in songData.lyric" :key="index"
               :class="classObject(item,key,index)"
                >{{item}}</span>
           </div>
-
+<!--{{songData.lyric}}-->
     </div>
 </template>
 
@@ -33,7 +33,7 @@
             }
         },
         methods:{
-            async fetchLyric(){
+           /* async fetchLyric(){
 
                 //歌词
                 let songLyricUrl = '/api/lyric?songmid='+this.songId
@@ -43,16 +43,16 @@
                 // debugger
                 //歌词对象
                 let lyrArr = {}
-                //* 贪婪匹配,有多少匹配多少
+                //!* 贪婪匹配,有多少匹配多少
                 let reg = /\[\d*:\d*\.\d*]/g
                 for (let i = 0; i < lyrics.length; i++) {
                    let timerRegExpArr = lyrics[i].match(reg)
                     if (!timerRegExpArr) continue
                     let t = timerRegExpArr[0] //数值格式,取出数据
                     //取出分钟
-                    let min = Number(t.match(/\[\d*/).toString().slice(1))
+                    let min = Number(t.match(/\[\d*!/).toString().slice(1))
                     //取出秒
-                    let second = Number(t.match(/:\d*/).toString().slice(1))
+                    let second = Number(t.match(/:\d*!/).toString().slice(1))
                     //歌词文本
                     let content = lyrics[i].replace(timerRegExpArr,"")
                     //处理版权问题,比如官方翻译无法获取到
@@ -67,7 +67,7 @@
                 this.songLyric = lyrArr
                 this.getALlKeys(lyrArr)
                 // console.log(lyrArr)
-            },
+            },*/
             //得到所有的Keys
             getALlKeys(lyrArr){
                 //将所有的key入栈
@@ -82,8 +82,9 @@
             }
         },
         created() {
-            this.fetchLyric()
-
+            // this.fetchLyric()
+            // songData.lyric
+            this.getALlKeys(this.songData.lyric)
         },
         watch:{
             currentTime(){
@@ -103,6 +104,12 @@
                         return 'currentLyric'
                     }
                 }
+            },
+            songData(){
+                const {cur,list}=this.$store.state
+                return list.find(item=>{
+                    return item.mid===cur
+                }) || null
             }
         }
 
