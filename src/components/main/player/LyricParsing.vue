@@ -78,7 +78,7 @@
             //歌词移动
             lyricMove(){
                 // debugger
-                this.$refs.lyricWrap.style.transform="translateY("+(33-this.lyricIndex*32)+"px)"
+                this.$refs.lyricWrap.style.transform="translateY("+(25-this.lyricIndex*35)+"px)"
             }
         },
         created() {
@@ -96,7 +96,8 @@
         computed:{
             classObject() {
                 return function (item,key,index) {
-                    if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
+
+                    if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
                         //当前的歌词位置,即行数
                         this.lyricIndex=index
                         return 'currentLyric'
@@ -127,20 +128,28 @@
         //border: 1px solid red;
     }
     .lyric-wrap{
-        //border: 1px solid red;
+        //border: 1px solid blue;
         width: 100%;
         height: 100px;
-        //overflow: hidden;
         position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         padding: 1px 0 0 0 ;
-        transform: translateY(33px);
+
+        transform: translateY(25px);
+
+
+
         span{
-            //border: 1px solid red;
-            margin: 6px 0;
+            //border: 1px solid black;
+            //margin: 6px 0;
             height: 20px;
+            width:100%;
+            display:block;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            text-align: center;
+            margin: 15px 0;
+
         }
      }
     .currentLyric{

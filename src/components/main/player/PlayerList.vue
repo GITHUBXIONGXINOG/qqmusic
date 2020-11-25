@@ -18,7 +18,7 @@
                     {{item}}
                 </li>
             </ul>
-            <div class="song-info" >
+            <div class="song-info" v-if="songData">
                 <ul class="song-info-ul" v-for="(item,index) in songList" :key="index"
                     :class="{'alive-song':songData.mid==item.mid&&pausedSign}"
                     @mouseenter="OperateChange(index)"
@@ -36,7 +36,7 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
-                        <li @click="clickPlaying">
+                        <li @click="clickPlaying(item.mid)">
                             <i class="iconfont icon-bofang2">
                             </i>
                         </li>
@@ -130,9 +130,8 @@
                     this.songOperatingShow=''
                 }
             },
-            clickPlaying(){
-                debugger
-                Bus.$emit('clickPlaying',!this.pausedSign)
+            clickPlaying(mid){
+                Bus.$emit('clickPlaying',mid)
              }
         },
 
@@ -143,7 +142,7 @@
           // this.$store.dispatch('queryDataA',this.$route.params.songId)*/
           //   debugger
             this.$store.dispatch('queryDataA',this.$route.params.songId)
-            this.songData()
+            // this.songData()
         },
         data(){
             return{
@@ -164,6 +163,7 @@
                     'lajixiangzizhi',
                 ],//用户歌曲操作图标
                 songOperatingShow:'',//显示操作标识
+                paused:'',
 
             }
         },

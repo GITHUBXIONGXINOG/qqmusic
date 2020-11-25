@@ -283,6 +283,7 @@
             //进度条初始化
             progressInit(){
                 this.bgSlotWidth = (document.body.clientWidth)*.423
+                if (this.$refs.bgSlot)
                 this.$refs.bgSlot.style.width=  this.bgSlotWidth + 'px'
 
             },
@@ -327,9 +328,11 @@
 
         },
         created() {
-            debugger
-            Bus.$on('clickPlaying',item=>{
-                this.changeSongStatus()
+            Bus.$on('clickPlaying',mid=>{
+                // debugger
+                // this.changeSongStatus()
+                this.isPaused=!this.isPaused
+                // console.log(mid)
             })
         },
         computed:{

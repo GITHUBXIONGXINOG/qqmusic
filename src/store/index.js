@@ -53,8 +53,13 @@ export default new Vuex.Store({
         commit('queryDataM',{songId})
         return
       }
+      // debugger
       //不存在,从服务器重新获取
       result = await api.songInfo(songId)
+      let resultOfSongInfo = await api.songInfo(songId)
+
+      let resultOfSongPlayer = await api.songPlayer(songId)
+
       // console.log(result)
       //拿到数据
       if (parseInt(result.data.result)===100){
@@ -62,10 +67,10 @@ export default new Vuex.Store({
           songId,
           data:result.data.data.track_info
         })
-
       }
-      // console.log(state)
     }
+
+
   },
   modules: {
   }

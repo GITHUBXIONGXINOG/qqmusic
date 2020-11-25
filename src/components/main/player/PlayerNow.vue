@@ -1,13 +1,14 @@
 <template>
     <div class="player-now">
+<!--        {{songData.title}}-->
         <div class="songInfo">
             <div class="songPicture-wrap">
                 <img :src="songPicture" alt="">
             </div>
-            <ul class="songCreateInfo" v-show="songTitle">
-                <li><span>歌曲名:&nbsp;</span><i>{{songTitle}}</i></li>
-                <li><span>歌手名:&nbsp;</span><i>{{singer}}</i></li>
-                <li><span>专辑名:&nbsp;</span><i>{{albumName}}</i></li>
+            <ul class="songCreateInfo" v-if="songDataNow">
+                <li><span>歌曲名:&nbsp;</span><i>{{songDataNow.title}}</i></li>
+                <li><span>歌手名:&nbsp;</span><i>{{songDataNow.singer[0].name}}</i></li>
+                <li><span>专辑名:&nbsp;</span><i>{{songDataNow.album.title}}</i></li>
             </ul>
         </div>
         <div class="songLyric">
@@ -61,6 +62,19 @@ export default {
     },
     methods:{
 
+    },
+    created() {
+
+    },
+    computed:{
+        songDataNow(){
+            // debugger
+            const {cur,list}=this.$store.state
+            // console.log(list)
+            return list.find(item=>{
+                return item.mid===cur
+            }) || null
+        },
     },
     watch:{
 
