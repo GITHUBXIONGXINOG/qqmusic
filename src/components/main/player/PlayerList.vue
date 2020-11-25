@@ -37,7 +37,7 @@
                         v-show="songOperatingShow==index"
                     >
                         <li @click="clickPlaying(item.mid)">
-                            <i class="iconfont icon-bofang2">
+                            <i class="iconfont ">
                             </i>
                         </li>
                         <li>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-    import Bus from "@/assets/js/bus";
+    // import Bus from "@/assets/js/bus";
     export default {
         props:{
 
@@ -93,9 +93,14 @@
                     this.songOperatingShow=''
                 }
             },
-            clickPlaying(mid){
-                Bus.$emit('clickPlaying',mid)
-             }
+            //点击传值给兄弟组件playerbar
+            clickPlaying(clickMid){
+                let clickFlag =this.clickFlag
+                let clickInfo = {clickFlag,clickMid}
+                 this.$bus.$emit('clickPlaying',clickInfo)
+                this.clickFlag=!this.clickFlag
+             },
+
         },
 
         created() {
@@ -126,8 +131,7 @@
                     'lajixiangzizhi',
                 ],//用户歌曲操作图标
                 songOperatingShow:'',//显示操作标识
-                paused:'',
-
+                clickFlag:false,
             }
         },
         watch:{
@@ -136,143 +140,6 @@
 
     }
 </script>
-<style lang="scss">
-.player-list{
-    .rank-wrap{
-        .song-info{
-            .song-info-ul{
-                //border: 1px solid red;
-                display: flex;
-                padding: 0 0 0 44px;
-                margin: 15px 0;
-                color: #E1E1E1CC;
-                position: relative;
-                height: 50px;
-                align-items: center;
-                .checkInput{
-                    position: absolute;
-                    left: -4px;
-                }
 
-                li{
-                    //border: 1px solid red;
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-
-                }
-                .song-index{
-                    //margin: 0 10px;
-                    margin: 0 5px 0 0;
-                }
-                .song-title{
-                    width: 500px;
-                }
-                .song-singer{
-                    width: 216px;
-
-                }
-                .song-interval{
-                    width: 50px;
-
-                }
-                .song-operating{
-                    position: absolute;
-                    display: flex;
-                    right: 370px;
-                    li{
-                        border: 1px solid rgba(225,225,225,.2);
-                        border-radius: 50%;
-                        width: 38px;
-                        height: 38px;
-                        margin: 0 5px;
-                        display: flex;
-                        justify-content: center;
-                        color: #bdbdbe;
-                        i{
-                            font-size: 20px;
-                        }
-                        &:hover{
-                            border-color: rgba(225,225,225,.8);
-                            color: rgba(225,225,225,.8);
-                            cursor: pointer;
-                        }
-                    }
-                    li:nth-child(1){
-                        font-size: 19px;
-                        padding-left: 5px;
-                    }
-                    li:nth-child(4){
-                        position: absolute;
-                        right: -265px;
-
-                    }
-
-                }
-                .operating-hidden{
-                    opacity: 0;
-                }
-            }
-        }
-        .alive-song{
-            color: #FFFFFF!important;
-            .song-index{
-                opacity: 0;
-            }
-            //动态图标
-            .bg-bubbles{
-                position: absolute;
-                //border: 1px solid red;
-                width: 12px;
-                height: 15px;
-                left: 40px;
-                display: flex;
-                justify-content: space-between;
-                align-items: flex-end;
-                li{
-                    //border: 1px solid white;
-                    width: 20%;
-                    background-color: rgba(225,225,225,.8);
-                    //content: '';
-                    //display: block;
-                    height: 10px;
-                    bottom: 0;
-
-                }
-                li:nth-child(1){
-                    animation: square 1s infinite ease-in;
-                    //animation-delay:.1s;
-
-                }
-                li:nth-child(2){
-                    animation: square 1s infinite ease-in;
-                    animation-delay:.2s;
-                }
-                li:nth-child(3){
-                    animation: square 1s infinite ease-in;
-                    animation-delay:.4s;
-                }
-            }
-        }
-        @keyframes square {
-            0%{
-                height: 0px;
-            }
-            25%{
-                height: 5px;
-            }
-            50%{
-                height: 10px;
-            }
-            75%{
-                height: 5px;
-            }
-            100%{
-                height: 0px;
-            }
-        }
-    }
-}
-</style>
 
 

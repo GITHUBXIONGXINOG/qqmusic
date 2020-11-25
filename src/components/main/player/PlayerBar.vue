@@ -81,7 +81,6 @@
 </template>
 
 <script>
-    import Bus from "@/assets/js/bus";
     export default {
         props:{
 
@@ -98,7 +97,9 @@
                 dragFlag:false,//拖动flag
                 isMuted:false,//是否静音
                 volumeLen:0,//音量长度
-                progressLen:0//进度条长度
+                progressLen:0,//进度条长度
+                clickFlag:'',
+                clickMid:''
             }
         },
 
@@ -312,13 +313,18 @@
 
         },
         created() {
-            Bus.$on('clickPlaying',mid=>{
-                // debugger
+
+            this.$bus.$on('clickPlaying',clickInfo=>{
+                // this.isPaused=!this.isPaused
                 // this.changeSongStatus()
-                this.isPaused=!this.isPaused
-                // console.log(mid)
+                let {clickFlag,clickMid} = clickInfo
+                this.clickFlag=clickFlag
+                this.clickMid = clickMid
+
             })
+
             this.progressInit()
+
 
         },
         computed:{
@@ -361,14 +367,17 @@
                 }
 
             },
-
+            //监视PlayerList的点击
+            clickFlag(val){
+                this.changeSongStatus()
+            },
             progressLen:{
                 handler:function () {
                     this.dragProgress()
 
                 },
                 deep:true
-            }
+            },
 
 
         },

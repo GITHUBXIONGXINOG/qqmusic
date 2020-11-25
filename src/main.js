@@ -25,7 +25,8 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/swiper-bundle.css'
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
 
-
+import bus from "@/assets/js/bus";
+Vue.prototype.$bus = bus
 new Vue({
   router,
   store,
