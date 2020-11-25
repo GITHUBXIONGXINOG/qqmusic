@@ -4,15 +4,10 @@
         <div class="pageInfo">
             <!--播放列表-->
             <player-list
-                :playSongList="playSongList"
                 :pausedSign="pausedSign"
             />
             <!--正在播放-->
             <player-now
-              :songPicture="songPicture"
-              :songTitle="songTitle"
-              :singer="singer"
-              :albumName="albumName"
               :songId="songId"
               :currentTime="currentTime"
               :durationTime="durationTime"
@@ -21,14 +16,12 @@
 
         <!-- 播放控制组件-->
         <player-bar
-            :songTitle="songTitle"
-            :singer="singer"
             @currentTime="setCurrentTime"
             @durationTime="setDurationTime"
             @getPausedSign="PausedSign"
         />
-        <div class="background-picture">
-            <img :src="songPicture" alt="" @click.prevent>
+        <div class="background-picture"  v-if="songData">
+            <img :src="songData.songPic" alt="" @click.prevent>
         </div>
 
     </div>
@@ -49,14 +42,10 @@
         data(){
             return{
                 songInfoUrl:'',//歌曲信息
-                songPicture:'',//歌曲图片
-                songTitle:'',//歌曲标题
-                singer:'',//歌手
                 albumName:'',//专辑名
                 songLyric:'',//歌词
                 currentTime:0,//当前播放的时间
                 durationTime:0,//总时间
-                playSongList:{},//播放歌曲列表
                 pausedSign:true,//暂停信号
             }
         },
@@ -68,24 +57,9 @@
               let songInfoUrl = '/api/song?songmid='+this.songId
               const resOfSongInfo = await this.$http.get(songInfoUrl)
               this.songInfoUrl = resOfSongInfo.data.data
-              this.songPicture =  `https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.songInfoUrl.track_info.album.mid}.jpg`
-              this.songTitle =  this.songInfoUrl.track_info.title
-              this.singer =  this.songInfoUrl.track_info.singer[0].name
               this.albumName = this.songInfoUrl.track_info.album.name
 
-              // console.log(this.playSongList)
-              //键值对标记
-              let flag = true
-              //循环遍历,查看是否存储
-              for (let key in this.playSongList){
-                  if (key==this.songId){
-                      flag = false
-                  }
-              }
-              if (flag){
-                  this.playSongList[this.songId]=this.songInfoUrl.track_info
-              }
-              // console.log(this.playSongList)
+
 
 
 
@@ -113,7 +87,14 @@
             // this.$store.dispatch('queryDataA',this.$route.params.songId)
             // console.log(this.$route)
         },
-
+        computed:{
+            songData(){
+                const {cur,list}=this.$store.state
+                return list.find(item=>{
+                    return item.mid===cur
+                }) || null
+            }
+        },
         mounted() {
 
         },
@@ -121,28 +102,7 @@
         watch:{
 
 
-            // $route:{
-            //     handler:function (val,oldVal) {
-            //         debugger
-            //         console.log(val)
-            //
-            //             // debugger
-            //             this.activeIndex.key = val.query.inputSearch
-            //             this.activeIndex.t=0
-            //             this.fetchSearchApi(this.activeIndex)
-            //             // console.log(this.activeIndex)
-            //
-            //     },
-            //     //深度监听
-            //     deep:true
-            // },
-            // $route(to){
-            //     console.log(to)
-            //     debugger
-            //     console.log(to)
-            //     this.$store.dispatch('queryDataA',to.params.songId)
-            //
-            // },
+
             songId:{
                 handler:function () {
                     this.fetchPlayerApi()
@@ -158,19 +118,7 @@
             //
             // },
             //监听路由
-           /* $route:{
-                handler:function (val,oldVal) {
-                    debugger
-                    if (val.path=='/player'){
-                        debugger
 
-
-                        // console.log(this.activeIndex)
-                    }
-                },
-                //深度监听
-                deep:true
-            },*/
 
         },
         components:{

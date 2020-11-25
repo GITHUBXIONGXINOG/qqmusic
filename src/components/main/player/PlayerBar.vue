@@ -1,8 +1,8 @@
 <template>
-    <div class="player-bar" ref="playerBar">
+    <div class="player-bar" ref="playerBar"  v-if="songData">
         <div class="audio-panel">
             <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
-                    @playing="setStart"  v-if="songData"
+                    @playing="setStart"
                     :src="songData.playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
@@ -24,14 +24,13 @@
                     <div class="currentTime" ref="currentTime"
                          @mousedown="move"
                     ></div>
-
                     <!--歌曲信息-->
                     <div class="songInfo">
                         <!--歌曲名字和作者-->
                         <div class="songTitle">
-                            <span>{{songTitle}}</span>
+                            <span>{{songData.title}}</span>
                             <span>&nbsp;-&nbsp;</span>
-                            <span>{{singer}}</span>
+                            <span>{{songData.singerName}}</span>
                         </div>
                         <!--歌曲时间信息-->
                         <div class="songTime">
@@ -44,6 +43,7 @@
                     </div>
 
                 </div>
+
                 <!--更多操作-->
                 <div class="moreOpera">
                     <!--列表循环-->
@@ -84,16 +84,6 @@
     import Bus from "@/assets/js/bus";
     export default {
         props:{
-            songTitle:{
-                type: String,
-                required: true
-            },
-            //歌手
-            singer:{
-                type: String,
-                required: true
-            }
-
 
         },
         data(){
@@ -328,6 +318,8 @@
                 this.isPaused=!this.isPaused
                 // console.log(mid)
             })
+            this.progressInit()
+
         },
         computed:{
             //时间格式化

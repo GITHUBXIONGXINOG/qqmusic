@@ -1,14 +1,14 @@
 <template>
-    <div class="player-now">
-<!--        {{songData.title}}-->
+    <div class="player-now"  v-if="songData">
+<!--        {{songData.songPic}}-->
         <div class="songInfo">
             <div class="songPicture-wrap">
-                <img :src="songPicture" alt="">
+                <img :src="songData.songPic" alt="">
             </div>
-            <ul class="songCreateInfo" v-if="songDataNow">
-                <li><span>歌曲名:&nbsp;</span><i>{{songDataNow.title}}</i></li>
-                <li><span>歌手名:&nbsp;</span><i>{{songDataNow.singer[0].name}}</i></li>
-                <li><span>专辑名:&nbsp;</span><i>{{songDataNow.album.title}}</i></li>
+            <ul class="songCreateInfo">
+                <li><span>歌曲名:&nbsp;</span><i>{{songData.title}}</i></li>
+                <li><span>歌手名:&nbsp;</span><i>{{songData.singer[0].name}}</i></li>
+                <li><span>专辑名:&nbsp;</span><i>{{songData.album.title}}</i></li>
             </ul>
         </div>
         <div class="songLyric">
@@ -25,22 +25,7 @@
 import LyricParsing from './LyricParsing'
 export default {
     props:{
-        songPicture:{
-            type: String,
-            required: true
-        },
-        songTitle:{
-            type: String,
-            required: true
-        },
-        singer:{
-            type: String,
-            required: true
-        },
-        albumName:{
-            type: String,
-            required: true
-        },
+
         songId:{
             type: String,
             required: true
@@ -64,10 +49,10 @@ export default {
 
     },
     created() {
-
+        // console.log(this.songDataNow)
     },
     computed:{
-        songDataNow(){
+        songData(){
             // debugger
             const {cur,list}=this.$store.state
             // console.log(list)

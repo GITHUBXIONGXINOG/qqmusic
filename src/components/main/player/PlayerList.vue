@@ -54,40 +54,7 @@
 
                     </ul>
                 </ul>
-          <!--      <ul v-for="(item,index,key) in playSongList" :key="index" class="rank-info-ul" :key="index">
-                    {{playSongList[index]}}
-                   &lt;!&ndash; <li class="rank-info-li">
-                        <i class="rank-num" :class="{'rank-num-top':index<3}">{{item.rank}}</i>
-                        &lt;!&ndash;输出排名&ndash;&gt;
-                        <span class="rank-value">
-                            <i :class="['iconfont',`${rankInfo(item.rankValue)}`]"></i>
-                            <i>{{item.rankValue}}</i>
-                        </span>
-                        <span class="song-title-wrap"
-                              @mouseenter="OperateChange(index)"
-                              @mouseleave="OperateChange"
-                        >
-                            <img :src="item.img" alt="">
-                            <i class="song-title"><a href="javascript:;">{{item.title}}</a></i>
-                            <i class="song-isonly iconfont icon-dujia" title="独家" v-show="item.isonly"></i>
-                            <i class="song-ismv iconfont icon-MV" title="MV" v-show="item.ismv"></i>
-                            <i class="song-isvip iconfont icon-VIP" title="vip" v-show="item.isvip"></i>
-                            &lt;!&ndash;用户操作选项&ndash;&gt;
-                            <ul class="song-operating"
-                                v-show="songOperatingShow==index"
-                            >
-                                <li v-for="n in operatingList">
-                                   <i :class="['iconfont',`icon-${n}`]">
-                                   </i>
-                                </li>
-                            </ul>
-                        </span>
-                        <i class="rank-singername"><a href="javascript:;">{{item.singerName}}</a></i>
-                        <i class="rank-time">{{songTime(item.interval)}}</i>
-                    </li>&ndash;&gt;
-                </ul>-->
-<!--                {{ songData }}-->
-<!--                {{// playSongList}}-->
+
             </div>
         </div>
     </div>
@@ -97,11 +64,7 @@
     import Bus from "@/assets/js/bus";
     export default {
         props:{
-            //播放列表
-            playSongList:{
-                type: Object,
-                require:true
-            },
+
             //暂停信号
             pausedSign:{
                 type: Boolean,
@@ -168,19 +131,7 @@
             }
         },
         watch:{
-            /*//to 跳转的页面 to和$route一样,存储当前路由的信息
-            $route(to){
-                console.log(to)
-                this.$store.dispatch('queryDataA',to.params.songId)
 
-            },*/
-            playSongList:{
-                handler:function () {
-                    // debugger
-                    // console.log(this.playSongList)
-                },
-                deep:true
-            }
         },
 
     }
@@ -200,7 +151,7 @@
                 align-items: center;
                 .checkInput{
                     position: absolute;
-                    left: -5px;
+                    left: -4px;
                 }
 
                 li{

@@ -31,10 +31,12 @@ export default new Vuex.Store({
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
         state.list.unshift({
           ...dataOfInfo,
-          interval:timeFormat(dataOfInfo.interval),
-          playerUrl:dataOfPlay
+          interval:timeFormat(dataOfInfo.interval),//时间
+          playerUrl:dataOfPlay,//播放链接
+          singerName:dataOfInfo.singer[0].name,
+          songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`
         })
-
+// songPic =  `https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.songInfoUrl.track_info.album.mid}.jpg`
       }
     }
   },
