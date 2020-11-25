@@ -108,7 +108,8 @@
             //$route存储当前路由所有信息
             // 路由设置里面 path: '/player/:songId',所以params里面有songId
             //第一次加载时拿到当前路由匹配的id,派发请求
-            this.$store.dispatch('queryDataA',this.$route.params.songId)
+            // this.$store.dispatch('queryDataA',this.$route.params.songId)
+            // console.log(this.$route)
         },
 
         mounted() {
@@ -116,6 +117,30 @@
         },
 
         watch:{
+
+
+            // $route:{
+            //     handler:function (val,oldVal) {
+            //         debugger
+            //         console.log(val)
+            //
+            //             // debugger
+            //             this.activeIndex.key = val.query.inputSearch
+            //             this.activeIndex.t=0
+            //             this.fetchSearchApi(this.activeIndex)
+            //             // console.log(this.activeIndex)
+            //
+            //     },
+            //     //深度监听
+            //     deep:true
+            // },
+            // $route(to){
+            //     console.log(to)
+            //     debugger
+            //     console.log(to)
+            //     this.$store.dispatch('queryDataA',to.params.songId)
+            //
+            // },
             songId:{
                 handler:function () {
                     this.fetchPlayerApi()
@@ -123,12 +148,27 @@
                 deep:true
             },
             //to 跳转的页面 to和$route一样,存储当前路由的信息
-            $route(to){
-                debugger
-                console.log(to)
-                this.$store.dispatch('queryDataA',to.params.songId)
+            // $route(to,from){
+            //     console.log(to)
+            //     debugger
+            //     console.log(to)
+            //     this.$store.dispatch('queryDataA',to.params.songId)
+            //
+            // },
+            //监听路由
+           /* $route:{
+                handler:function (val,oldVal) {
+                    debugger
+                    if (val.path=='/player'){
+                        debugger
 
-            },
+
+                        // console.log(this.activeIndex)
+                    }
+                },
+                //深度监听
+                deep:true
+            },*/
 
         },
         components:{

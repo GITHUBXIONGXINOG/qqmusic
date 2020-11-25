@@ -52,9 +52,11 @@
          /*   imgUrl(val){
                 this.url = val
             }*/
+
         },
         created() {
             this.getImgInfo()
+
 
         },
         mounted() {
