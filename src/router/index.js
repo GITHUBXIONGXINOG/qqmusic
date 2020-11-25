@@ -45,6 +45,7 @@ export default new VueRouter({
         },
         {
             path: '/player/:songId',
+            // path: '/player',
             name: 'Player',
             component: Player,
             props: true

@@ -3,7 +3,9 @@
 <!--        播放: {{songId}}-->
         <div class="pageInfo">
             <!--播放列表-->
-            <player-list />
+            <player-list
+                :playSongList="playSongList"
+            />
             <!--正在播放-->
             <player-now
               :songPicture="songPicture"
@@ -54,7 +56,7 @@
                 songLyric:'',//歌词
                 currentTime:0,//当前播放的时间
                 durationTime:0,//总时间
-                playSongList:[],//播放歌曲列表
+                playSongList:{},//播放歌曲列表
             }
         },
         methods:{
@@ -74,7 +76,7 @@
               this.singer =  this.songInfoUrl.track_info.singer[0].name
               this.albumName = this.songInfoUrl.track_info.album.name
 
-              console.log(this.playSongList)
+              // console.log(this.playSongList)
               //键值对标记
               let flag = true
               //循环遍历,查看是否存储

@@ -19,10 +19,11 @@
                 </li>
             </ul>
             <div class="rank-info" >
-                <ul v-for="(item,index) in storageContent" :key="index" class="rank-info-ul" >
-                    <li class="rank-info-li">
+          <!--      <ul v-for="(item,index,key) in playSongList" :key="index" class="rank-info-ul" :key="index">
+                    {{playSongList[index]}}
+                   &lt;!&ndash; <li class="rank-info-li">
                         <i class="rank-num" :class="{'rank-num-top':index<3}">{{item.rank}}</i>
-                        <!--输出排名-->
+                        &lt;!&ndash;输出排名&ndash;&gt;
                         <span class="rank-value">
                             <i :class="['iconfont',`${rankInfo(item.rankValue)}`]"></i>
                             <i>{{item.rankValue}}</i>
@@ -36,7 +37,7 @@
                             <i class="song-isonly iconfont icon-dujia" title="独家" v-show="item.isonly"></i>
                             <i class="song-ismv iconfont icon-MV" title="MV" v-show="item.ismv"></i>
                             <i class="song-isvip iconfont icon-VIP" title="vip" v-show="item.isvip"></i>
-                            <!--用户操作选项-->
+                            &lt;!&ndash;用户操作选项&ndash;&gt;
                             <ul class="song-operating"
                                 v-show="songOperatingShow==index"
                             >
@@ -48,8 +49,9 @@
                         </span>
                         <i class="rank-singername"><a href="javascript:;">{{item.singerName}}</a></i>
                         <i class="rank-time">{{songTime(item.interval)}}</i>
-                    </li>
-                </ul>
+                    </li>&ndash;&gt;
+                </ul>-->
+                {{playSongList}}
             </div>
         </div>
     </div>
@@ -58,7 +60,11 @@
 <script>
     export default {
         props:{
-
+            //播放列表
+            playSongList:{
+                type: Object,
+                require:true
+            }
         },
         data(){
             return{
@@ -73,6 +79,15 @@
                 contentNav:['歌曲','歌手','时长'],
             }
         },
+        watch:{
+            playSongList:{
+                handler:function () {
+                    debugger
+                    console.log(this.playSongList)
+                },
+                deep:true
+            }
+        }
 
     }
 </script>
