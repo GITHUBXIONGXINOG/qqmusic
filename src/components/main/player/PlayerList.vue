@@ -20,7 +20,7 @@
             </ul>
             <div class="song-info" >
                 <ul class="song-info-ul" v-for="(item,index) in songList" :key="index"
-                    :class="{'alive-song':songData.mid==item.mid}"
+                    :class="{'alive-song':songData.mid==item.mid&&pausedSign}"
                     @mouseenter="OperateChange(index)"
                     @mouseleave="OperateChange"
                 >
@@ -36,12 +36,22 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
-<!--                                                v-show="songOperatingShow==index"
--->
-                        <li v-for="n in operatingList">
-                            <i :class="['iconfont',`icon-${n}`]">
+                        <li @click="clickPlaying">
+                            <i class="iconfont icon-bofang2">
                             </i>
                         </li>
+                        <li>
+                            <i class="iconfont icon-jia"></i>
+                        </li>
+                        <li>
+                            <i class="iconfont icon-fenxiang"></i>
+                        </li>
+                        <li>
+                            <i class="iconfont icon-lajixiangzizhi"></i>
+                        </li>
+
+
+
                     </ul>
                 </ul>
           <!--      <ul v-for="(item,index,key) in playSongList" :key="index" class="rank-info-ul" :key="index">
@@ -84,11 +94,17 @@
 </template>
 
 <script>
+    import Bus from "@/assets/js/bus";
     export default {
         props:{
             //播放列表
             playSongList:{
                 type: Object,
+                require:true
+            },
+            //暂停信号
+            pausedSign:{
+                type: Boolean,
                 require:true
             }
         },
@@ -114,6 +130,10 @@
                     this.songOperatingShow=''
                 }
             },
+            clickPlaying(){
+                debugger
+                Bus.$emit('clickPlaying',!this.pausedSign)
+             }
         },
 
         created() {

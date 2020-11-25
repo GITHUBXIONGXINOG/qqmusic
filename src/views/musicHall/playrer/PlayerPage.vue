@@ -5,6 +5,7 @@
             <!--播放列表-->
             <player-list
                 :playSongList="playSongList"
+                :pausedSign="pausedSign"
             />
             <!--正在播放-->
             <player-now
@@ -25,6 +26,7 @@
             :singer="singer"
             @currentTime="setCurrentTime"
             @durationTime="setDurationTime"
+            @getPausedSign="PausedSign"
         />
         <div class="background-picture">
             <img :src="songPicture" alt="" @click.prevent>
@@ -57,6 +59,7 @@
                 currentTime:0,//当前播放的时间
                 durationTime:0,//总时间
                 playSongList:{},//播放歌曲列表
+                pausedSign:true,//暂停信号
             }
         },
         methods:{
@@ -100,6 +103,11 @@
             //总时间
             setDurationTime(val){
               this.durationTime=val
+            },
+            //暂停信号
+            PausedSign(val){
+              //原先是是否可以暂停,现在是暂停信号,取反
+              this.pausedSign=!val
             }
 
         },

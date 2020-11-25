@@ -81,6 +81,7 @@
 </template>
 
 <script>
+    import Bus from "@/assets/js/bus";
     export default {
         props:{
             //设置歌曲播放地址
@@ -232,9 +233,12 @@
                 if (audio.paused){//如果暂停状态
                     audio.play()  //调用播放
                     this.isPaused=false
+                    this.$emit('getPausedSign',this.isPaused)
                 }else {             //如果播放状态
                         audio.pause()   //调用暂停
                     this.isPaused=true
+                    this.$emit('getPausedSign',this.isPaused)
+
 
                 }
                 // console.log('audio暂停状态:'+audio.paused)
@@ -323,7 +327,10 @@
 
         },
         created() {
-
+            debugger
+            Bus.$on('clickPlaying',item=>{
+                this.changeSongStatus()
+            })
         },
         computed:{
             //时间格式化
