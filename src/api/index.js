@@ -7,10 +7,7 @@ const api = {
             }
         })
     },
-    /*
-    *                 let songLyricUrl = '/api/lyric?songmid='+this.songId
-
-    * */
+   //歌词
     songLyric(songId){
         return axios.get('/api/lyric',{
             params:{
@@ -18,6 +15,7 @@ const api = {
             }
         })
     },
+    //播放链接
     songPlayer(songId){
         return axios.get('/api/song/urls',{
             params:{

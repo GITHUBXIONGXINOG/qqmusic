@@ -2,8 +2,8 @@
     <div class="player-bar" ref="playerBar">
         <div class="audio-panel">
             <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
-                    @playing="setStart"
-                    :src="playerUrl"  ref="audio"></audio>
+                    @playing="setStart"  v-if="songData"
+                    :src="songData.playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
                 <div class="play-btns">
@@ -84,12 +84,6 @@
     import Bus from "@/assets/js/bus";
     export default {
         props:{
-            //设置歌曲播放地址
-            playerUrl:{
-                type: String,
-                required: true
-            },
-            //歌曲标题
             songTitle:{
                 type: String,
                 required: true
@@ -346,7 +340,15 @@
                     s = s<10 ? '0'+s : s
                     return min + ':' + s
                 }
-            }
+            },
+            songData(){
+                // debugger
+                const {cur,list}=this.$store.state
+                // console.log(list)
+                return list.find(item=>{
+                    return item.mid===cur
+                }) || null
+            },
         },
         mounted() {
             //进度条初始化

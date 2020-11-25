@@ -21,7 +21,6 @@
 
         <!-- 播放控制组件-->
         <player-bar
-            :playerUrl="songPlayerUrl"
             :songTitle="songTitle"
             :singer="singer"
             @currentTime="setCurrentTime"
@@ -49,7 +48,6 @@
         },
         data(){
             return{
-                songPlayerUrl:'',//歌曲播放
                 songInfoUrl:'',//歌曲信息
                 songPicture:'',//歌曲图片
                 songTitle:'',//歌曲标题
@@ -65,10 +63,6 @@
         methods:{
           async fetchPlayerApi(){
               //歌曲播放url
-              let playerUrl = '/api/song/urls?id='+this.songId
-              const resOfPlayer = await this.$http.get(playerUrl)
-              this.songPlayerUrl = resOfPlayer.data.data
-              this.songPlayerUrl = (Object.values(this.songPlayerUrl))[0]
 
               //歌曲信息
               let songInfoUrl = '/api/song?songmid='+this.songId

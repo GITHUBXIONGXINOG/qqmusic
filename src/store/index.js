@@ -24,14 +24,15 @@ export default new Vuex.Store({
     //payload 只能传一个参数,通过解构出想要的值
     queryDataM(state,payload){
       // debugger
-      let {songId,data}=payload
+      let {songId,dataOfInfo,dataOfPlay}=payload
       state.cur = songId
-      if (data){
+      if (dataOfInfo&&dataOfPlay){
         // state.list.push(data)
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
         state.list.unshift({
-          ...data,
-          interval:timeFormat(data.interval)
+          ...dataOfInfo,
+          interval:timeFormat(dataOfInfo.interval),
+          playerUrl:dataOfPlay
         })
 
       }
@@ -55,17 +56,19 @@ export default new Vuex.Store({
       }
       // debugger
       //不存在,从服务器重新获取
-      result = await api.songInfo(songId)
+      // result = await api.songInfo(songId)
       let resultOfSongInfo = await api.songInfo(songId)
 
       let resultOfSongPlayer = await api.songPlayer(songId)
 
       // console.log(result)
       //拿到数据
-      if (parseInt(result.data.result)===100){
+      if (parseInt(resultOfSongInfo.data.result)===100&&parseInt(resultOfSongPlayer.data.result)===100){
         commit('queryDataM',{
           songId,
-          data:result.data.data.track_info
+          dataOfInfo:resultOfSongInfo.data.data.track_info,
+          dataOfPlay:(Object.values(resultOfSongPlayer.data.data))[0]
+        //  (Object.values(this.songPlayerUrl))[0]
         })
       }
     }
