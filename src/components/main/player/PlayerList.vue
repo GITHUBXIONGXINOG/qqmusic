@@ -25,13 +25,16 @@
                     @mouseleave="OperateChange"
                 >
                     <input type="checkbox" class="checkInput">
-                    <li class="song-index">{{index+1}}</li>
+                    <ul class="bg-bubbles">
+                        <li v-for="(i, j) in 3" :key="j"></li>
+                    </ul>
+                    <li class="song-index" >{{index+1}}</li>
                     <li class="song-title">{{item.title}}</li>
                     <li class="song-singer">{{item.singer[0].name}}</li>
-                    <li class="song-interval">{{item.interval}}</li>
+                    <li class="song-interval"   :class="{'operating-hidden':songOperatingShow==index}">{{item.interval}}</li>
                     <!--用户操作选项-->
                     <ul class="song-operating"
-                        v-show="true"
+                        v-show="songOperatingShow==index"
                     >
 <!--                                                v-show="songOperatingShow==index"
 -->
@@ -137,8 +140,8 @@
                 operatingList:[
                     'bofang2',
                     'jia',
-                    'xiazai',
-                    'fenxiang'
+                    'fenxiang',
+                    'lajixiangzizhi',
                 ],//用户歌曲操作图标
                 songOperatingShow:'',//显示操作标识
 
@@ -167,7 +170,7 @@
     .rank-wrap{
         .song-info{
             .song-info-ul{
-                border: 1px solid red;
+                //border: 1px solid red;
                 display: flex;
                 padding: 0 0 0 44px;
                 margin: 15px 0;
@@ -177,10 +180,11 @@
                 align-items: center;
                 .checkInput{
                     position: absolute;
-                    left: 0;
+                    left: -5px;
                 }
+
                 li{
-                    border: 1px solid red;
+                    //border: 1px solid red;
                     height: 100%;
                     display: flex;
                     align-items: center;
@@ -191,10 +195,10 @@
                     margin: 0 5px 0 0;
                 }
                 .song-title{
-                    width: 497.98px;
+                    width: 500px;
                 }
                 .song-singer{
-                    width: 215px;
+                    width: 216px;
 
                 }
                 .song-interval{
@@ -204,13 +208,97 @@
                 .song-operating{
                     position: absolute;
                     display: flex;
-                    right: 400px;
-                }
+                    right: 370px;
+                    li{
+                        border: 1px solid rgba(225,225,225,.2);
+                        border-radius: 50%;
+                        width: 38px;
+                        height: 38px;
+                        margin: 0 5px;
+                        display: flex;
+                        justify-content: center;
+                        color: #bdbdbe;
+                        i{
+                            font-size: 20px;
+                        }
+                        &:hover{
+                            border-color: rgba(225,225,225,.8);
+                            color: rgba(225,225,225,.8);
+                            cursor: pointer;
+                        }
+                    }
+                    li:nth-child(1){
+                        font-size: 19px;
+                        padding-left: 5px;
+                    }
+                    li:nth-child(4){
+                        position: absolute;
+                        right: -265px;
 
+                    }
+
+                }
+                .operating-hidden{
+                    opacity: 0;
+                }
             }
         }
         .alive-song{
             color: #FFFFFF!important;
+            .song-index{
+                opacity: 0;
+            }
+            //动态图标
+            .bg-bubbles{
+                position: absolute;
+                //border: 1px solid red;
+                width: 12px;
+                height: 15px;
+                left: 40px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                li{
+                    //border: 1px solid white;
+                    width: 20%;
+                    background-color: rgba(225,225,225,.8);
+                    //content: '';
+                    //display: block;
+                    height: 10px;
+                    bottom: 0;
+
+                }
+                li:nth-child(1){
+                    animation: square 1s infinite ease-in;
+                    //animation-delay:.1s;
+
+                }
+                li:nth-child(2){
+                    animation: square 1s infinite ease-in;
+                    animation-delay:.2s;
+                }
+                li:nth-child(3){
+                    animation: square 1s infinite ease-in;
+                    animation-delay:.4s;
+                }
+            }
+        }
+        @keyframes square {
+            0%{
+                height: 0px;
+            }
+            25%{
+                height: 5px;
+            }
+            50%{
+                height: 10px;
+            }
+            75%{
+                height: 5px;
+            }
+            100%{
+                height: 0px;
+            }
         }
     }
 }
