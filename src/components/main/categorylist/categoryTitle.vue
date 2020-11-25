@@ -1,5 +1,6 @@
 <template>
     <div class="category-title">
+<!--        {{ titleListAll }}-->
         <div class="title-wrap">
             <ul class="title-ul-wrap" v-for="(item,index) in titleList" :key="index" >
                 <div class="title-center">
@@ -97,7 +98,7 @@
                 moreIndex:[false,false,false,false,false],//存储该更多是否被点击,true为被点击
                 moreInfo:['更多','更多','更多','','更多'],//存储'更多'位置上显示的数据,点击后可以动态更新
                 saveSelectName:'全部歌单',//保存点击的名字,在外部输出
-                orderSelect:true
+                orderSelect:true,
 
             }
         },
@@ -105,12 +106,47 @@
             //获取api数据
             async fetchCategory(params) {
                 // debugger
-                // console.log(params)
-                //标签
-                let urlTitle = '/api/songlist/category'
-                const res = await this.$http.get(urlTitle)
-                // console.log(res)
-                this.titleListAll = res.data.data
+                //往本地存储读取数据
+                let titleListAll = localStorage.getItem('titleListAll')
+                // console.log(titleListAll);
+                //如果存在数据,拿走
+                if (titleListAll){
+                    //将拿取到的数据进行解析
+                    titleListAll = JSON.parse(titleListAll)
+                     //时间判断
+                       //new Date().getTime() 当前时间
+                       //titleListAll.time    数据存储时间
+                    if (new Date().getTime()-titleListAll.time < 30*60*1000){
+                        this.titleListAll = titleListAll.data
+                        // return
+                    }
+                }else {
+                    //如果不存在,发送请求
+                    //标签
+                    let urlTitle = '/api/songlist/category'
+                    let res = await this.$http.get(urlTitle)
+                    // debugger
+
+                    // console.log(res)
+                    // console.log(res.data.result)
+                    //==100代表服务器响应成功,拿到数据
+                    if (parseInt(res.data.result)===100){
+                        //将服务器拿到的数据存储到titleListAll
+                        this.titleListAll = res.data.data
+                        //本地存储数据 JSON格式字符串
+                        localStorage.setItem(
+                          'titleListAll',
+                          JSON.stringify({
+                              time:new Date().getTime(),
+                              data:res.data.data
+                          }))
+                    }
+                }
+
+
+
+                // this.titleListAll = res.data.data
+
                 //内容
 
                 let urlContent = '/api/songlist/list'
@@ -135,12 +171,7 @@
                     this.showList[i]=new Array()
                     this.moreList[i]=new Object()
                     for (let j = 0 ,m= this.titleList[i].list.length ; j < m; j++) {
-                        // console.log(this.titleList[i]);
-                        // console.log(this.titleList[i].list);
-                        // console.log(this.titleList[i].list[j]);
-                        // this.showList[0][0]=1
-                        // console.log(this.showList[0])
-                        // console.log(this.showList[i][j])
+
                         if (j<len[i]){
                             this.showList[i][j]=(this.titleList[i].list[j])
                         }else {
@@ -151,21 +182,12 @@
                 //派发
                 this.$emit('contentList',this.contentList)
             },
+
             //点击函数
             selectTitle(id,name){
                 //index,类别 ,key具体项
                 // debugger
                 this.activeIndex['category']=id
-                // console.log( this.activeIndex)
-                // const params = {}
-                // // console.log(this.titleList)
-                // for (let item in this.titleList){
-                //     // console.log(this.titleList[item])
-                //     console.log(this.activeIndex[item])
-                //     // console.log(this.titleList[item].list[0].id)
-                //     params[item] = this.titleList[item].list[this.activeIndex[item]].id
-                // }
-                // console.log(params);
                 this.fetchCategory(this.activeIndex)
                 //清空更多上的样式
                 this.moreIndex=[false,false,false,false,false]
@@ -221,15 +243,9 @@
                 const contextMenuBox = document.getElementById('contextMenuBox')
                 if (contextMenuBox){
                     if (!contextMenuBox.contains(e.target)){
-                        // debugger
-                        // console.log(this.showIndex)
+
                         this.showIndex=-1
-                        // debugger
-                        // console.log(this.moreIndex)
-                        //全部置为false
-                        // this.moreIndex=[false,false,false,false,false]
-                        // console.log( this.moreIndex)
-                        // this.moreIndex[index]= !this.moreIndex[index]
+
                     }
                 }
             })
@@ -365,6 +381,14 @@
             changePageInfo(page){
                 this.activeIndex.pageNo=page
                 this.fetchCategory(this.activeIndex)
+            },
+            //监听路由切换 如果路由改变
+            $route(){
+                debugger
+                this.$nextTick(()=>{
+                    this.fetchCategory()
+
+                })
             }
         },
 

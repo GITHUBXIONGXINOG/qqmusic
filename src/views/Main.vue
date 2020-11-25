@@ -4,9 +4,9 @@
     <main-header
         @nav-click="toPath"
     />
-    <keep-alive>
+<!--    <keep-alive>-->
       <router-view></router-view>
-    </keep-alive>
+<!--    </keep-alive>-->
     <main-footer
         @nav-click="toPath"
     />
