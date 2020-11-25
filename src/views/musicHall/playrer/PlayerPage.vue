@@ -88,7 +88,7 @@
               if (flag){
                   this.playSongList[this.songId]=this.songInfoUrl.track_info
               }
-              console.log(this.playSongList)
+              // console.log(this.playSongList)
 
 
 
@@ -105,7 +105,10 @@
         },
         created() {
            this.fetchPlayerApi()
-
+            //$route存储当前路由所有信息
+            // 路由设置里面 path: '/player/:songId',所以params里面有songId
+            //第一次加载时拿到当前路由匹配的id,派发请求
+            this.$store.dispatch('queryDataA',this.$route.params.songId)
         },
 
         mounted() {
@@ -118,6 +121,13 @@
                     this.fetchPlayerApi()
                 },
                 deep:true
+            },
+            //to 跳转的页面 to和$route一样,存储当前路由的信息
+            $route(to){
+                debugger
+                console.log(to)
+                this.$store.dispatch('queryDataA',to.params.songId)
+
             },
 
         },

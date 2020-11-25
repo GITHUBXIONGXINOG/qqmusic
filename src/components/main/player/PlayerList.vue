@@ -66,6 +66,12 @@
                 require:true
             }
         },
+        created() {
+          /*  //$route存储当前路由所有信息
+            // 路由设置里面 path: '/player/:songId',所以params里面有songId
+            //第一次加载时拿到当前路由匹配的id,派发请求
+          this.$store.dispatch('queryDataA',this.$route.params.songId)*/
+        },
         data(){
             return{
                 userOperating:['收藏','添加到','下载','删除','清空列表'],//用户操作
@@ -80,10 +86,16 @@
             }
         },
         watch:{
+            /*//to 跳转的页面 to和$route一样,存储当前路由的信息
+            $route(to){
+                console.log(to)
+                this.$store.dispatch('queryDataA',to.params.songId)
+
+            },*/
             playSongList:{
                 handler:function () {
-                    debugger
-                    console.log(this.playSongList)
+                    // debugger
+                    // console.log(this.playSongList)
                 },
                 deep:true
             }

@@ -384,7 +384,6 @@
             },
             //监听路由切换 如果路由改变
             $route(){
-                debugger
                 this.$nextTick(()=>{
                     this.fetchCategory()
 

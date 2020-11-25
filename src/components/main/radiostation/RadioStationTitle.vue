@@ -48,11 +48,33 @@
         },
       methods:{
           async fetchApi(){
-            // debugger
-            let urlTitle = "/api/radio/category"
-            const resTitle  = await this.$http.get(urlTitle)
-            // console.log(resTitle.data.data)
-            this.titleListTemp = resTitle.data.data
+              let titleListTemp = localStorage.getItem('titleListTemp')
+              if (titleListTemp){
+                  titleListTemp = JSON.parse(titleListTemp)
+                  if (new Date().getTime(-titleListTemp.time<30*60*1000)){
+                      this.titleListTemp = titleListTemp.data
+                  }
+              }else {
+                  // debugger
+                  let urlTitle = "/api/radio/category"
+                  let resTitle  = await this.$http.get(urlTitle)
+                  if (parseInt(resTitle.data.result)===100){
+                      this.titleListTemp = resTitle.data.data
+                      localStorage.setItem(
+                        'titleListTemp',
+                        JSON.stringify({
+                            time:new Date().getTime(),
+                            data:this.titleListTemp
+                        })
+                      )
+                  }
+
+              }
+
+
+
+
+
           },
           //滚动事件
           handleScroll(){
@@ -142,10 +164,10 @@
                   this.$emit('contentList',this.titleList)
               })
           },
-    /*      activeIndex(val){
-              debugger
-              this.activeIndex=val
-          }*/
+          $route(){
+              this.fetchApi()
+          }
+
       },
 
       mounted() {
