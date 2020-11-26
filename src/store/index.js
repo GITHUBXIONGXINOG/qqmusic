@@ -71,7 +71,6 @@ export default new Vuex.Store({
           detaOdLyric:detaOfLyric,
           lyric:formatLyric(detaOfLyric)
         })
-// songPic =  `https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.songInfoUrl.track_info.album.mid}.jpg`
       }
     }
   },

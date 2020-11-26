@@ -98,8 +98,8 @@
                 isMuted:false,//是否静音
                 volumeLen:0,//音量长度
                 progressLen:0,//进度条长度
-                clickFlag:'',
-                clickMid:''
+                clickFlag:'',//点击标志
+                clickMid:'',//点击歌曲mid
             }
         },
 
@@ -318,8 +318,13 @@
                 // this.isPaused=!this.isPaused
                 // this.changeSongStatus()
                 let {clickFlag,clickMid} = clickInfo
-                this.clickFlag=clickFlag
-                this.clickMid = clickMid
+
+                // 如果点击的id是当前歌曲的id 暂停
+                if (this.songData.mid==clickMid){
+                    this.clickFlag=clickFlag
+                }else {//如果不是进行切换
+                    this.$store.dispatch('queryDataA',clickMid)
+                }
 
             })
 
