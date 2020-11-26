@@ -72,7 +72,6 @@ export default {
                 if (recommentForU){
                     recommentForU = JSON.parse(recommentForU)
                     if (new Date().getTime()-recommentForU.time<30*60*1000){
-                        // debugger
                         this.apiGetList = recommentForU.data
                         // console.log(this.apiGetList)
                     }
