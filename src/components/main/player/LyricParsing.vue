@@ -269,20 +269,28 @@ export default {
         //border: 1px solid red;
     }
     .lyric-wrap{
-        //border: 1px solid red;
+        //border: 1px solid blue;
         width: 100%;
         height: 100px;
-        //overflow: hidden;
         position: absolute;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         padding: 1px 0 0 0 ;
-        transform: translateY(33px);
+
+        transform: translateY(25px);
+
+
+
         span{
-            //border: 1px solid red;
-            margin: 6px 0;
+            //border: 1px solid black;
+            //margin: 6px 0;
             height: 20px;
+            width:100%;
+            display:block;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+            text-align: center;
+            margin: 15px 0;
+
         }
     }
     .currentLyric{
