@@ -42,10 +42,19 @@ function formatLyric(lyric) {
   // debugger
   return lyrArr
 }
+
+async function songUrlGet(songId) {
+  // debugger
+  let res = await api.songPlayer(songId)
+  console.log(res)
+  console.log((Object.values(res.data.data))[0])
+  return (Object.values(res.data.data))[0]
+}
+
 export default new Vuex.Store({
   state: {
     cur:0,//当前展示的歌曲id
-    list:[]//所有已经加载过的信息
+    list:[],//所有已经加载过的信息
   },
   mutations: {
     //state 原始状态
@@ -57,21 +66,58 @@ export default new Vuex.Store({
         dataOfInfo,
         dataOfPlay,
         detaOfLyric,
+        content_id,
+        dataOfSongList,
       }=payload
-      state.cur = songId
+      // state.cur = songId || content_id
+
       if (dataOfInfo&&dataOfPlay&&detaOfLyric){
         // state.list.push(data)
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
-        state.list.unshift({
-          ...dataOfInfo,
-          interval:timeFormat(dataOfInfo.interval),//时间
-          playerUrl:dataOfPlay,//播放链接
-          singerName:dataOfInfo.singer[0].name,//歌手名字
-          songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`,//歌曲图片
-          detaOdLyric:detaOfLyric,
-          lyric:formatLyric(detaOfLyric)
-        })
+        //如果不是歌单,从头插入歌曲
+       if (!content_id){
+         state.cur = songId
+         state.list.unshift({
+           ...dataOfInfo,
+           interval:timeFormat(dataOfInfo.interval),//时间
+           playerUrl:dataOfPlay,//播放链接
+           singerName:dataOfInfo.singer[0].name,//歌手名字
+           songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`,//歌曲图片
+           detaOdLyric:detaOfLyric,
+           lyric:formatLyric(detaOfLyric)
+         })
+       }else if(content_id){//如果是歌单,从尾插入歌曲
+         state.list.push({
+           ...dataOfInfo,
+           interval:timeFormat(dataOfInfo.interval),//时间
+           playerUrl:dataOfPlay,//播放链接
+           singerName:dataOfInfo.singer[0].name,//歌手名字
+           songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`,//歌曲图片
+           detaOdLyric:detaOfLyric,
+           lyric:formatLyric(detaOfLyric)
+         })
+       }
+
       }
+
+    /*  else if (content_id&&dataOfSongList){
+        debugger
+          state.list=[]
+        dataOfSongList.songlist.forEach((item,index)=>{
+          if (index<50){
+
+            state.list.push({
+              ...item,
+              interval:timeFormat(item.interval),//时间
+              // playerUrl:playerUrl,//播放链接
+
+            })
+          }else{
+            return
+          }
+        })
+          // state.list.push({...dataOfSongList.songlist})
+      }*/
     },
     queryDataMDelete(state,payload){
       // debugger
@@ -131,6 +177,47 @@ export default new Vuex.Store({
         //  (Object.values(this.songPlayerUrl))[0]
         })
       }
+    },
+    //歌单
+    async queryDataASongList({state,commit},content_id){
+      // debugger
+      //校验是否存在
+      let result = state.list.find(item=>{
+        return item.content_id===content_id
+      })
+      if (result){
+        //如果存在,执行commit方法,调用queryDataM,只改ID
+        commit('queryDataM',{content_id})
+        return
+      }
+      //不存在,从服务器重新获取
+      // result = await api.songInfo(songId)
+      let resultOfSongList = await api.songList(content_id)
+
+      // debugger
+
+      if (parseInt(resultOfSongList.data.result)===100){
+        for (let i in resultOfSongList.data.data.songlist){
+          if (i<30){
+            let item = resultOfSongList.data.data.songlist[i]
+            let resultOfSongInfo=await api.songInfo(item.songmid)
+            let resultOfSongPlayer = await api.songPlayer(item.songmid)
+            let resultOfSongLyric = await api.songLyric(item.songmid)
+            commit('queryDataM',{
+              content_id,
+              songId:item.songmid,
+              // dataOfSongList:resultOfSongList.data.data,
+              dataOfInfo:resultOfSongInfo.data.data.track_info,
+              dataOfPlay:(Object.values(resultOfSongPlayer.data.data))[0],
+              detaOfLyric:resultOfSongLyric.data.data.lyric,
+            })
+          }
+
+        }
+
+      }
+
+
     },
 
     //删除歌曲

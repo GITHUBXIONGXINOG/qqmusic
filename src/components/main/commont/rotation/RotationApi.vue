@@ -68,12 +68,24 @@ export default {
             console.log(res)*/
             /*对应不同api的保存数据*/
             if (index==0){
+                // debugger
                 let recommentForU = localStorage.getItem('recommentForU')
                 if (recommentForU){
                     recommentForU = JSON.parse(recommentForU)
                     if (new Date().getTime()-recommentForU.time<30*60*1000){
                         this.apiGetList = recommentForU.data
-                        // console.log(this.apiGetList)
+                    }else {
+                        let res = await this.$http.get(this.apiSetList.path)
+                        if (parseInt(res.data.result)===100){
+                            this.apiGetList=res.data.data.list
+                            localStorage.setItem(
+                              'recommentForU',
+                              JSON.stringify({
+                                  time:new Date().getTime(),
+                                  data:res.data.data.list
+                              })
+                            )
+                        }
                     }
                 }else {
                     let res = await this.$http.get(this.apiSetList.path)
@@ -148,7 +160,6 @@ export default {
                 }))
 
             }
-
 
         },
 
@@ -244,7 +255,18 @@ export default {
         this.apiSet(this.index)
         this.fetchRecommendSwiper(this.index)
     },
-
+    watch:{
+        $route(){
+            this.$nextTick(()=>{
+                this.fetchRecommendSwiper(this.index)
+            })
+        },
+        index(val){
+            this.$nextTick(()=>{
+                this.fetchRecommendSwiper(val)
+            })
+        }
+    }
 
 }
 </script>

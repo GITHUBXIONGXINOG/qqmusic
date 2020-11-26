@@ -23,6 +23,15 @@ const api = {
             }
         })
     },
+    //歌单
+    songList(content_id){
+        return axios.get('/api/songlist',{
+            params:{
+                id:content_id
+            }
+        })
+    },
+
 
 }
 export default api

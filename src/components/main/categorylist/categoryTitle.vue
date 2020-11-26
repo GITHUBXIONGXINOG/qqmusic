@@ -119,6 +119,27 @@
                     if (new Date().getTime()-titleListAll.time < 30*60*1000){
                         this.titleListAll = titleListAll.data
                         // return
+                    }else {
+                        //如果不存在,发送请求
+                        //标签
+                        let urlTitle = '/api/songlist/category'
+                        let res = await this.$http.get(urlTitle)
+                        // debugger
+
+                        // console.log(res)
+                        // console.log(res.data.result)
+                        //==100代表服务器响应成功,拿到数据
+                        if (parseInt(res.data.result)===100){
+                            //将服务器拿到的数据存储到titleListAll
+                            this.titleListAll = res.data.data
+                            //本地存储数据 JSON格式字符串
+                            localStorage.setItem(
+                              'titleListAll',
+                              JSON.stringify({
+                                  time:new Date().getTime(),
+                                  data:res.data.data
+                              }))
+                        }
                     }
                 }else {
                     //如果不存在,发送请求

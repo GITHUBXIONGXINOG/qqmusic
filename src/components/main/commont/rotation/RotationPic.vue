@@ -1,7 +1,6 @@
 <template>
     <div class="rotation-pic">
         <div class="imgShowStation">
-
             <div class="imgList-wrap  " v-for="(item,index) in imgList" :key="item.id"
                  :class="`imgList-${index}`"
                  ref="imgList"
@@ -13,7 +12,7 @@
 
                     <!--图片-->
                     <picture-show :imgUrl=imgUrl(v)
-                                  :songId="v.mid"
+                                  :songId="songsId(v)"
                     />
                     <!--图片标题内容-->
                     <div class="text-info" >
@@ -248,6 +247,7 @@
             }
         },
         computed:{
+            //图片地址
             imgUrl(){
                 return function (v) {
                     // debugger
@@ -260,6 +260,16 @@
                 }
 
 
+            },
+            //歌曲或专辑id
+            songsId(){
+                return function (v) {
+                    if (v.mid){
+                        return 'songmid='+v.mid
+                    }else if (v.content_id){
+                        return 'content_id='+v.content_id
+                    }
+                }
             }
         }
     }

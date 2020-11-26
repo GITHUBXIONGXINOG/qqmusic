@@ -86,6 +86,24 @@
             //第一次加载时拿到当前路由匹配的id,派发请求
             // this.$store.dispatch('queryDataA',this.$route.params.songId)
             // console.log(this.$route)
+            // debugger
+            let regSong = /songmid=/
+            let regSongList = /content_id=/
+            let regAlbums = /albummid=/
+            let idInfo = ''
+            if (this.$route.params.songId.match(regSong)){
+                 idInfo=this.$route.params.songId.replace(regSong,'')
+                this.$store.dispatch('queryDataA',idInfo)
+            }else if (this.$route.params.songId.match(regSongList)){
+                idInfo=this.$route.params.songId.replace(regSongList,'')
+                this.$store.dispatch('queryDataASongList',idInfo)
+            }else {
+                idInfo=this.$route.params.songId.replace(regSongList,'')
+
+            }
+
+
+
         },
         computed:{
             songData(){

@@ -25,7 +25,7 @@
             },
             //对应的歌曲id
             songId:{
-                type: String,
+                type: [String,Number],
                 require: true
             }
         },
