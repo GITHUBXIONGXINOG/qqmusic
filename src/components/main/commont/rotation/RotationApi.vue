@@ -68,14 +68,35 @@ export default {
             console.log(res)*/
             /*对应不同api的保存数据*/
             if (index==0){
-                this.apiGetList = res.data.data.list.map(item => ({
+                let recommentForU = localStorage.getItem('recommentForU')
+                if (recommentForU){
+                    recommentForU = JSON.parse(recommentForU)
+                    if (new Date().getTime()-recommentForU.time<30*60*1000){
+                        // debugger
+                        this.apiGetList = recommentForU.data
+                        // console.log(this.apiGetList)
+                    }
+                }else {
+                    let res = await this.$http.get(this.apiSetList.path)
+                    if (parseInt(res.data.result)===100){
+                        this.apiGetList=res.data.data.list
+                        localStorage.setItem(
+                          'recommentForU',
+                          JSON.stringify({
+                              time:new Date().getTime(),
+                              data:res.data.data.list
+                          })
+                        )
+                    }
+                }
+              /*  this.apiGetList = res.data.data.list.map(item => ({
                     id:item.content_id,
                     img:item.cover,
                     title:item.title,
                     singer:item.username,
                     listen_num:item.listen_num,
                     type:item.type
-                }))
+                }))*/
             }
             //新歌首发
             else if (index==1){

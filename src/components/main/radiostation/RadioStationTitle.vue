@@ -51,7 +51,7 @@
               let titleListTemp = localStorage.getItem('titleListTemp')
               if (titleListTemp){
                   titleListTemp = JSON.parse(titleListTemp)
-                  if (new Date().getTime(-titleListTemp.time<30*60*1000)){
+                  if (new Date().getTime()-titleListTemp.time<30*60*1000){
                       this.titleListTemp = titleListTemp.data
                   }
               }else {

@@ -1,15 +1,18 @@
 <template>
     <div class="rotation-pic">
         <div class="imgShowStation">
+
             <div class="imgList-wrap  " v-for="(item,index) in imgList" :key="item.id"
                  :class="`imgList-${index}`"
                  ref="imgList"
             >
+
                 <div class="imgList-inner" v-for="(v,i) in item" :key="i"
                      :class="`slide-img-${i}`"
                 >
+
                     <!--图片-->
-                    <picture-show :imgUrl="v.img"
+                    <picture-show :imgUrl=imgUrl(v)
                                   :songId="v.mid"
                     />
                     <!--图片标题内容-->
@@ -26,31 +29,7 @@
                             {{v.singer}}
                         </div>
 
-                        <!--排行榜-->
-                     <!--   <div v-else-if="numberPart==3">
-                            <div class="isRank">
-                                <div v-for="(n,p) in v.song" :key="p" class="rank-wrap">
-                                    <div class="rank-title-wrap">
-                                        <span class="rank-number">
-                                            {{v.song[p].rank}}
-                                        </span>
-                                        <a class="rank-title" href="javascript:;">
-                                            &lt;!&ndash;                                            {{v.song[p].title}}&ndash;&gt;
-                                            {{v.song[p].title.length>10
-                                          ? v.song[p].title.slice(0,9)+'...'
-                                          : v.song[p].title}}
-                                        </a>
-                                    </div>
-                                    &lt;!&ndash;隐藏超出的文字&ndash;&gt;
-                                    <a class="rank-singerName" href="javascript:;" >
-                                        {{v.song[p].singerName.length>18
-                                      ? v.song[p].singerName.slice(0,17)+'...'
-                                      : v.song[p].singerName}}
-                                    </a>
-                                </div>
 
-                            </div>
-                        </div>-->
 
                         <!--mv-->
                         <div v-else>
@@ -64,11 +43,7 @@
                         </div>
 
                     </div>
-
-
                 </div>
-
-
             </div>
         </div>
 
@@ -270,6 +245,21 @@
              else {
                  return '#icon-nav-shallow'
              }
+            }
+        },
+        computed:{
+            imgUrl(){
+                return function (v) {
+                    // debugger
+                    // console.log(v)
+                    if (v.img){
+                        return v.img
+                    }else if (v.cover){
+                        return v.cover
+                    }
+                }
+
+
             }
         }
     }
