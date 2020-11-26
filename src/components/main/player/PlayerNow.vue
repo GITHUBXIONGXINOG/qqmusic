@@ -1,6 +1,6 @@
 <template>
     <div class="player-now" >
-<!--        {{songData.songPic}}-->
+
         <div class="songInfo" >
 
                 <div class="songPicture-wrap">
@@ -8,7 +8,7 @@
                     <i class="img-bg" v-else></i>
                 </div>
                 <ul class="songCreateInfo"  v-if="songData">
-                    <li><span >歌曲名:&nbsp;</span><i>{{songData.title}}</i></li>
+                    <li><span >歌曲名:&nbsp;</span><i>{{songData.title||songData.songname}}</i></li>
                     <li><span>歌手名:&nbsp;</span><i>{{songData.singer[0].name}}</i></li>
                     <li><span>专辑名:&nbsp;</span><i>{{songData.album.title}}</i></li>
                 </ul>

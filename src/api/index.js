@@ -1,5 +1,6 @@
 import axios from 'axios'
 const api = {
+    //歌曲信息
     songInfo(songId){
         return axios.get('/api/song',{
             params:{

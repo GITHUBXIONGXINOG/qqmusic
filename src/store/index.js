@@ -43,13 +43,7 @@ function formatLyric(lyric) {
   return lyrArr
 }
 
-async function songUrlGet(songId) {
-  // debugger
-  let res = await api.songPlayer(songId)
-  console.log(res)
-  console.log((Object.values(res.data.data))[0])
-  return (Object.values(res.data.data))[0]
-}
+
 
 export default new Vuex.Store({
   state: {
@@ -62,21 +56,19 @@ export default new Vuex.Store({
     queryDataM(state,payload){
       // debugger
       let {
-        songId,
-        dataOfInfo,
-        dataOfPlay,
-        detaOfLyric,
-        content_id,
-        dataOfSongList,
+        songId,//歌词id
+        dataOfInfo,//歌曲信息
+        dataOfPlay,//播放url
+        detaOfLyric,//歌词
+        content_id,//歌单id
+        dataOfSongList,//歌单数据
+        dataOfFirstSongMid,//歌单第一个歌曲id
       }=payload
       // state.cur = songId || content_id
-
+      state.cur = songId || dataOfFirstSongMid
       if (dataOfInfo&&dataOfPlay&&detaOfLyric){
         // state.list.push(data)
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
-        //如果不是歌单,从头插入歌曲
-       if (!content_id){
-         state.cur = songId
          state.list.unshift({
            ...dataOfInfo,
            interval:timeFormat(dataOfInfo.interval),//时间
@@ -86,38 +78,22 @@ export default new Vuex.Store({
            detaOdLyric:detaOfLyric,
            lyric:formatLyric(detaOfLyric)
          })
-       }else if(content_id){//如果是歌单,从尾插入歌曲
-         state.list.push({
-           ...dataOfInfo,
-           interval:timeFormat(dataOfInfo.interval),//时间
-           playerUrl:dataOfPlay,//播放链接
-           singerName:dataOfInfo.singer[0].name,//歌手名字
-           songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`,//歌曲图片
-           detaOdLyric:detaOfLyric,
-           lyric:formatLyric(detaOfLyric)
-         })
-       }
-
       }
 
-    /*  else if (content_id&&dataOfSongList){
-        debugger
+      else if (content_id&&dataOfSongList&&dataOfPlay){
+        // debugger
           state.list=[]
         dataOfSongList.songlist.forEach((item,index)=>{
-          if (index<50){
 
             state.list.push({
               ...item,
               interval:timeFormat(item.interval),//时间
-              // playerUrl:playerUrl,//播放链接
-
+              playerUrl:dataOfPlay[0],//播放链接
             })
-          }else{
-            return
-          }
+
         })
           // state.list.push({...dataOfSongList.songlist})
-      }*/
+      }
     },
     queryDataMDelete(state,payload){
       // debugger
@@ -193,27 +169,27 @@ export default new Vuex.Store({
       //不存在,从服务器重新获取
       // result = await api.songInfo(songId)
       let resultOfSongList = await api.songList(content_id)
-
       // debugger
-
+      //获取所有歌曲id
+      let songMids = ''
+      // debugger
+      // console.log(dataOfFirstSongMid)
+      for (let item in resultOfSongList.data.data.songlist){
+        songMids += resultOfSongList.data.data.songlist[item].songmid +','
+      }
+      // console.log(songMids)
+      //id: 歌曲的 songmid，必填，多个用逗号分割
+      let dataOfPlay = await api.songPlayer(songMids)
+      debugger
+      // console.log(playerUrl)
       if (parseInt(resultOfSongList.data.result)===100){
-        for (let i in resultOfSongList.data.data.songlist){
-          if (i<30){
-            let item = resultOfSongList.data.data.songlist[i]
-            let resultOfSongInfo=await api.songInfo(item.songmid)
-            let resultOfSongPlayer = await api.songPlayer(item.songmid)
-            let resultOfSongLyric = await api.songLyric(item.songmid)
-            commit('queryDataM',{
-              content_id,
-              songId:item.songmid,
-              // dataOfSongList:resultOfSongList.data.data,
-              dataOfInfo:resultOfSongInfo.data.data.track_info,
-              dataOfPlay:(Object.values(resultOfSongPlayer.data.data))[0],
-              detaOfLyric:resultOfSongLyric.data.data.lyric,
-            })
-          }
 
-        }
+        commit('queryDataM',{
+          content_id,
+          dataOfSongList:resultOfSongList.data.data,
+          dataOfPlay:Object.values(dataOfPlay.data.data),
+          dataOfFirstSongMid:resultOfSongList.data.data.songlist[0].songmid//第一个歌曲id
+        })
 
       }
 

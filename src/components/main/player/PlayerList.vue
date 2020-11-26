@@ -1,6 +1,6 @@
 <template>
     <div class="player-list">
-        {{songList}}
+<!--        {{songList}}-->
         <!--用户操作按钮-->
         <ul class="userOpera">
             <a href="javascript:;" v-for="(item,index) in userOperating" :key="index">
@@ -11,9 +11,7 @@
             </a>
         </ul>
         <div class="rank-wrap">
-         <!--   <div v-for="item in songList">
-                {{songTitle(item)}}
-            </div>-->
+
             <ul class="content-nav-ul">
                 <input type="checkbox" class="checkAll">
                 <li v-for="(item,index) in contentNav" :key="index"
@@ -24,9 +22,7 @@
             </ul>
             <div class="song-info" v-if="songData">
                 <ul class="song-info-ul" v-for="(item,index) in songList" :key="index"
-                    :class="{'alive-song':songData.mid==item.mid&&pausedSign
-                                        || songData.songmid==item.songmid&&pausedSign
-                }"
+                    :class="{'alive-song':songData.mid==item.mid&&pausedSign}"
                     @mouseenter="OperateChange(index)"
                     @mouseleave="OperateChange"
                 >
@@ -36,7 +32,7 @@
                     </ul><!--动态图标-->
 
                     <li class="song-index" >{{index+1}}</li>
-                    <li class="song-title">{{songTitle(item)}}</li>
+                    <li class="song-title">{{item.title||item.songname}}</li>
                     <li class="song-singer">{{item.singer[0].name}}</li>
                     <li class="song-interval"
                         :class="{'operating-hidden':songOperatingShow==index}">
@@ -96,14 +92,14 @@
                 }) || null
             },
             //标题
-            songTitle(){
-                return function (item){
-                    // debugger
-                    if (item.title) return item.title
-                    else if(item.albumname) return item.albumname
-                }
-
-            }
+            // songTitle(){
+            //     return function (item){
+            //         // debugger
+            //         if (item.title) return item.title
+            //         else if(item.albumname) return item.albumname
+            //     }
+            //
+            // }
 
         },
         methods:{
