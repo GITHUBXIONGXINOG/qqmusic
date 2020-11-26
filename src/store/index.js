@@ -80,6 +80,14 @@ export default new Vuex.Store({
         result,
       }=payload
         state.list.splice(result,1 )
+
+      let res = state.list.find(item=>{
+        return item.mid===songId
+      })
+      if (!res){
+        // let result = state.list.findIndex(item=>item.mid)
+        state.cur = state.list[0].mid
+      }
     },
 
   },
@@ -125,6 +133,7 @@ export default new Vuex.Store({
       }
     },
 
+    //删除歌曲
     queryDataADelete({state,commit},songId){
       // debugger
       //校验是否存在
