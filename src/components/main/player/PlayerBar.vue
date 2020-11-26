@@ -1,8 +1,8 @@
 <template>
-    <div class="player-bar" ref="playerBar"  v-if="songData">
+    <div class="player-bar" ref="playerBar"  >
         <div class="audio-panel">
             <audio  @canplay="getDuration" @timeupdate="updateTime" @ended="endOpera"
-                    @playing="setStart"
+                    @playing="setStart" v-if="songData"
                     :src="songData.playerUrl"  ref="audio"></audio>
             <div class="audio-control">
                 <!--控制按钮-->
@@ -27,7 +27,7 @@
                     <!--歌曲信息-->
                     <div class="songInfo">
                         <!--歌曲名字和作者-->
-                        <div class="songTitle">
+                        <div class="songTitle" v-if="songData">
                             <span>{{songData.title}}</span>
                             <span>&nbsp;-&nbsp;</span>
                             <span>{{songData.singerName}}</span>
@@ -190,12 +190,14 @@
             getDuration() {
               /*  debugger
                 console.log(this.$refs.audio.duration); //此时可以获取到duration*/
-                this.durationOriginal = this.$refs.audio.duration
-                this.duration = this.timeFormat(this.durationOriginal);
-                this.$emit('durationTime',this.durationOriginal)
-                //获取音量
-                this.getVolume()
-                this.$refs.audio.play()
+                if (this.$refs.audio){
+                    this.durationOriginal = this.$refs.audio.duration
+                    this.duration = this.timeFormat(this.durationOriginal);
+                    this.$emit('durationTime',this.durationOriginal)
+                    //获取音量
+                    this.getVolume()
+                    this.$refs.audio.play()
+                }
             },
             //获取当前播放时间
             updateTime(e) {
@@ -212,20 +214,22 @@
 
             //播放暂停歌曲
             changeSongStatus(){
-                // debugger
-                let audio =this.$refs.audio//获取audio
+                if (this.$refs.audio){
+                    // debugger
+                    let audio =this.$refs.audio//获取audio
 
-                if (audio.paused){//如果暂停状态
-                    audio.play()  //调用播放
-                    this.isPaused=false
-                    this.$emit('getPausedSign',this.isPaused)
-                }else {             //如果播放状态
+                    if (audio.paused){//如果暂停状态
+                        audio.play()  //调用播放
+                        this.isPaused=false
+                        this.$emit('getPausedSign',this.isPaused)
+                    }else {             //如果播放状态
                         audio.pause()   //调用暂停
-                    this.isPaused=true
-                    this.$emit('getPausedSign',this.isPaused)
+                        this.isPaused=true
+                        this.$emit('getPausedSign',this.isPaused)
 
-
+                    }
                 }
+
                 // console.log('audio暂停状态:'+audio.paused)
                 // console.log('是否暂停:'+this.isPaused)
             },
@@ -360,6 +364,7 @@
             window.onresize = ()=> {
                 this.progressInit();
             }
+
 
         },
         watch:{

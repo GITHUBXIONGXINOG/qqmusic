@@ -36,6 +36,7 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
+                        <!--播放-->
                         <li @click="clickPlaying(item.mid)">
                             <i class="iconfont ">
                             </i>
@@ -46,7 +47,8 @@
                         <li>
                             <i class="iconfont icon-fenxiang"></i>
                         </li>
-                        <li>
+                        <!--删除-->
+                        <li @click="deleteSong(item.mid)">
                             <i class="iconfont icon-lajixiangzizhi"></i>
                         </li>
 
@@ -95,11 +97,17 @@
             },
             //点击传值给兄弟组件playerbar
             clickPlaying(clickMid){
-                let clickFlag =this.clickFlag
-                let clickInfo = {clickFlag,clickMid}
-                 this.$bus.$emit('clickPlaying',clickInfo)
-                this.clickFlag=!this.clickFlag
+                if (clickMid){
+                    let clickFlag =this.clickFlag
+                    let clickInfo = {clickFlag,clickMid}
+                    this.$bus.$emit('clickPlaying',clickInfo)
+                    this.clickFlag=!this.clickFlag
+                }
              },
+            deleteSong(clickMid){
+                this.$store.dispatch('queryDataADelete',clickMid)
+
+            }
 
         },
 

@@ -72,7 +72,16 @@ export default new Vuex.Store({
           lyric:formatLyric(detaOfLyric)
         })
       }
-    }
+    },
+    queryDataMDelete(state,payload){
+      // debugger
+      let {
+        songId,
+        result,
+      }=payload
+        state.list.splice(result,1 )
+    },
+
   },
   actions: {
     //context 当前的容器包括state,commit等
@@ -114,8 +123,21 @@ export default new Vuex.Store({
         //  (Object.values(this.songPlayerUrl))[0]
         })
       }
-    }
+    },
 
+    queryDataADelete({state,commit},songId){
+      // debugger
+      //校验是否存在
+      // let result = state.list.splice(state.list.findIndex(item=>item.id===songId),1 )
+      let result = state.list.findIndex(item=>item.mid===songId)
+
+      if (result>=0){
+        //如果存在,执行commit方法,调用queryDataM,只改ID
+        commit('queryDataMDelete',{songId,result})
+        return
+      }
+
+    },
 
   },
   modules: {
