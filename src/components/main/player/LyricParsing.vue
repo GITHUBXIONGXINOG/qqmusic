@@ -186,7 +186,7 @@ export default {
         }
     },
     methods:{
-        async fetchLyric(){
+       /* async fetchLyric(){
             debugger
             console.log(this.songId)
             //歌词
@@ -199,16 +199,16 @@ export default {
                 // debugger
                 //歌词对象
                 let lyrArr = {}
-                //* 贪婪匹配,有多少匹配多少
+                //!* 贪婪匹配,有多少匹配多少
                 let reg = /\[\d*:\d*\.\d*]/g
                 for (let i = 0; i < lyrics.length; i++) {
                     let timerRegExpArr = lyrics[i].match(reg)
                     if (!timerRegExpArr) continue
                     let t = timerRegExpArr[0] //数值格式,取出数据
                     //取出分钟
-                    let min = Number(t.match(/\[\d*/).toString().slice(1))
+                    let min = Number(t.match(/\[\d*!/).toString().slice(1))
                     //取出秒
-                    let second = Number(t.match(/:\d*/).toString().slice(1))
+                    let second = Number(t.match(/:\d*!/).toString().slice(1))
                     //歌词文本
                     let content = lyrics[i].replace(timerRegExpArr,"")
                     //处理版权问题,比如官方翻译无法获取到
@@ -225,6 +225,41 @@ export default {
                 // console.log(lyrArr)
             }
 
+        },*/
+        async fetchLyric(){
+            debugger
+            //歌词
+            let songLyricUrl = '/api/lyric?songmid='+this.songId
+            const resOfSongLyric = await this.$http.get(songLyricUrl)
+            let lyrics = resOfSongLyric.data.data.lyric.split("\n")
+            // console.log(resOfSongLyric)
+            // debugger
+            //歌词对象
+            let lyrArr = {}
+            //* 贪婪匹配,有多少匹配多少
+            let reg = /\[\d*:\d*\.\d*]/g
+            for (let i = 0; i < lyrics.length; i++) {
+                let timerRegExpArr = lyrics[i].match(reg)
+                if (!timerRegExpArr) continue
+                let t = timerRegExpArr[0] //数值格式,取出数据
+                //取出分钟
+                let min = Number(t.match(/\[\d*/).toString().slice(1))
+                //取出秒
+                let second = Number(t.match(/:\d*/).toString().slice(1))
+                //歌词文本
+                let content = lyrics[i].replace(timerRegExpArr,"")
+                //处理版权问题,比如官方翻译无法获取到
+                if (content){
+                    //计算时间
+                    let time = min*60+second
+                    //时间对应文本
+                    lyrArr[time] = content
+                }
+
+            }
+            this.songLyric = lyrArr
+            this.getALlKeys(lyrArr)
+            // console.log(lyrArr)
         },
         //得到所有的Keys
         getALlKeys(lyrArr){
