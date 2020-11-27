@@ -1,6 +1,7 @@
 <template>
     <div class="player-page">
 <!--        播放: {{songId}}-->
+        <div class="back-home">主页</div>
         <div class="pageInfo">
             <!--播放列表-->
             <player-list
