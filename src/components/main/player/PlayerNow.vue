@@ -4,7 +4,9 @@
         <div class="songInfo" >
 
                 <div class="songPicture-wrap">
-                    <img :src="songData.songPic" alt="" v-if="songData">
+<!--                    <img :src="songData.songPic||null" alt="" v-if="songData">-->
+                    <img :src="songPic(songData.songPic)" alt="" v-if="songData">
+
                     <i class="img-bg" v-else></i>
                 </div>
                 <ul class="songCreateInfo"  v-if="songData">
@@ -72,6 +74,15 @@ export default {
                 return item.mid===cur
             }) || null
         },
+        songPic(){
+            return function (pic) {
+              if (pic){
+                  return pic
+              }else {
+                  return null
+              }
+            }
+        }
     },
     watch:{
 

@@ -48,6 +48,9 @@
               this.imgHeight=img.height+'px'
           },
         },
+        computed:{
+
+        },
         watch:{
          /*   imgUrl(val){
                 this.url = val

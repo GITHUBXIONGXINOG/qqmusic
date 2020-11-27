@@ -127,14 +127,15 @@ export default {
             else if (index==2){
                 this.apiGetList = res.data.data.list.map(item => ({
                     id:item.id,
-                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
+                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.photo.pic_mid}.jpg`,
                     title:item.name,
                     // subtitle:item.subtitle,
                     singer:item.singers[0].name,
                     // listen_num:item.listen_num,
-                    type:item.type
+                    type:item.type,
+                    mid:item.mid,
                 }))
-            }
+            }//新碟首发
             else if (index==3){//排行榜
 
                 this.apiGetList = res.data.data[0].list.map(item => ({

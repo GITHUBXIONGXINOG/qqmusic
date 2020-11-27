@@ -63,6 +63,7 @@ export default new Vuex.Store({
         content_id,//歌单id
         dataOfSongList,//歌单数据
         dataOfFirstSongMid,//歌单第一个歌曲id
+        dataOfSongLyrics,//歌词
       }=payload
       // state.cur = songId || content_id
       state.cur = songId || dataOfFirstSongMid
@@ -80,7 +81,7 @@ export default new Vuex.Store({
          })
       }
 
-      else if (content_id&&dataOfSongList&&dataOfPlay){
+      else if (content_id&&dataOfSongList&&dataOfPlay&&dataOfSongLyrics){
         // debugger
           state.list=[]
         dataOfSongList.songlist.forEach((item,index)=>{
@@ -88,8 +89,14 @@ export default new Vuex.Store({
             state.list.push({
               ...item,
               interval:timeFormat(item.interval),//时间
-              playerUrl:dataOfPlay[0],//播放链接
+              playerUrl:dataOfPlay[index],//播放链接
+              singerName:item.albumname,//歌手名字
+              songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
+              detaOfLyric:formatLyric(dataOfSongLyrics[index]),
+              mid:item.songmid,
+              title:item.songname
             })
+          // debugger
 
         })
           // state.list.push({...dataOfSongList.songlist})
@@ -169,26 +176,38 @@ export default new Vuex.Store({
       //不存在,从服务器重新获取
       // result = await api.songInfo(songId)
       let resultOfSongList = await api.songList(content_id)
-      // debugger
+      //歌词
+      let dataOfSongLyrics = []
+
+      //切割,只显示前30个
+      resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,30)
       //获取所有歌曲id
       let songMids = ''
       // debugger
       // console.log(dataOfFirstSongMid)
+      let songmid = ''
       for (let item in resultOfSongList.data.data.songlist){
-        songMids += resultOfSongList.data.data.songlist[item].songmid +','
+        songmid = resultOfSongList.data.data.songlist[item].songmid
+        songMids +=  songmid+','
+        dataOfSongLyrics.push ((await api.songLyric(songmid)).data.data.lyric)
       }
+      // debugger
+
       // console.log(songMids)
       //id: 歌曲的 songmid，必填，多个用逗号分割
       let dataOfPlay = await api.songPlayer(songMids)
-      debugger
+      // debugger
       // console.log(playerUrl)
       if (parseInt(resultOfSongList.data.result)===100){
 
         commit('queryDataM',{
           content_id,
           dataOfSongList:resultOfSongList.data.data,
+          // dataOfPlay:Object.values(dataOfPlay.data.data),
           dataOfPlay:Object.values(dataOfPlay.data.data),
-          dataOfFirstSongMid:resultOfSongList.data.data.songlist[0].songmid//第一个歌曲id
+
+          dataOfFirstSongMid:resultOfSongList.data.data.songlist[0].songmid,//第一个歌曲id
+          dataOfSongLyrics
         })
 
       }
