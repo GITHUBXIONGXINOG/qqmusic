@@ -1,7 +1,9 @@
 <template>
     <div class="player-page">
 <!--        播放: {{songId}}-->
-        <div class="back-home">主页</div>
+        <router-link to="/homepage" class="back-home">
+            <span class="iconfont icon-cuowu"></span>
+        </router-link>
         <div class="pageInfo">
             <!--播放列表-->
             <player-list

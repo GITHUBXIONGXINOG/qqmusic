@@ -708,4 +708,41 @@
 
 
   }
+  //回到主页
+  .back-home{
+    //border: 1px solid red;
+    position: fixed;
+    z-index: 3;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    right: -5%;
+    color: red;
+    //display: block;
+    //content: '';
+    background: rgba(0,0,0,.2);
+    top: 0;
+    &:hover{
+      background: rgba(0,0,0,.5);
+      transform: translateX(-15px);
+    }
+    transition: transform .9s;
+
+    &:hover span{
+      color: #8c8c8c;
+      transform: scale(1.2) ;
+
+    }
+    span{
+      //font-size: 30px;
+      color: #595959;
+      position: absolute;
+      left: 10px;
+      top: 40%;
+      transition: transform .9s;
+
+    }
+  }
+
+
 }
