@@ -67,6 +67,7 @@ export default new Vuex.Store({
       }=payload
       // state.cur = songId || content_id
       state.cur = songId || dataOfFirstSongMid
+      debugger
       if (dataOfInfo&&dataOfPlay&&detaOfLyric){
         // state.list.push(data)
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
@@ -77,11 +78,12 @@ export default new Vuex.Store({
            singerName:dataOfInfo.singer[0].name,//歌手名字
            songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfInfo.album.mid}.jpg`,//歌曲图片
            detaOdLyric:detaOfLyric,
-           lyric:formatLyric(detaOfLyric)
+           lyric:formatLyric(detaOfLyric),
+           albumname:dataOfInfo.album.title
          })
       }
 
-      else if (content_id&&dataOfSongList&&dataOfPlay&&dataOfSongLyrics){
+      else if (content_id&&dataOfSongList&&dataOfPlay){
         // debugger
           state.list=[]
         dataOfSongList.songlist.forEach((item,index)=>{
@@ -92,7 +94,7 @@ export default new Vuex.Store({
               playerUrl:dataOfPlay[index],//播放链接
               singerName:item.albumname,//歌手名字
               songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
-              detaOfLyric:formatLyric(dataOfSongLyrics[index]),
+              // detaOfLyric:formatLyric(dataOfSongLyrics[index]),
               mid:item.songmid,
               title:item.songname
             })
@@ -177,7 +179,7 @@ export default new Vuex.Store({
       // result = await api.songInfo(songId)
       let resultOfSongList = await api.songList(content_id)
       //歌词
-      let dataOfSongLyrics = []
+      // let dataOfSongLyrics = []
 
       //切割,只显示前30个
       resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,30)
@@ -189,7 +191,7 @@ export default new Vuex.Store({
       for (let item in resultOfSongList.data.data.songlist){
         songmid = resultOfSongList.data.data.songlist[item].songmid
         songMids +=  songmid+','
-        dataOfSongLyrics.push ((await api.songLyric(songmid)).data.data.lyric)
+        // dataOfSongLyrics.push ((await api.songLyric(songmid)).data.data.lyric)
       }
       // debugger
 
@@ -207,7 +209,7 @@ export default new Vuex.Store({
           dataOfPlay:Object.values(dataOfPlay.data.data),
 
           dataOfFirstSongMid:resultOfSongList.data.data.songlist[0].songmid,//第一个歌曲id
-          dataOfSongLyrics
+          // dataOfSongLyrics
         })
 
       }

@@ -83,10 +83,10 @@
         computed:{
             //vuex数据
             songData(){
-                debugger
+                // debugger
                 const {cur,list}=this.$store.state
                 this.songList=list
-                console.log(this.songList)
+                // console.log(this.songList)
                 // console.log(list)
                 return list.find(item=>{
                     return item.mid===cur

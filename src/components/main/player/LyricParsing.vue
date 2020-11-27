@@ -142,7 +142,8 @@
 -->
 <template>
     <div class="lyric-parsing">
-        <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap">
+<!--        {{songLyric}}-->
+        <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap" v-if="songData">
               <span v-for="(item,key,index) in songLyric" :key="index"
                     :class="classObject(item,key,index)"
               >{{item}}</span>
@@ -179,6 +180,7 @@ export default {
 
             //歌词
             let songLyricUrl = '/api/lyric?songmid='+this.songId
+
             const resOfSongLyric = await this.$http.get(songLyricUrl)
             let lyrics = resOfSongLyric.data.data.lyric.split("\n")
             // console.log(resOfSongLyric)
@@ -244,6 +246,18 @@ export default {
                     return 'currentLyric'
                 }
             }
+        },
+        songData(){
+            const {cur,list}=this.$store.state
+            debugger
+            console.log(list)
+            return list.find(item=>{
+                if (item.mid===cur){
+                    this.songLyric = item.lyric
+
+                }
+                return item.mid===cur
+            }) || null
         }
     }
 

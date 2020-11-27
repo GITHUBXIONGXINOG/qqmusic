@@ -1,18 +1,19 @@
 <template>
     <div class="player-now" >
-
+<!--{{songData}}-->
         <div class="songInfo" >
 
                 <div class="songPicture-wrap">
 <!--                    <img :src="songData.songPic||null" alt="" v-if="songData">-->
-                    <img :src="songPic(songData.songPic)" alt="" v-if="songData">
+                    <img :src="songData.songPic" alt="" v-if="songData">
 
                     <i class="img-bg" v-else></i>
+
                 </div>
                 <ul class="songCreateInfo"  v-if="songData">
-                    <li><span >歌曲名:&nbsp;</span><i>{{songData.title||songData.songname}}</i></li>
+                    <li><span >歌曲名:&nbsp;</span><i>{{songData.title}}</i></li>
                     <li><span>歌手名:&nbsp;</span><i>{{songData.singer[0].name}}</i></li>
-                    <li><span>专辑名:&nbsp;</span><i>{{songData.album.title}}</i></li>
+                    <li><span>专辑名:&nbsp;</span><i>{{songData.albumname}}</i></li>
                 </ul>
 
 
@@ -49,17 +50,17 @@ export default {
     },
     data(){
         return{
-
+           NowList:[],//当前
         }
     },
     methods:{
         //缓存当前的数据
-        getTemp(val){
+   /*     getTemp(val){
             // debugger
             if (val){
                 this.tempInfo = val
             }
-        }
+        }*/
     },
     created(){
         // console.log(this.songDataNow)
@@ -70,19 +71,18 @@ export default {
             // debugger
             const {cur,list}=this.$store.state
             // console.log(list)
+       /*     if (list.find(item=>{
+                return item.mid===cur
+            }) || null){
+                console.log(list.find(item=>{
+                    return item.mid===cur
+                }) || null)
+            }*/
             return list.find(item=>{
                 return item.mid===cur
             }) || null
         },
-        songPic(){
-            return function (pic) {
-              if (pic){
-                  return pic
-              }else {
-                  return null
-              }
-            }
-        }
+
     },
     watch:{
 
