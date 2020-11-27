@@ -204,7 +204,9 @@
                 if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
-                    this.$emit('currentTime',this.currentTimeOriginal)
+                    // this.$emit('currentTime',this.currentTimeOriginal)
+                    this.$bus.$emit('currentTime',this.currentTimeOriginal)
+                    console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
                 }
             },
             //结束操作
@@ -330,7 +332,8 @@
                     this.$store.dispatch('queryDataA',clickMid)
                 }
 
-            })
+            }),
+              this.currentTimeOriginal=0
 
             this.progressInit()
 
@@ -392,6 +395,9 @@
 
         },
         components:{
+        },
+        destroyed(){
+
         }
     }
 </script>

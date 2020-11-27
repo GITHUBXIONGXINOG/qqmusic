@@ -22,7 +22,6 @@
         <div class="songLyric">
             <lyric-parsing
                 :songId="songId"
-                :currentTime="currentTime"
                 :durationTime="durationTime"
             />
         </div>
@@ -38,10 +37,10 @@ export default {
             type: String,
             required: true
         },
-        currentTime:{
+        /*currentTime:{
             type: Number,
             required: true
-        },
+        },*/
         durationTime:{
             type: Number,
             required: true

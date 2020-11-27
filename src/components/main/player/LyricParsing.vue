@@ -143,10 +143,12 @@
 <template>
     <div class="lyric-parsing">
 <!--        {{songLyric}}-->
+
         <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap" v-if="songData">
               <span v-for="(item,key,index) in songLyric" :key="index"
                     :class="classObject(item,key,index)"
               >{{item}}</span>
+
         </div>
 
     </div>
@@ -159,10 +161,10 @@ export default {
             type: String,
             required: true
         },
-        currentTime:{
+    /*    currentTime:{
             type: Number,
             required: true
-        },
+        },*/
         durationTime:{
             type: Number,
             required: true
@@ -173,44 +175,47 @@ export default {
             songLyric:{},//歌词时间对象
             allKeys:[],//所有key
             lyricIndex:0,//当前显示歌词的索引
+            currentTime:0,//当前时间
         }
     },
     methods:{
         async fetchLyric(){
-
+            debugger
             //歌词
-            let songLyricUrl = '/api/lyric?songmid='+this.songId
+            // let songLyricUrl = '/api/lyric?songmid='+this.songId
+            if (this.songId){
+                let resOfSongLyric = await this.$http.get(this.songId)
+                let lyrics = resOfSongLyric.data.data.lyric.split("\n")
+                // console.log(resOfSongLyric)
+                // debugger
+                //歌词对象
+                let lyrArr = {}
+                //* 贪婪匹配,有多少匹配多少
+                let reg = /\[\d*:\d*\.\d*]/g
+                for (let i = 0; i < lyrics.length; i++) {
+                    let timerRegExpArr = lyrics[i].match(reg)
+                    if (!timerRegExpArr) continue
+                    let t = timerRegExpArr[0] //数值格式,取出数据
+                    //取出分钟
+                    let min = Number(t.match(/\[\d*/).toString().slice(1))
+                    //取出秒
+                    let second = Number(t.match(/:\d*/).toString().slice(1))
+                    //歌词文本
+                    let content = lyrics[i].replace(timerRegExpArr,"")
+                    //处理版权问题,比如官方翻译无法获取到
+                    if (content){
+                        //计算时间
+                        let time = min*60+second
+                        //时间对应文本
+                        lyrArr[time] = content
+                    }
 
-            const resOfSongLyric = await this.$http.get(songLyricUrl)
-            let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-            // console.log(resOfSongLyric)
-            // debugger
-            //歌词对象
-            let lyrArr = {}
-            //* 贪婪匹配,有多少匹配多少
-            let reg = /\[\d*:\d*\.\d*]/g
-            for (let i = 0; i < lyrics.length; i++) {
-                let timerRegExpArr = lyrics[i].match(reg)
-                if (!timerRegExpArr) continue
-                let t = timerRegExpArr[0] //数值格式,取出数据
-                //取出分钟
-                let min = Number(t.match(/\[\d*/).toString().slice(1))
-                //取出秒
-                let second = Number(t.match(/:\d*/).toString().slice(1))
-                //歌词文本
-                let content = lyrics[i].replace(timerRegExpArr,"")
-                //处理版权问题,比如官方翻译无法获取到
-                if (content){
-                    //计算时间
-                    let time = min*60+second
-                    //时间对应文本
-                    lyrArr[time] = content
                 }
-
+                this.songLyric = lyrArr
+                this.getALlKeys(lyrArr)
+                // console.log(lyrArr)
             }
-            this.songLyric = lyrArr
-            this.getALlKeys(lyrArr)
-            // console.log(lyrArr)
+
         },
         //得到所有的Keys
         getALlKeys(lyrArr){
@@ -222,39 +227,71 @@ export default {
         //歌词移动
         lyricMove(){
             // debugger
-            this.$refs.lyricWrap.style.transform="translateY("+(33-this.lyricIndex*32)+"px)"
-        }
+            this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
+        },
+
+
     },
     created() {
-        this.fetchLyric()
+        // this.fetchLyric()
+
+
 
     },
     watch:{
+    /*    currentTime:this.delayer(nv=>{
+            this.$nextTick(()=>{
+                this.lyricMove()
+            })
+        }) ,*/
         currentTime(){
+            // debugger
+            // this.delayer()
             this.lyricMove()
-        }
+
+        },
+      /*  songId(){
+            this.fetchLyric()
+        }*/
     },
     mounted() {
+        this.$bus.$on('currentTime',currentTime=>{
 
+            this.currentTime=currentTime
+
+            // debugger
+        })
     },
     computed:{
         classObject() {
+
             return function (item,key,index) {
-                if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
+
+                if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
+                    // debugger
+                    console.log('currentTime:'+this.currentTime)
+                    console.log('key:'+key+'歌词:'+this.songLyric[key])
+                    console.log('index:'+index)
+                    console.log('next:'+this.allKeys[index+1])
+                    // console.log('歌词:'+this.songLyric[index])
                     //当前的歌词位置,即行数
+                    // this.lyricIndex=0
                     this.lyricIndex=index
+                    // console.log(this.lyricIndex)
                     return 'currentLyric'
                 }
             }
         },
         songData(){
             const {cur,list}=this.$store.state
-            debugger
+            // debugger
             console.log(list)
             return list.find(item=>{
                 if (item.mid===cur){
                     this.songLyric = item.lyric
-
+                    this.getALlKeys(item.lyric)
+                    this.lyricIndex=0
+                    this.currentTime=0
                 }
                 return item.mid===cur
             }) || null
@@ -281,6 +318,9 @@ export default {
         height: 20px;
         top: 40px;
         //border: 1px solid red;
+
+
+
     }
     .lyric-wrap{
         //border: 1px solid blue;
@@ -289,7 +329,7 @@ export default {
         position: absolute;
         padding: 1px 0 0 0 ;
 
-        transform: translateY(25px);
+        transform: translateY(30px);
 
 
 

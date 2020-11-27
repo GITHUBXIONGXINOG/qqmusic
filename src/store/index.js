@@ -49,6 +49,7 @@ export default new Vuex.Store({
   state: {
     cur:0,//当前展示的歌曲id
     list:[],//所有已经加载过的信息
+
   },
   mutations: {
     //state 原始状态
@@ -67,7 +68,7 @@ export default new Vuex.Store({
       }=payload
       // state.cur = songId || content_id
       state.cur = songId || dataOfFirstSongMid
-      debugger
+      // debugger
       if (dataOfInfo&&dataOfPlay&&detaOfLyric){
         // state.list.push(data)
         //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为

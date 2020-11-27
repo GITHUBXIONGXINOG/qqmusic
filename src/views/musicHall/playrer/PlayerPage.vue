@@ -9,14 +9,12 @@
             <!--正在播放-->
             <player-now
               :songId="songId"
-              :currentTime="currentTime"
               :durationTime="durationTime"
             />
         </div>
 
         <!-- 播放控制组件-->
         <player-bar
-            @currentTime="setCurrentTime"
             @durationTime="setDurationTime"
             @getPausedSign="PausedSign"
         />
@@ -65,9 +63,9 @@
 
           },
             //当前时间
-            setCurrentTime(val){
+      /*      setCurrentTime(val){
               this.currentTime = val
-            },
+            },*/
             //总时间
             setDurationTime(val){
               this.durationTime=val
