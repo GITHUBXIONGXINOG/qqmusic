@@ -81,6 +81,8 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from "vuex"
+
     export default {
         props:{
 
@@ -206,7 +208,7 @@
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                     // this.$emit('currentTime',this.currentTimeOriginal)
                     this.$bus.$emit('currentTime',this.currentTimeOriginal)
-                    console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
+                    // console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
                 }
             },
             //结束操作
@@ -315,7 +317,10 @@
 
                 }
             },
+            ...mapMutations([
+                "getAudio",
 
+            ])
 
         },
         created() {
@@ -329,7 +334,7 @@
                 if (this.songData.mid==clickMid){
                     this.clickFlag=clickFlag
                 }else {//如果不是进行切换
-                    this.$store.dispatch('queryDataA',clickMid)
+                    this.$store.dispatch('queryDataSong',clickMid)
                 }
 
             }),
@@ -353,12 +358,13 @@
             },
             songData(){
                 // debugger
-                const {cur,list}=this.$store.state
+                const {cur,playList}=this.$store.state
                 // console.log(list)
-                return list.find(item=>{
+                return playList.find(item=>{
                     return item.mid===cur
                 }) || null
             },
+
         },
         mounted() {
             //进度条初始化
@@ -367,7 +373,7 @@
             window.onresize = ()=> {
                 this.progressInit();
             }
-
+            this.getAudio(this.$refs.audio)
 
         },
         watch:{
@@ -387,7 +393,6 @@
             progressLen:{
                 handler:function () {
                     this.dragProgress()
-
                 },
                 deep:true
             },
@@ -397,7 +402,7 @@
         components:{
         },
         destroyed(){
-
+            this.$bus.$off('clickPlaying')
         }
     }
 </script>

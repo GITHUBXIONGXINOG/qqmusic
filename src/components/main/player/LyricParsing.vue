@@ -145,9 +145,15 @@
 <!--        {{songLyric}}-->
 
         <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap" v-if="songData">
-              <span v-for="(item,key,index) in songLyric" :key="index"
-                    :class="classObject(item,key,index)"
-              >{{item}}</span>
+            <div v-if="!songLyric">暂无歌词, 请欣赏歌曲</div>
+            <div v-else>
+                <span v-for="(item,key,index) in songLyric" :key="index"
+                      :class="classObject(item,key,index)"
+                >{{item}}
+                </span>
+            </div>
+
+
 
         </div>
 
@@ -155,12 +161,13 @@
 </template>
 
 <script>
+import api from "@/api";
 export default {
     props:{
-        songId:{
+     /*   songId:{
             type: String,
             required: true
-        },
+        },*/
     /*    currentTime:{
             type: Number,
             required: true
@@ -181,10 +188,12 @@ export default {
     methods:{
         async fetchLyric(){
             debugger
+            console.log(this.songId)
             //歌词
             // let songLyricUrl = '/api/lyric?songmid='+this.songId
             if (this.songId){
-                let resOfSongLyric = await this.$http.get(this.songId)
+                let resOfSongLyric = await this.api.songLyric(this.songId)
+                console.log(resOfSongLyric)
                 let lyrics = resOfSongLyric.data.data.lyric.split("\n")
                 // console.log(resOfSongLyric)
                 // debugger
@@ -283,16 +292,22 @@ export default {
             }
         },
         songData(){
-            const {cur,list}=this.$store.state
-            // debugger
-            console.log(list)
-            return list.find(item=>{
+            const {cur,playList}=this.$store.state
+            debugger
+            // console.log(playList)
+            return playList.find(item=>{
                 if (item.mid===cur){
-                    this.songLyric = item.lyric
+                    this.songId=item.mid
+                    if (item.lyric){
+                        this.songLyric = item.lyric
+                    }else{
+                        this.fetchLyric()
+                    }
                     this.getALlKeys(item.lyric)
                     this.lyricIndex=0
                     this.currentTime=0
                 }
+
                 return item.mid===cur
             }) || null
         }

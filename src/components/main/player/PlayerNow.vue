@@ -68,7 +68,7 @@ export default {
     computed:{
         songData(){
             // debugger
-            const {cur,list}=this.$store.state
+            const {cur,playList}=this.$store.state
             // console.log(list)
        /*     if (list.find(item=>{
                 return item.mid===cur
@@ -77,7 +77,7 @@ export default {
                     return item.mid===cur
                 }) || null)
             }*/
-            return list.find(item=>{
+            return playList.find(item=>{
                 return item.mid===cur
             }) || null
         },

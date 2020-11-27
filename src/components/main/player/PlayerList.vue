@@ -84,23 +84,15 @@
             //vuex数据
             songData(){
                 // debugger
-                const {cur,list}=this.$store.state
-                this.songList=list
+                const {cur,playList}=this.$store.state
+                this.songList=playList
                 // console.log(this.songList)
                 // console.log(list)
-                return list.find(item=>{
+                return playList.find(item=>{
                     return item.mid===cur
                 }) || null
             },
-            //标题
-            // songTitle(){
-            //     return function (item){
-            //         // debugger
-            //         if (item.title) return item.title
-            //         else if(item.albumname) return item.albumname
-            //     }
-            //
-            // }
+
 
         },
         methods:{
@@ -116,6 +108,7 @@
             clickPlaying(clickMid){
                 if (clickMid){
                     let clickFlag =this.clickFlag
+                    //点击标志,点击歌曲id
                     let clickInfo = {clickFlag,clickMid}
                     this.$bus.$emit('clickPlaying',clickInfo)
                     this.clickFlag=!this.clickFlag

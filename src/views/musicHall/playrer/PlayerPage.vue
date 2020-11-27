@@ -94,7 +94,7 @@
             let idInfo = ''
             if (this.$route.params.songId.match(regSong)){
                  idInfo=this.$route.params.songId.replace(regSong,'')
-                this.$store.dispatch('queryDataA',idInfo)
+                this.$store.dispatch('queryDataSong',idInfo)
             }else if (this.$route.params.songId.match(regSongList)){
                 idInfo=this.$route.params.songId.replace(regSongList,'')
                 this.$store.dispatch('queryDataASongList',idInfo)
@@ -108,8 +108,8 @@
         },
         computed:{
             songData(){
-                const {cur,list}=this.$store.state
-                return list.find(item=>{
+                const {cur,playList}=this.$store.state
+                return playList.find(item=>{
                     return item.mid===cur
                 }) || null
             }

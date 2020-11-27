@@ -38,10 +38,10 @@ function formatLyric(lyric) {
     return lyrArr
 }
 
-const mutations = {
+
     //state 原始状态
     //payload 只能传一个参数,通过解构出想要的值
-    queryDataM(state,payload){
+export const queryDataSong = (state, payload)=>{
         // debugger
         let {
             songId,//歌词id
@@ -59,7 +59,7 @@ const mutations = {
         if (dataOfInfo&&dataOfPlay&&detaOfLyric){
             // state.list.push(data)
             //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
-            state.list.unshift({
+            state.playList.unshift({
                 ...dataOfInfo,
                 interval:timeFormat(dataOfInfo.interval),//时间
                 playerUrl:dataOfPlay,//播放链接
@@ -73,40 +73,59 @@ const mutations = {
 
         else if (content_id&&dataOfSongList&&dataOfPlay){
             // debugger
-            state.list=[]
+            state.playList=[]
             dataOfSongList.songlist.forEach((item,index)=>{
+                // console.log(dataOfSongLyrics);
+                if (index<1){
+                    console.log(dataOfSongLyrics[0]);
+                    state.playList.push({
+                        ...item,
+                        interval:timeFormat(item.interval),//时间
+                        playerUrl:dataOfPlay[index],//播放链接
+                        singerName:item.albumname,//歌手名字
+                        songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
+                        lyric:formatLyric(dataOfSongLyrics[0]),
+                        mid:item.songmid,
+                        title:item.songname
+                    })
+                }else{
+                    state.playList.push({
+                        ...item,
+                        interval:timeFormat(item.interval),//时间
+                        playerUrl:dataOfPlay[index],//播放链接
+                        singerName:item.albumname,//歌手名字
+                        songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
+                        mid:item.songmid,
+                        title:item.songname
+                    })
+                }
 
-                state.list.push({
-                    ...item,
-                    interval:timeFormat(item.interval),//时间
-                    playerUrl:dataOfPlay[index],//播放链接
-                    singerName:item.albumname,//歌手名字
-                    songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
-                    // detaOfLyric:formatLyric(dataOfSongLyrics[index]),
-                    mid:item.songmid,
-                    title:item.songname
-                })
                 // debugger
 
             })
             // state.list.push({...dataOfSongList.songlist})
         }
-    },
-    queryDataMDelete(state,payload){
+    }
+ export const  queryDataMDelete = (state,payload) =>{
         // debugger
         let {
             songId,
             result,
         }=payload
-        state.list.splice(result,1 )
+        state.playList.splice(result,1 )
 
-        let res = state.list.find(item=>{
+        let res = state.playList.find(item=>{
             return item.mid===songId
         })
         if (!res){
             // let result = state.list.findIndex(item=>item.mid)
-            state.cur = state.list[0].mid
+            state.cur = state.playList[0].mid
         }
-    },
+    }
+
+
+// 获取 audio 元素
+export const getAudio = (state, audio) => {
+    state.audio = audio
 }
-export default mutations
+
