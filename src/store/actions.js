@@ -5,7 +5,7 @@ const actions = {
 
     //想展示那首歌的信息就传递id
     async queryDataSong({state,commit}, songId){
-        debugger
+        // debugger
         //校验是否存在
         let result = state.playList.find(item=>{
             return item.mid===songId
@@ -59,13 +59,13 @@ const actions = {
         let dataOfSongLyrics = []
 
         //切割,只显示前30个
-        resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,30)
+        resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,35)
         //获取所有歌曲id
         let songMids = ''
         // debugger
         // console.log(dataOfFirstSongMid)
         let songmid = ''
-        let i = 0
+
         for (let item in resultOfSongList.data.data.songlist){
             songmid = resultOfSongList.data.data.songlist[item].songmid
             songMids +=  songmid+','

@@ -142,14 +142,14 @@
 -->
 <template>
     <div class="lyric-parsing">
-<!--        {{songLyric}}-->
-
         <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap" v-if="songData">
-            <div v-if="!songLyric">暂无歌词, 请欣赏歌曲</div>
+<!--            {{songLyric}}-->
+            <div v-if="nLyric">暂无歌词, 请欣赏歌曲</div>
             <div v-else>
                 <span v-for="(item,key,index) in songLyric" :key="index"
                       :class="classObject(item,key,index)"
-                >{{item}}
+                >
+                    {{item}}
                 </span>
             </div>
 
@@ -161,7 +161,7 @@
 </template>
 
 <script>
-import api from "@/api";
+
 export default {
     props:{
      /*   songId:{
@@ -183,6 +183,7 @@ export default {
             allKeys:[],//所有key
             lyricIndex:0,//当前显示歌词的索引
             currentTime:0,//当前时间
+            nLyric:false,//没有歌词
         }
     },
     methods:{
@@ -283,11 +284,7 @@ export default {
 
     },
     watch:{
-    /*    currentTime:this.delayer(nv=>{
-            this.$nextTick(()=>{
-                this.lyricMove()
-            })
-        }) ,*/
+
         currentTime(){
             // debugger
             // this.delayer()
@@ -307,6 +304,7 @@ export default {
         })
     },
     computed:{
+        //类对象 设置歌词
         classObject() {
 
             return function (item,key,index) {
@@ -326,15 +324,19 @@ export default {
                 }
             }
         },
+        //获取数据
         songData(){
             const {cur,playList}=this.$store.state
-            debugger
+            // debugger
             // console.log(playList)
             return playList.find(item=>{
                 if (item.mid===cur){
                     this.songId=item.mid
                     if (item.lyric){
                         this.songLyric = item.lyric
+                        if (!this.songLyric){
+                            this.nLyric=true
+                        }
                     }else{
                         this.fetchLyric()
                     }
@@ -345,7 +347,8 @@ export default {
 
                 return item.mid===cur
             }) || null
-        }
+        },
+
     }
 
 }

@@ -77,7 +77,7 @@ export const queryDataSong = (state, payload)=>{
             dataOfSongList.songlist.forEach((item,index)=>{
                 // console.log(dataOfSongLyrics);
                 if (index<1){
-                    console.log(dataOfSongLyrics[0]);
+                    // console.log(dataOfSongLyrics[0]);
                     state.playList.push({
                         ...item,
                         interval:timeFormat(item.interval),//时间
