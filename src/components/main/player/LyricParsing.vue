@@ -269,10 +269,10 @@ export default {
 
                 if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
                     // debugger
-                    console.log('currentTime:'+this.currentTime)
-                    console.log('key:'+key+'歌词:'+this.songLyric[key])
-                    console.log('index:'+index)
-                    console.log('next:'+this.allKeys[index+1])
+                    // console.log('currentTime:'+this.currentTime)
+                    // console.log('key:'+key+'歌词:'+this.songLyric[key])
+                    // console.log('index:'+index)
+                    // console.log('next:'+this.allKeys[index+1])
                     // console.log('歌词:'+this.songLyric[index])
                     //当前的歌词位置,即行数
                     // this.lyricIndex=0
