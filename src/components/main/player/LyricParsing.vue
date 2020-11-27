@@ -228,7 +228,7 @@ export default {
 
         },*/
         async fetchLyric(){
-            debugger
+            // debugger
             //歌词
             let songLyricUrl = '/api/lyric?songmid='+this.songId
             const resOfSongLyric = await this.$http.get(songLyricUrl)
@@ -260,7 +260,7 @@ export default {
             }
             this.songLyric = lyrArr
             this.getALlKeys(lyrArr)
-            // console.log(lyrArr)
+            console.log(lyrArr)
         },
         //得到所有的Keys
         getALlKeys(lyrArr){
@@ -318,9 +318,14 @@ export default {
                     // console.log('歌词:'+this.songLyric[index])
                     //当前的歌词位置,即行数
                     // this.lyricIndex=0
+
                     this.lyricIndex=index
                     // console.log(this.lyricIndex)
                     return 'currentLyric'
+                }else {
+                    this.$nextTick(()=>{
+                        return ''
+                    })
                 }
             }
         },

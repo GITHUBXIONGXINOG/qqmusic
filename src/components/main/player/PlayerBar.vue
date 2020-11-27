@@ -102,6 +102,7 @@ import {mapGetters, mapMutations} from "vuex"
                 progressLen:0,//进度条长度
                 clickFlag:'',//点击标志
                 clickMid:'',//点击歌曲mid
+                timer:null,//定时器
             }
         },
 
@@ -203,12 +204,17 @@ import {mapGetters, mapMutations} from "vuex"
             },
             //获取当前播放时间
             updateTime(e) {
+
                 if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                     // this.$emit('currentTime',this.currentTimeOriginal)
-                    this.$bus.$emit('currentTime',this.currentTimeOriginal)
+                    this.timer = setInterval(()=>{
+                        this.$bus.$emit('currentTime',this.currentTimeOriginal)
+                    },1000)
                     // console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
+                }else {
+                    clearInterval(this.timer)
                 }
             },
             //结束操作
