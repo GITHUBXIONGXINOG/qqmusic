@@ -136,3 +136,6 @@ export const isPlayMutation = (state, payload) => {
 export const setCurrentMid = (state,payload) =>{
     state.cur = payload
 }
+export const setCurrentLyric = (state,payload) =>{
+    state.currentLyric = payload
+}

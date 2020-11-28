@@ -196,7 +196,7 @@ export default {
     methods:{
         ...mapMutations([
             "isPlayMutation",//设置播放状态,存入
-            ""
+            "setCurrentLyric",//存入当前歌词对象
         ]),
 
         async fetchLyric(){
@@ -256,24 +256,29 @@ export default {
         },
         initLyric(lyric){
             // debugger
-            this.currentLyric=new Lyric(lyric,this.handleLyric)
-            //如果歌曲处于播放状态,则播放歌词
-            if(this.isPlay){
-                this.currentLyric.play()
-            }else {
+            if ( this.currentLyric){
                 this.currentLyric.stop()
-
             }
+            this.currentLyric=new Lyric(lyric,this.handleLyric)
+            this.setCurrentLyric(this.currentLyric)
+            // this.lyricPlay()
+            //如果歌曲处于播放状态,则播放歌词
+        /*    if(this.isPlay){
+                this.lyricTogglePlay()
+            }else {
+                this.lyricTogglePlay()
+            }*/
         },
         handleLyric({lineNum,txt}){
-            this.currentLineNum=lineNum
             // debugger
-            this.$nextTick(()=>{
+
                 // debugger
-                if ( this.$refs.lyricWrap){
-                    this.$refs.lyricWrap.style.transform="translateY("+(26-lineNum*35)+"px)"
-                }
-            })
+                this.currentLineNum=lineNum
+                // if ( this.$refs.lyricWrap){
+                //     this.$refs.lyricWrap.style.transform="translateY("+(26-lineNum*35)+"px)"
+                // }
+
+            console.log('lineNum:'+lineNum+'txt'+txt)
      /*       if(lineNum>2){
                 let lineEl= this.$refs.lyricLine[lineNum-2]
                 if(this.$refs.lyricList){
@@ -283,7 +288,24 @@ export default {
                 }
             }*/
         },
-
+        //歌词状态切换
+        // lyricTogglePlay() {
+        //     debugger
+        //     setTimeout(() => {
+        //         // 歌词的播放/暂停
+        //         if (this.currentLyric) {
+        //             this.currentLyric.togglePlay()
+        //         }
+        //     }, 50)
+        // },
+        // 歌词的重新播放
+        lyricPlay() {
+            setTimeout(() => {
+                if (this.currentLyric) {
+                    this.currentLyric.play()
+                }
+            }, 20)
+        },
 
     },
     created() {
@@ -305,7 +327,7 @@ export default {
         }*/
         getCurrentLyricSign:{
             handler(newVal,oldVal){
-                // debugger
+                debugger
                 console.log(newVal)
                 console.log(oldVal)
                 if (newVal!=oldVal&&newVal){
@@ -399,7 +421,9 @@ export default {
     },
     destroyed() {
         // this.$bus.off('currentTime')
-    }
+        this.$bus.$off('PausedSign')
+
+        }
 
 }
 </script>

@@ -128,7 +128,9 @@ import {mapMutations, mapGetters} from "vuex"
             ...mapGetters([
               "isPlay",//获取播放状态
               "audio",//获取audio标签
-              "cur",
+              "cur",//当前mid
+              "currentLyric",//歌词元素,读取
+
             ]),
 
 
@@ -160,12 +162,19 @@ import {mapMutations, mapGetters} from "vuex"
                 // debugger
                 this.isPlayMutation(!this.isPlay)
                 if (clickMid==this.cur){//当前歌曲恢复播放
-                    if (this.audio)
-                    this.audio.play()
-                }else {
-                    if (this.audio)
+                    if (this.audio){
+                        this.audio.play()
+                    }
+                    // this.lyricTogglePlay()
+                }else {//点击的其它歌曲
+                    if (this.audio){
                         this.audio.pause()
+                    }
+                    if (this.currentLyric) {
+                        this.currentLyric.stop()
+                    }
                     this.$store.dispatch('queryDataSong',clickMid)
+                        // this.lyricPlay()
                 }
             },
             //停止播放
@@ -173,14 +182,36 @@ import {mapMutations, mapGetters} from "vuex"
                 // debugger
                 this.isPlayMutation(!this.isPlay)
                if (!this.audio){
-                   debugger
+                   // debugger
                    this.$bus.$emit('resetAudioInfo',true)
                }else {
                    this.audio.pause()
 
                }
 
+               this.lyricTogglePlay()
+
+
            },
+         /*   // 歌词的重新播放
+            lyricPlay() {
+                setTimeout(() => {
+                    if (this.currentLyric) {
+                        this.currentLyric.play()
+                    }
+                }, 20)
+            },
+            // 歌词的播放/暂停
+            lyricTogglePlay() {
+                // debugger
+                setTimeout(() => {
+                    // 歌词的播放/暂停
+                    if (this.currentLyric) {
+                        this.currentLyric.togglePlay()
+                    }
+                }, 20)
+            },
+            */
 
             deleteSong(clickMid){
                 this.$store.dispatch('queryDataADelete',clickMid)

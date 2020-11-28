@@ -127,7 +127,9 @@ import {audio} from "@/store/getters";
                 // console.log(this.$store.state)
                 this.isPlayMutation(true)
                 // console.log(this.$store.state)
-
+                if (this.currentLyric) {
+                    this.currentLyric.play()
+                }
             },
             //拖拽事件
             move(e){
@@ -246,10 +248,11 @@ import {audio} from "@/store/getters";
                     this.getAudio(this.audio)
                 }
                 this.audio.play()
+                // this.lyricTogglePlay()
             },
             //停止播放
             clickStop(){
-                debugger
+                // debugger
                 this.isPlayMutation(!this.isPlay)
                 if (!this.audio){
                     // debugger
@@ -257,7 +260,21 @@ import {audio} from "@/store/getters";
                     this.getAudio(this.audio)
                 }
                 this.audio.pause()
+                // this.lyricTogglePlay()
             },
+       /*
+            //歌词状态切换
+            lyricTogglePlay() {
+                // debugger
+                setTimeout(() => {
+                    // 歌词的播放/暂停
+                    if (this.currentLyric) {
+                        this.currentLyric.togglePlay()
+                    }
+                }, 50)
+            },
+            */
+          /*
             //播放暂停歌曲
             changeSongStatus(){
                 if (this.$refs.audio){
@@ -280,6 +297,10 @@ import {audio} from "@/store/getters";
                 // console.log('audio暂停状态:'+audio.paused)
                 // console.log('是否暂停:'+this.isPaused)
             },
+
+            */
+
+
             //当前进度条
             currentProgress(flag){
                 if (!flag){
@@ -414,6 +435,7 @@ import {audio} from "@/store/getters";
             //得到store的数据,在getters.js中处理后,返回值
             ...mapGetters([
                 "isPlay",//播放状态,读取
+              "currentLyric",//歌词元素,读取
             ])
         },
         mounted() {
@@ -465,7 +487,7 @@ import {audio} from "@/store/getters";
             isResetAudio(val){
                 if (val){
                     this.$nextTick(()=>{
-                        debugger
+                        // debugger
                         this.audio = this.$refs.audio
                         this.getAudio(this.audio)
                         this.audio.pause()
