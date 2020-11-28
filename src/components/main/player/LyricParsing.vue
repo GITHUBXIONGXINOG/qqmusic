@@ -145,9 +145,9 @@
         <div class="lyric-wrap" ref="lyricWrap" id="lyricWrap" v-if="songData">
 <!--            {{songLyric}}-->
             <div v-if="nLyric">暂无歌词, 请欣赏歌曲</div>
-            <div v-else>
+            <div v-else ref="lyricInner">
                 <span v-for="(item,key,index) in songLyric" :key="index"
-                      :class="classObject(item,key,index)"
+                      :class="classObject(item,key,index)" class="lyric-text"
                 >
                     {{item}}
                 </span>
@@ -228,7 +228,7 @@ export default {
 
         },*/
         async fetchLyric(){
-            debugger
+            // debugger
             //歌词
             let songLyricUrl = '/api/lyric?songmid='+this.songId
             const resOfSongLyric = await this.$http.get(songLyricUrl)
@@ -288,7 +288,7 @@ export default {
         currentTime(){
             // debugger
             // this.delayer()
-            this.lyricMove()
+            // this.lyricMove()
 
         },
       /*  songId(){
@@ -309,7 +309,7 @@ export default {
 
             return function (item,key,index) {
 
-                if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
+                if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
                     // debugger
                     // console.log('currentTime:'+this.currentTime)
                     // console.log('key:'+key+'歌词:'+this.songLyric[key])
@@ -320,6 +320,10 @@ export default {
                     // this.lyricIndex=0
                     this.lyricIndex=index
                     // console.log(this.lyricIndex)
+                    this.$nextTick(()=>{
+                        this.$refs.lyricInner.setAttribute('class', ' lyric-move-class-'+index)
+                    })
+                   // return true
                     return 'currentLyric'
                 }
             }
@@ -349,6 +353,9 @@ export default {
             }) || null
         },
 
+    },
+    destroyed() {
+        this.$bus.$off('currentTime')
     }
 
 }
@@ -386,7 +393,7 @@ export default {
 
 
 
-        span{
+        .lyric-text{
             //border: 1px solid black;
             //margin: 6px 0;
             height: 20px;
@@ -404,8 +411,11 @@ export default {
         color: #31c27c;
         //position: absolute;
 
-
-
+    }
+    @for $i from 0 to 100{
+        .lyric-move-class-#{$i}{
+            transform: translateY(26px-$i*35px);
+        }
     }
 }
 
