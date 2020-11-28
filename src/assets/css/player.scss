@@ -53,11 +53,12 @@
       .delete-panel{
         position: absolute;
         border: 1px solid #bfbfbf;
+        border-radius: 2px;
         width: 522px;
         height: 236px;
         background: #FFFFFF;
         box-shadow: 10px 10px 50px 2px rgba(0,0,0,.5);
-        z-index: 999;
+        z-index: 9999;
         left: 0;
         right: 0;
         top: 0;
@@ -146,6 +147,33 @@
             }
 
           }
+        }
+      }
+      //空选中框
+      .null-delete-panel{
+        //border: 1px solid red;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        width: 205px;
+        height: 150px;
+        background: rgba(0,0,0,.8);
+        box-shadow: 8px 3px 20px 5px rgba(0,0,0,.4);
+        z-index: 999;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .icon-jinggao{
+          font-size: 50px;
+          margin: 0 0 10px 0;
+        }
+        .null-err-info{
+
         }
       }
     }

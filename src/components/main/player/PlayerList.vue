@@ -22,11 +22,11 @@
                     <span :class="iconList[2]"></span>
                     <i>{{userOperating[2]}}</i>
                 </li>
-                <li class="">
+                <li @click="checkBox.length>0 ? deletePanelFlag=1 : setNullDeletePanel()">
                     <span :class="iconList[3]"></span>
                     <i>{{userOperating[3]}}</i>
                 </li>
-                <li @click="deletePanelFlag=true">
+                <li @click="deletePanelFlag=2">
                     <span :class="iconList[4]"></span>
                     <i>{{userOperating[4]}}</i>
                 </li>
@@ -41,13 +41,23 @@
 
                 <div class="content-wrap">
                     <span class="iconfont icon-qietucopy"></span>
-                    <span class="delete-panel-content">确定要清空列表</span>
+                    <span class="delete-panel-content">
+                        <i v-if="deletePanelFlag===1">确定要删除歌曲？</i>
+                        <i v-else-if="deletePanelFlag===2">确定要清空列表?</i>
+                    </span>
                 </div>
                 <div class="confirm-select">
-                    <span class="delete-panel-confirm" @click="deleteList">确定</span>
+
+                    <span class="delete-panel-confirm" @click="deleteConfirm(deletePanelFlag)">确定</span>
+
                     <span class="delete-panel-cancel" @click="deletePanelFlag=false">取消</span>
                 </div>
 
+            </div>
+            <!--空选中删除-->
+            <div class="null-delete-panel" v-show="ShowCheckedNull">
+                <span class="iconfont icon-jinggao"></span>
+                <span class="null-err-info">请选择操作的单曲</span>
             </div>
         </ul>
         <div class="rank-wrap">
@@ -163,10 +173,9 @@ import {mapMutations, mapGetters} from "vuex"
                 songOperatingShow:'',//显示操作标识
                 clickFlag:false,//点击标记
                 deletePanelFlag:false,//清空列表标记
-                changeClick:[],//input 勾选框
-                selectAllFlag:false,//全选框
-                checkBox:[],
-                checked:"",
+                checkBox:[],//选中列表
+                checked:"",//全选框
+                ShowCheckedNull:false,
             }
         },
 
@@ -189,14 +198,7 @@ import {mapMutations, mapGetters} from "vuex"
               // "currentLyric",//歌词元素,读取
 
             ]),
-       /*     checkFromAllControl(){
-                debugger
-                if (this.selectAllFlag){
-                    return 'checked'
-                }
-                return ''
 
-            }*/
 
 
 
@@ -206,6 +208,7 @@ import {mapMutations, mapGetters} from "vuex"
               'isPlayMutation',//提交播放状态
               'queryDataMDelete',//删除点击歌曲
               'deleteAllSongList',//删除所有歌曲
+              'deleteSelectSong',//删除选中歌曲
             ]),
             //悬浮显示切换
             OperateChange(index){
@@ -280,6 +283,7 @@ import {mapMutations, mapGetters} from "vuex"
                     })
                 }
             },
+            //单勾选
             checkOne(item){
                 // debugger
                 item.checked = !item.checked
@@ -300,6 +304,27 @@ import {mapMutations, mapGetters} from "vuex"
                     }
                 })
 
+            },
+            //删除函数判断
+            deleteConfirm(index){
+                //删除选中
+                if (index===1){
+                    this.deleteSelectSong(this.checkBox)
+                }else if (index===2){
+                    //清空列表
+                    this.deleteList()
+                }
+                //隐藏面板
+                this.deletePanelFlag=false
+            },
+            //空选中删除
+            setNullDeletePanel(){
+                debugger
+                this.ShowCheckedNull=true
+                //1.5秒后关闭
+                setTimeout(item=>{
+                    this.ShowCheckedNull=false
+                },1500)
             }
 
         },
@@ -319,12 +344,12 @@ import {mapMutations, mapGetters} from "vuex"
             //     this.$bus.$emit('resetAudioInfo',true)
             // }
             //初始化列表,将所有的mid存入checkbox,并且设置对应的checked为false
-            this.$nextTick(()=>{
-                this.songList.forEach( (item)=> {
-                    this.checkBox.push(item.mid)
-                    item.checked=false;
-                })
-            })
+            // this.$nextTick(()=>{
+            //     this.songList.forEach( (item)=> {
+            //         this.checkBox.push(item.mid)
+            //         item.checked=false;
+            //     })
+            // })
 
         },
         updated() {

@@ -106,6 +106,7 @@ export const queryDataSong = (state, payload)=>{
             // state.list.push({...dataOfSongList.songlist})
         }
     }
+
 export const  queryDataMDelete = (state,songId) =>{
         // debugger
         let index = state.playList.findIndex(item=>item.mid===songId)
@@ -159,4 +160,12 @@ export const deleteAllSongList = (state) =>{
     state.playList=[],
     state.isPlay=false,
     state.audio=null
+}
+
+export const deleteSelectSong = (state,payload) =>{
+    debugger
+    console.log(payload)
+    payload.forEach(mid=>{
+        queryDataMDelete(state,mid)
+    })
 }
