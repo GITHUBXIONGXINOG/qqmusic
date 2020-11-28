@@ -92,6 +92,7 @@
 
 <script>
 import {mapGetters, mapMutations} from "vuex"
+import {audio} from "@/store/getters";
 
     export default {
         props:{
@@ -113,6 +114,8 @@ import {mapGetters, mapMutations} from "vuex"
                 clickFlag:'',//点击标志
                 clickMid:'',//点击歌曲mid
                 timer:null,//定时器
+                audio:null,//播放器初始
+                isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
             }
         },
 
@@ -235,14 +238,24 @@ import {mapGetters, mapMutations} from "vuex"
             },
             //开始播放
             clickStart(){
-                debugger
+                // debugger
                 this.isPlayMutation(!this.isPlay)
+                if (!this.audio){
+                    // debugger
+                    this.audio = this.$refs.audio
+                    this.getAudio(this.audio)
+                }
                 this.audio.play()
             },
             //停止播放
             clickStop(){
                 debugger
                 this.isPlayMutation(!this.isPlay)
+                if (!this.audio){
+                    // debugger
+                    this.audio = this.$refs.audio
+                    this.getAudio(this.audio)
+                }
                 this.audio.pause()
             },
             //播放暂停歌曲
@@ -351,13 +364,14 @@ import {mapGetters, mapMutations} from "vuex"
             ...mapMutations([
                 "getAudio",//获取audio,存入
                 "isPlayMutation",//设置播放状态,存入
+                "setCurrentMid",//当前的歌曲id,存入
 
             ])
 
         },
         created() {
 
-            this.$bus.$on('clickPlaying',clickInfo=>{
+          /*  this.$bus.$on('clickPlaying',clickInfo=>{
                 // this.isPaused=!this.isPaused
                 // this.changeSongStatus()
                 let {clickFlag,clickMid} = clickInfo
@@ -369,10 +383,11 @@ import {mapGetters, mapMutations} from "vuex"
                     this.$store.dispatch('queryDataSong',clickMid)
                 }
 
-            }),
+            }),*/
               this.currentTimeOriginal=0
 
             this.progressInit()
+
 
 
         },
@@ -399,19 +414,30 @@ import {mapGetters, mapMutations} from "vuex"
             //得到store的数据,在getters.js中处理后,返回值
             ...mapGetters([
                 "isPlay",//播放状态,读取
-                "audio",//播放组件,读取
             ])
         },
         mounted() {
+            this.$nextTick(()=>{
+                this.audio = this.$refs.audio
+                this.getAudio(this.audio)
+            })
+            this.$nextTick(()=>{
+                this.$bus.$on('resetAudioInfo',item=>{
+                    this.isResetAudio=item
+                })
+            })
             //进度条初始化
             this.progressInit()
             //监听浏览器的窗口缩放事件window.onresize
             window.onresize = ()=> {
                 this.progressInit();
             }
-            if (this.$refs.audio){
-                this.getAudio(this.$refs.audio)
-            }
+            this.$nextTick(()=>{
+                if (this.$refs.audio){
+                    // debugger
+                    this.getAudio(this.$refs.audio)
+                }
+            })
             console.log(this.$store.state);
 
         },
@@ -435,6 +461,19 @@ import {mapGetters, mapMutations} from "vuex"
                 },
                 deep:true
             },
+            //重置audio
+            isResetAudio(val){
+                if (val){
+                    this.$nextTick(()=>{
+                        debugger
+                        this.audio = this.$refs.audio
+                        this.getAudio(this.audio)
+                        this.audio.pause()
+                    })
+                }
+                this.isResetAudio=false
+
+            }
 
 
         },
@@ -442,6 +481,7 @@ import {mapGetters, mapMutations} from "vuex"
         },
         destroyed(){
             this.$bus.$off('clickPlaying')
+            this.$bus.$off('resetAudioInfo')
         }
     }
 </script>

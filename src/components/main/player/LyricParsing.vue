@@ -163,6 +163,7 @@
 
 <script>
 import Lyric from 'lyric-parser'
+import {mapGetters,mapMutations} from "vuex"
 export default {
     props:{
      /*   songId:{
@@ -193,6 +194,10 @@ export default {
         }
     },
     methods:{
+        ...mapMutations([
+            "isPlayMutation",//设置播放状态,存入
+            ""
+        ]),
 
         async fetchLyric(){
             // debugger
@@ -253,7 +258,7 @@ export default {
             // debugger
             this.currentLyric=new Lyric(lyric,this.handleLyric)
             //如果歌曲处于播放状态,则播放歌词
-            if(!this.PausedSign){
+            if(this.isPlay){
                 this.currentLyric.play()
             }else {
                 this.currentLyric.stop()
@@ -264,8 +269,10 @@ export default {
             this.currentLineNum=lineNum
             // debugger
             this.$nextTick(()=>{
-
-                this.$refs.lyricWrap.style.transform="translateY("+(26-lineNum*35)+"px)"
+                // debugger
+                if ( this.$refs.lyricWrap){
+                    this.$refs.lyricWrap.style.transform="translateY("+(26-lineNum*35)+"px)"
+                }
             })
      /*       if(lineNum>2){
                 let lineEl= this.$refs.lyricLine[lineNum-2]
@@ -327,8 +334,13 @@ export default {
             this.PausedSign=PausedSign
         })
 
+
     },
     computed:{
+        ...mapGetters([
+            "isPlay",//播放状态,读取
+            "audio",//播放组件,读取
+        ]),
         //类对象 设置歌词
         classObject() {
 

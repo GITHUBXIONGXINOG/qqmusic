@@ -133,3 +133,6 @@ export const isPlayMutation = (state, payload) => {
     state.isPlay = payload
 }
 
+export const setCurrentMid = (state,payload) =>{
+    state.cur = payload
+}
