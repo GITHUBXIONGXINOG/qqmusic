@@ -40,7 +40,7 @@ function formatLyric(lyric) {
 
 
     //state 原始状态
-    //payload 只能传一个参数,通过解构出想要的值
+//payload 只能传一个参数,通过解构出想要的值
 export const queryDataSong = (state, payload)=>{
         // debugger
         let {
@@ -106,21 +106,30 @@ export const queryDataSong = (state, payload)=>{
             // state.list.push({...dataOfSongList.songlist})
         }
     }
- export const  queryDataMDelete = (state,payload) =>{
+export const  queryDataMDelete = (state,songId) =>{
         // debugger
-        let {
-            songId,
-            result,
-        }=payload
-        state.playList.splice(result,1 )
+        let index = state.playList.findIndex(item=>item.mid===songId)
+     if (index>=0){//找到该歌曲
+         state.playList.splice(index,1 )//删除该歌曲
 
-        let res = state.playList.find(item=>{
-            return item.mid===songId
-        })
-        if (!res){
-            // let result = state.list.findIndex(item=>item.mid)
-            state.cur = state.playList[0].mid
-        }
+         //判断当前的歌曲id还在不在state里面,在的话不用处理
+         let res = state.playList.find(item=>{
+             return item.mid===state.cur
+         })
+         //如果不再的话说明删除的是当前播放的歌曲,重新赋值cur,后面的上来一位
+         if (!res){
+             // let result = state.list.findIndex(item=>item.mid)
+             if (state.playList[index]){
+                 state.cur = state.playList[index].mid
+             }else if (state.playList[index-1]){
+                 state.cur = state.playList[index-1].mid
+
+             }else{
+                 state.cur=''
+             }
+         }
+     }
+
     }
 
 
@@ -138,4 +147,16 @@ export const setCurrentMid = (state,payload) =>{
 }
 export const setCurrentLyric = (state,payload) =>{
     state.currentLyric = payload
+}
+// 设置播放列表
+export const setPlayList = (state,payload)=>{
+    state.playList = payload
+}
+
+
+export const deleteAllSongList = (state) =>{
+    state.cur=0,
+    state.playList=[],
+    state.isPlay=false,
+    state.audio=null
 }

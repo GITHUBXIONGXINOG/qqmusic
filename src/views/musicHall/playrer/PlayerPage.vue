@@ -33,6 +33,7 @@
     import PlayerList from '@/components/main/player/PlayerList'
     import PlayerNow from '@/components/main/player/PlayerNow'
     import PlayerBar from '@/components/main/player/PlayerBar'
+    import {mapMutations} from "vuex";
     export default {
         props:{
             songId: {
@@ -74,7 +75,10 @@
             PausedSign(val){
               //原先是是否可以暂停,现在是暂停信号,取反
               this.pausedSign=!val
-            }
+            },
+            ...mapMutations([
+              'deleteAllSongList'
+            ])
 
         },
         created() {
@@ -85,8 +89,11 @@
             // this.$store.dispatch('queryDataA',this.$route.params.songId)
             // console.log(this.$route)
             // debugger
+            //歌曲
             let regSong = /songmid=/
+            //歌单
             let regSongList = /content_id=/
+            //专辑
             let regAlbums = /albummid=/
             let idInfo = ''
             if (this.$route.params.songId.match(regSong)){
@@ -94,6 +101,7 @@
                 this.$store.dispatch('queryDataSong',idInfo)
             }else if (this.$route.params.songId.match(regSongList)){
                 idInfo=this.$route.params.songId.replace(regSongList,'')
+                this.deleteAllSongList()
                 this.$store.dispatch('queryDataASongList',idInfo)
             }else {
                 idInfo=this.$route.params.songId.replace(regSongList,'')

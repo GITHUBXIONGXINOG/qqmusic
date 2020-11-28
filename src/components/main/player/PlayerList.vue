@@ -3,12 +3,53 @@
 <!--        {{songList}}-->
         <!--用户操作按钮-->
         <ul class="userOpera">
-            <a href="javascript:;" v-for="(item,index) in userOperating" :key="index">
+<!--            <a href="javascript:;" v-for="(item,index) in userOperating" :key="index" ref="userOperating">
                 <span class="icon-wrap">
-                    <span :class="['iconfont ',`${iconList[index]}`]"></span>
+                    <span :class="iconList[0]"></span>
                     <i>{{item}}</i>
                 </span>
-            </a>
+            </a>-->
+            <ul class="icon-wrap">
+                <li class="">
+                    <span :class="iconList[0]"></span>
+                    <i>{{userOperating[0]}}</i>
+                </li>
+                <li class="">
+                    <span :class="iconList[1]"></span>
+                    <i>{{userOperating[1]}}</i>
+                </li>
+                <li class="">
+                    <span :class="iconList[2]"></span>
+                    <i>{{userOperating[2]}}</i>
+                </li>
+                <li class="">
+                    <span :class="iconList[3]"></span>
+                    <i>{{userOperating[3]}}</i>
+                </li>
+                <li @click="deletePanelFlag=true">
+                    <span :class="iconList[4]"></span>
+                    <i>{{userOperating[4]}}</i>
+                </li>
+            </ul>
+
+
+<!--            {{deletePanel}}-->
+            <div class="delete-panel" v-show="deletePanelFlag">
+                <nav class="delete-panel-title-wrap">
+                    <nav class="delete-panel-title">QQ音乐</nav>
+                    <span class="iconfont icon-cuowu" @click="deletePanelFlag=false"></span>
+                </nav>
+
+                <div class="content-wrap">
+                    <span class="iconfont icon-qietucopy"></span>
+                    <span class="delete-panel-content">确定要清空列表</span>
+                </div>
+                <div class="confirm-select">
+                    <span class="delete-panel-confirm" @click="deleteList">确定</span>
+                    <span class="delete-panel-cancel" @click="deletePanelFlag=false">取消</span>
+                </div>
+
+            </div>
         </ul>
         <div class="rank-wrap">
 
@@ -30,9 +71,10 @@
                     <ul class="bg-bubbles">
                         <li v-for="(i, j) in 3" :key="j"></li>
                     </ul><!--动态图标-->
-
-                    <li class="song-index" >{{index+1}}</li>
-                    <li class="song-title">{{item.title||item.songname}}</li>
+                    <div class="index-title">
+                        <li class="song-index" >{{index+1}}</li>
+                        <li class="song-title">{{item.title||item.songname}}</li>
+                    </div>
                     <li class="song-singer">{{item.singer[0].name}}</li>
                     <li class="song-interval"
                         :class="{'operating-hidden':songOperatingShow==index}">
@@ -60,12 +102,13 @@
                         <li>
                             <i class="iconfont icon-jia"></i>
                         </li>
-                        <li>
-                            <i class="iconfont icon-fenxiang"></i>
-                        </li>
+
                         <!--删除-->
                         <li @click="deleteSong(item.mid)">
                             <i class="iconfont icon-lajixiangzizhi"></i>
+                        </li>
+                        <li>
+                            <i class="iconfont icon-fenxiang"></i>
                         </li>
 
 
@@ -94,11 +137,11 @@ import {mapMutations, mapGetters} from "vuex"
             return{
                 userOperating:['收藏','添加到','下载','删除','清空列表'],//用户操作
                 iconList:[
-                    'icon-shoucang',
-                    'icon-jiatianjiakuangxuanduoxuan-8',
-                    'icon-xiazai',
-                    'icon-lajixiangzizhi',
-                    'icon-qingkong'
+                    'iconfont icon-shoucang',
+                    'iconfont icon-jiatianjiakuangxuanduoxuan-8',
+                    'iconfont icon-xiazai',
+                    'iconfont icon-lajixiangzizhi',
+                    'iconfont icon-qingkong'
                 ],//操作对应的图标
                 contentNav:['歌曲','歌手','时长'],
                 songList:[],
@@ -109,7 +152,8 @@ import {mapMutations, mapGetters} from "vuex"
                     'lajixiangzizhi',
                 ],//用户歌曲操作图标
                 songOperatingShow:'',//显示操作标识
-                clickFlag:false,
+                clickFlag:false,//点击标记
+                deletePanelFlag:false,//清空列表标记
             }
         },
 
@@ -129,15 +173,18 @@ import {mapMutations, mapGetters} from "vuex"
               "isPlay",//获取播放状态
               "audio",//获取audio标签
               "cur",//当前mid
-              "currentLyric",//歌词元素,读取
+              // "currentLyric",//歌词元素,读取
 
             ]),
+
 
 
         },
         methods:{
             ...mapMutations([
               'isPlayMutation',//提交播放状态
+              'queryDataMDelete',//删除点击歌曲
+              'deleteAllSongList',//删除所有歌曲
             ]),
             //悬浮显示切换
             OperateChange(index){
@@ -147,16 +194,7 @@ import {mapMutations, mapGetters} from "vuex"
                     this.songOperatingShow=''
                 }
             },
-  /*          //点击传值给兄弟组件playerbar
-            clickPlaying(clickMid){
-                if (clickMid){
-                    let clickFlag =this.clickFlag
-                    //点击标志,点击歌曲id
-                    let clickInfo = {clickFlag,clickMid}
-                    this.$bus.$emit('clickPlaying',clickInfo)
-                    this.clickFlag=!this.clickFlag
-                }
-             },*/
+
             //开始播放
             clickStart(clickMid){
                 // debugger
@@ -170,15 +208,15 @@ import {mapMutations, mapGetters} from "vuex"
                     if (this.audio){
                         this.audio.pause()
                     }
-                    if (this.currentLyric) {
-                        this.currentLyric.stop()
-                    }
+                    // if (this.currentLyric) {
+                    //     this.currentLyric.stop()
+                    // }
                     this.$store.dispatch('queryDataSong',clickMid)
                         // this.lyricPlay()
                 }
             },
             //停止播放
-           clickStop(){
+            clickStop(){
                 // debugger
                 this.isPlayMutation(!this.isPlay)
                if (!this.audio){
@@ -189,35 +227,22 @@ import {mapMutations, mapGetters} from "vuex"
 
                }
 
-               this.lyricTogglePlay()
+               // this.lyricTogglePlay()
 
 
            },
-         /*   // 歌词的重新播放
-            lyricPlay() {
-                setTimeout(() => {
-                    if (this.currentLyric) {
-                        this.currentLyric.play()
-                    }
-                }, 20)
-            },
-            // 歌词的播放/暂停
-            lyricTogglePlay() {
-                // debugger
-                setTimeout(() => {
-                    // 歌词的播放/暂停
-                    if (this.currentLyric) {
-                        this.currentLyric.togglePlay()
-                    }
-                }, 20)
-            },
-            */
 
+            //删除歌曲
             deleteSong(clickMid){
-                this.$store.dispatch('queryDataADelete',clickMid)
+                this.queryDataMDelete(clickMid)
+                // this.$store.dispatch('queryDataADelete',clickMid)
 
             },
-
+            //删除列表
+            deleteList(){
+                this.deleteAllSongList()
+                this.deletePanelFlag=false
+            }
         },
 
         created() {
@@ -230,10 +255,15 @@ import {mapMutations, mapGetters} from "vuex"
             // this.songData()
         },
         mounted() {
-            // if (!this.audio){
+            // if (!this.<span class="icon-wrap">audio){
             //     debugger
             //     this.$bus.$emit('resetAudioInfo',true)
             // }
+
+
+        },
+        updated() {
+
         },
 
         watch:{

@@ -8,7 +8,7 @@ const state = {
     //是否正在播放
     isPlay:false,
     //歌词元素
-    currentLyric:null
+    // currentLyric:null
 }
 
 export default state

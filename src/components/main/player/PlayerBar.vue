@@ -230,7 +230,8 @@ import {audio} from "@/store/getters";
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                     // this.$emit('currentTime',this.currentTimeOriginal)
-                    this.currentTimeSecond=Math.floor(this.currentTimeOriginal)
+                    if ( this.currentTimeSecond!=(this.currentTimeOriginal))
+                     this.currentTimeSecond=Math.floor(this.currentTimeOriginal)
                         // this.$bus.$emit('currentTime',this.currentTimeOriginal)
 
 
@@ -500,8 +501,13 @@ import {audio} from "@/store/getters";
 
             },
             //监视秒变化
-            currentTimeSecond(val){
-                this.$bus.$emit('currentTime',val)
+            currentTimeSecond:{
+                handler(oldVal,newVal){
+                    // debugger
+                    if (oldVal!=newVal){
+                        this.$bus.$emit('currentTime',oldVal)
+                    }
+                }
 
             }
 

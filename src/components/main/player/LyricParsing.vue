@@ -269,11 +269,11 @@ export default {
                 this.allKeys.push(key)
             }
         },
-        //歌词移动
-        lyricMove(){
-            // debugger
-            this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
-        },
+        // //歌词移动
+        // lyricMove(){
+        //     // debugger
+        //     this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
+        // },
 
 
     },
@@ -321,7 +321,7 @@ export default {
                     this.lyricIndex=index
                     // console.log(this.lyricIndex)
 
-                        console.log(this.currentTime)
+                        // console.log(this.currentTime)
                         this.$nextTick(()=>{
                             this.$refs.lyricInner.setAttribute('class', ' lyric-move-class-'+index)
                         })
