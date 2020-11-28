@@ -61,9 +61,6 @@
               this.albumName = this.songInfoUrl.track_info.album.name
 
 
-
-
-
           },
             //当前时间
       /*      setCurrentTime(val){

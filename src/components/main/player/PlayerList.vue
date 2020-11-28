@@ -42,11 +42,21 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
-                        <!--播放-->
+                      <!--  &lt;!&ndash;播放&ndash;&gt;
                         <li @click="clickPlaying(item.mid)">
                             <i class="iconfont ">
                             </i>
-                        </li>
+                        </li>-->
+                        <!--开始按钮-->
+                        <span class="startButton"
+                              @click="clickStart(item.mid)"
+                              v-show="!isPlay||item.mid!=cur"
+                        ><i></i></span>
+                        <!--停止按钮-->
+                        <span class="stopButton"
+                              @click="clickStop()"
+                              v-show="isPlay&&item.mid===cur"
+                        ><i></i></span>
                         <li>
                             <i class="iconfont icon-jia"></i>
                         </li>
@@ -69,7 +79,8 @@
 </template>
 
 <script>
-    // import Bus from "@/assets/js/bus";
+
+import {mapMutations, mapGetters} from "vuex"
     export default {
         props:{
 
@@ -78,57 +89,6 @@
                 type: Boolean,
                 require:true
             }
-        },
-
-        computed:{
-            //vuex数据
-            songData(){
-                // debugger
-                const {cur,playList}=this.$store.state
-                this.songList=playList
-                // console.log(this.songList)
-                // console.log(list)
-                return playList.find(item=>{
-                    return item.mid===cur
-                }) || null
-            },
-
-
-        },
-        methods:{
-            //悬浮显示切换
-            OperateChange(index){
-                if (index){
-                    this.songOperatingShow=index
-                }else{
-                    this.songOperatingShow=''
-                }
-            },
-            //点击传值给兄弟组件playerbar
-            clickPlaying(clickMid){
-                if (clickMid){
-                    let clickFlag =this.clickFlag
-                    //点击标志,点击歌曲id
-                    let clickInfo = {clickFlag,clickMid}
-                    this.$bus.$emit('clickPlaying',clickInfo)
-                    this.clickFlag=!this.clickFlag
-                }
-             },
-            deleteSong(clickMid){
-                this.$store.dispatch('queryDataADelete',clickMid)
-
-            }
-
-        },
-
-        created() {
-          /*  //$route存储当前路由所有信息
-            // 路由设置里面 path: '/player/:songId',所以params里面有songId
-            //第一次加载时拿到当前路由匹配的id,派发请求
-          // this.$store.dispatch('queryDataA',this.$route.params.songId)*/
-          //   debugger
-          //   this.$store.dispatch('queryDataA',this.$route.params.songId)
-            // this.songData()
         },
         data(){
             return{
@@ -152,6 +112,130 @@
                 clickFlag:false,
             }
         },
+
+        computed:{
+            //vuex数据
+            songData(){
+                // debugger
+                const {cur,playList}=this.$store.state
+                this.songList=playList
+                // console.log(this.songList)
+                // console.log(list)
+                return playList.find(item=>{
+                    return item.mid===cur
+                }) || null
+            },
+            ...mapGetters([
+              "isPlay",//获取播放状态
+              "audio",//获取audio标签
+              "cur",//当前mid
+              "currentLyric",//歌词元素,读取
+
+            ]),
+
+
+        },
+        methods:{
+            ...mapMutations([
+              'isPlayMutation',//提交播放状态
+            ]),
+            //悬浮显示切换
+            OperateChange(index){
+                if (index){
+                    this.songOperatingShow=index
+                }else{
+                    this.songOperatingShow=''
+                }
+            },
+  /*          //点击传值给兄弟组件playerbar
+            clickPlaying(clickMid){
+                if (clickMid){
+                    let clickFlag =this.clickFlag
+                    //点击标志,点击歌曲id
+                    let clickInfo = {clickFlag,clickMid}
+                    this.$bus.$emit('clickPlaying',clickInfo)
+                    this.clickFlag=!this.clickFlag
+                }
+             },*/
+            //开始播放
+            clickStart(clickMid){
+                // debugger
+                this.isPlayMutation(!this.isPlay)
+                if (clickMid==this.cur){//当前歌曲恢复播放
+                    if (this.audio){
+                        this.audio.play()
+                    }
+                    // this.lyricTogglePlay()
+                }else {//点击的其它歌曲
+                    if (this.audio){
+                        this.audio.pause()
+                    }
+                    if (this.currentLyric) {
+                        this.currentLyric.stop()
+                    }
+                    this.$store.dispatch('queryDataSong',clickMid)
+                        // this.lyricPlay()
+                }
+            },
+            //停止播放
+           clickStop(){
+                // debugger
+                this.isPlayMutation(!this.isPlay)
+               if (!this.audio){
+                   // debugger
+                   this.$bus.$emit('resetAudioInfo',true)
+               }else {
+                   this.audio.pause()
+
+               }
+
+               this.lyricTogglePlay()
+
+
+           },
+         /*   // 歌词的重新播放
+            lyricPlay() {
+                setTimeout(() => {
+                    if (this.currentLyric) {
+                        this.currentLyric.play()
+                    }
+                }, 20)
+            },
+            // 歌词的播放/暂停
+            lyricTogglePlay() {
+                // debugger
+                setTimeout(() => {
+                    // 歌词的播放/暂停
+                    if (this.currentLyric) {
+                        this.currentLyric.togglePlay()
+                    }
+                }, 20)
+            },
+            */
+
+            deleteSong(clickMid){
+                this.$store.dispatch('queryDataADelete',clickMid)
+
+            },
+
+        },
+
+        created() {
+          /*  //$route存储当前路由所有信息
+            // 路由设置里面 path: '/player/:songId',所以params里面有songId
+            //第一次加载时拿到当前路由匹配的id,派发请求
+          // this.$store.dispatch('queryDataA',this.$route.params.songId)*/
+          //   debugger
+          //   this.$store.dispatch('queryDataA',this.$route.params.songId)
+            // this.songData()
+        },
+        mounted() {
+            // if (!this.audio){
+            //     debugger
+            //     this.$bus.$emit('resetAudioInfo',true)
+            // }
+        },
+
         watch:{
 
         },

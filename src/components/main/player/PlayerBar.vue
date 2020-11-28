@@ -8,9 +8,19 @@
                 <!--控制按钮-->
                 <div class="play-btns">
                     <span class="back"><i></i></span>
-                    <span class="startAndStop"
+               <!--     <span class="startAndStop"
                           @click="changeSongStatus()"
                           :class="{stopButton:isPaused}"
+                    ><i></i></span>-->
+                    <!--开始按钮-->
+                    <span class="startButton"
+                          @click="clickStart()"
+                          v-show="!isPlay"
+                    ><i></i></span>
+                    <!--停止按钮-->
+                    <span class="stopButton"
+                          @click="clickStop()"
+                          v-show="isPlay"
                     ><i></i></span>
                     <span class="next"><i></i></span>
                 </div>
@@ -82,6 +92,7 @@
 
 <script>
 import {mapGetters, mapMutations} from "vuex"
+import {audio} from "@/store/getters";
 
     export default {
         props:{
@@ -102,13 +113,24 @@ import {mapGetters, mapMutations} from "vuex"
                 progressLen:0,//进度条长度
                 clickFlag:'',//点击标志
                 clickMid:'',//点击歌曲mid
+                timer:null,//定时器
+                audio:null,//播放器初始
+                isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
+                currentTimeSecond:0,
             }
         },
 
         methods:{
             //播放器开始标志
             setStart(){
+                // debugger
                 this.isPaused=false
+                // console.log(this.$store.state)
+                this.isPlayMutation(true)
+                // console.log(this.$store.state)
+                if (this.currentLyric) {
+                    this.currentLyric.play()
+                }
             },
             //拖拽事件
             move(e){
@@ -203,11 +225,15 @@ import {mapGetters, mapMutations} from "vuex"
             },
             //获取当前播放时间
             updateTime(e) {
+
                 if (!this.dragFlag){
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                     // this.$emit('currentTime',this.currentTimeOriginal)
-                    this.$bus.$emit('currentTime',this.currentTimeOriginal)
+                    this.currentTimeSecond=Math.floor(this.currentTimeOriginal)
+                        // this.$bus.$emit('currentTime',this.currentTimeOriginal)
+
+
                     // console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
                 }
             },
@@ -215,7 +241,43 @@ import {mapGetters, mapMutations} from "vuex"
             endOpera(){
                 this.isPaused=false
             },
-
+            //开始播放
+            clickStart(){
+                // debugger
+                this.isPlayMutation(!this.isPlay)
+                if (!this.audio){
+                    // debugger
+                    this.audio = this.$refs.audio
+                    this.getAudio(this.audio)
+                }
+                this.audio.play()
+                // this.lyricTogglePlay()
+            },
+            //停止播放
+            clickStop(){
+                // debugger
+                this.isPlayMutation(!this.isPlay)
+                if (!this.audio){
+                    // debugger
+                    this.audio = this.$refs.audio
+                    this.getAudio(this.audio)
+                }
+                this.audio.pause()
+                // this.lyricTogglePlay()
+            },
+       /*
+            //歌词状态切换
+            lyricTogglePlay() {
+                // debugger
+                setTimeout(() => {
+                    // 歌词的播放/暂停
+                    if (this.currentLyric) {
+                        this.currentLyric.togglePlay()
+                    }
+                }, 50)
+            },
+            */
+          /*
             //播放暂停歌曲
             changeSongStatus(){
                 if (this.$refs.audio){
@@ -226,17 +288,22 @@ import {mapGetters, mapMutations} from "vuex"
                         audio.play()  //调用播放
                         this.isPaused=false
                         this.$emit('getPausedSign',this.isPaused)
+                        this.$bus.$emit('PausedSign',false)
                     }else {             //如果播放状态
                         audio.pause()   //调用暂停
                         this.isPaused=true
                         this.$emit('getPausedSign',this.isPaused)
-
+                        this.$bus.$emit('PausedSign',true)
                     }
                 }
 
                 // console.log('audio暂停状态:'+audio.paused)
                 // console.log('是否暂停:'+this.isPaused)
             },
+
+            */
+
+
             //当前进度条
             currentProgress(flag){
                 if (!flag){
@@ -317,15 +384,18 @@ import {mapGetters, mapMutations} from "vuex"
 
                 }
             },
+            //mapMutations 提交 this.$store.commit('getAudio',payload)
             ...mapMutations([
-                "getAudio",
+                "getAudio",//获取audio,存入
+                "isPlayMutation",//设置播放状态,存入
+                "setCurrentMid",//当前的歌曲id,存入
 
             ])
 
         },
         created() {
 
-            this.$bus.$on('clickPlaying',clickInfo=>{
+          /*  this.$bus.$on('clickPlaying',clickInfo=>{
                 // this.isPaused=!this.isPaused
                 // this.changeSongStatus()
                 let {clickFlag,clickMid} = clickInfo
@@ -337,10 +407,11 @@ import {mapGetters, mapMutations} from "vuex"
                     this.$store.dispatch('queryDataSong',clickMid)
                 }
 
-            }),
+            }),*/
               this.currentTimeOriginal=0
 
             this.progressInit()
+
 
 
         },
@@ -364,16 +435,35 @@ import {mapGetters, mapMutations} from "vuex"
                     return item.mid===cur
                 }) || null
             },
-
+            //得到store的数据,在getters.js中处理后,返回值
+            ...mapGetters([
+                "isPlay",//播放状态,读取
+              "currentLyric",//歌词元素,读取
+            ])
         },
         mounted() {
+            this.$nextTick(()=>{
+                this.audio = this.$refs.audio
+                this.getAudio(this.audio)
+            })
+            this.$nextTick(()=>{
+                this.$bus.$on('resetAudioInfo',item=>{
+                    this.isResetAudio=item
+                })
+            })
             //进度条初始化
             this.progressInit()
             //监听浏览器的窗口缩放事件window.onresize
             window.onresize = ()=> {
                 this.progressInit();
             }
-            this.getAudio(this.$refs.audio)
+            this.$nextTick(()=>{
+                if (this.$refs.audio){
+                    // debugger
+                    this.getAudio(this.$refs.audio)
+                }
+            })
+            console.log(this.$store.state);
 
         },
         watch:{
@@ -396,13 +486,31 @@ import {mapGetters, mapMutations} from "vuex"
                 },
                 deep:true
             },
+            //重置audio
+            isResetAudio(val){
+                if (val){
+                    this.$nextTick(()=>{
+                        // debugger
+                        this.audio = this.$refs.audio
+                        this.getAudio(this.audio)
+                        this.audio.pause()
+                    })
+                }
+                this.isResetAudio=false
 
+            },
+            //监视秒变化
+            currentTimeSecond(val){
+                this.$bus.$emit('currentTime',val)
+
+            }
 
         },
         components:{
         },
         destroyed(){
             this.$bus.$off('clickPlaying')
+            this.$bus.$off('resetAudioInfo')
         }
     }
 </script>

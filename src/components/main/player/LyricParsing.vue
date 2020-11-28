@@ -309,7 +309,7 @@ export default {
 
             return function (item,key,index) {
 
-                if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
+                if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
                     // debugger
                     // console.log('currentTime:'+this.currentTime)
                     // console.log('key:'+key+'歌词:'+this.songLyric[key])
@@ -320,9 +320,13 @@ export default {
                     // this.lyricIndex=0
                     this.lyricIndex=index
                     // console.log(this.lyricIndex)
-                    this.$nextTick(()=>{
-                        this.$refs.lyricInner.setAttribute('class', ' lyric-move-class-'+index)
-                    })
+
+                        console.log(this.currentTime)
+                        this.$nextTick(()=>{
+                            this.$refs.lyricInner.setAttribute('class', ' lyric-move-class-'+index)
+                        })
+
+
                    // return true
                     return 'currentLyric'
                 }
@@ -414,7 +418,7 @@ export default {
     }
     @for $i from 0 to 100{
         .lyric-move-class-#{$i}{
-            transform: translateY(26px-$i*35px);
+            transform: translateY(-$i*35px);
         }
     }
 }
