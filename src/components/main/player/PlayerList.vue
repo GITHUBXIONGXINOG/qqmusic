@@ -32,8 +32,7 @@
                 </li>
             </ul>
 
-
-<!--            {{deletePanel}}-->
+            <!--删除面板-->
             <div class="delete-panel" v-show="deletePanelFlag">
                 <nav class="delete-panel-title-wrap">
                     <nav class="delete-panel-title">QQ音乐</nav>
@@ -52,9 +51,8 @@
             </div>
         </ul>
         <div class="rank-wrap">
-
             <ul class="content-nav-ul">
-                <input type="checkbox" class="checkAll">
+                <input type="checkbox" class="checkAll" v-model="checked" @click="selectAll">
                 <li v-for="(item,index) in contentNav" :key="index"
                     :class="`nav-li-${index}`"
                 >
@@ -67,15 +65,26 @@
                     @mouseenter="OperateChange(index)"
                     @mouseleave="OperateChange"
                 >
-                    <input type="checkbox" class="checkInput"><!--勾选框-->
+                    <!--勾选框-->
+                    <input type="checkbox" class="checkInput"
+                           v-model="item.checked"
+                           :value="item.mid"
+                           @click="checkOne(item)"
+                    >
+                    <!--动态图标-->
                     <ul class="bg-bubbles">
                         <li v-for="(i, j) in 3" :key="j"></li>
-                    </ul><!--动态图标-->
+                    </ul>
+                    <!--歌曲标题-->
                     <div class="index-title">
                         <li class="song-index" >{{index+1}}</li>
                         <li class="song-title">{{item.title||item.songname}}</li>
                     </div>
-                    <li class="song-singer">{{item.singer[0].name}}</li>
+                    <!--歌手名字-->
+                    <li class="song-singer">
+                        {{item.singer[0].name}}
+                    </li>
+                    <!--歌曲时间-->
                     <li class="song-interval"
                         :class="{'operating-hidden':songOperatingShow==index}">
                         {{item.interval}}
@@ -154,6 +163,10 @@ import {mapMutations, mapGetters} from "vuex"
                 songOperatingShow:'',//显示操作标识
                 clickFlag:false,//点击标记
                 deletePanelFlag:false,//清空列表标记
+                changeClick:[],//input 勾选框
+                selectAllFlag:false,//全选框
+                checkBox:[],
+                checked:"",
             }
         },
 
@@ -176,6 +189,14 @@ import {mapMutations, mapGetters} from "vuex"
               // "currentLyric",//歌词元素,读取
 
             ]),
+       /*     checkFromAllControl(){
+                debugger
+                if (this.selectAllFlag){
+                    return 'checked'
+                }
+                return ''
+
+            }*/
 
 
 
@@ -242,7 +263,45 @@ import {mapMutations, mapGetters} from "vuex"
             deleteList(){
                 this.deleteAllSongList()
                 this.deletePanelFlag=false
+            },
+            //总勾选框
+            selectAll(){
+                this.checked = !this.checked;
+                // debugger
+                if(this.checked){
+                    this.songList.forEach( (item)=> {
+                        this.checkBox.push(item.mid)
+                        item.checked=this.checked;
+                    })
+                }else{
+                    this.checkBox=[];
+                    this.songList.forEach( (item)=> {
+                        item.checked=this.checked;
+                    })
+                }
+            },
+            checkOne(item){
+                // debugger
+                item.checked = !item.checked
+                //如果点击后为选中,入栈
+                if (item.checked){
+                    this.checkBox.push(item.mid)
+                }else{//不选中
+                    let index = this.checkBox.findIndex(order=>order===item.mid)
+                    this.checkBox.splice(index,1)
+                }
+
+                this.$nextTick(()=>{
+                    //如果选中表长度和列表长度相同
+                    if (this.checkBox.length==this.songList.length){
+                        this.checked = true
+                    }else {
+                        this.checked = false
+                    }
+                })
+
             }
+
         },
 
         created() {
@@ -259,7 +318,13 @@ import {mapMutations, mapGetters} from "vuex"
             //     debugger
             //     this.$bus.$emit('resetAudioInfo',true)
             // }
-
+            //初始化列表,将所有的mid存入checkbox,并且设置对应的checked为false
+            this.$nextTick(()=>{
+                this.songList.forEach( (item)=> {
+                    this.checkBox.push(item.mid)
+                    item.checked=false;
+                })
+            })
 
         },
         updated() {
