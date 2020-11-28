@@ -128,4 +128,8 @@ export const queryDataSong = (state, payload)=>{
 export const getAudio = (state, audio) => {
     state.audio = audio
 }
+//是否播放标识
+export const isPlayMutation = (state, payload) => {
+    state.isPlay = payload
+}
 

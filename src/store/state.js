@@ -5,6 +5,8 @@ const state = {
     playList:[],
     // audio 元素
     audio: null,
+    //是否正在播放
+    isPlay:false,
 }
 
 export default state

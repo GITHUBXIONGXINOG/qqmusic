@@ -146,22 +146,23 @@
 <!--            {{songLyric}}-->
             <div v-if="nLyric">暂无歌词, 请欣赏歌曲</div>
             <div v-else>
-                <span v-for="(item,key,index) in songLyric" :key="index"
+           <!--     <span v-for="(item,key,index) in songLyric" :key="index"
                       :class="classObject(item,key,index)"
                 >
                     {{item}}
-                </span>
+                </span>-->
+                <p ref="lyricLine" v-for="(item,index) in currentLyric.lines"
+                   :class="currentLineNum===index ? 'currentLyric' : '' ">
+                    {{item.txt}}
+                </p>
             </div>
-
-
-
         </div>
 
     </div>
 </template>
 
 <script>
-
+import Lyric from 'lyric-parser'
 export default {
     props:{
      /*   songId:{
@@ -184,83 +185,54 @@ export default {
             lyricIndex:0,//当前显示歌词的索引
             currentTime:0,//当前时间
             nLyric:false,//没有歌词
+            currentLyric:'',
+            currentLineNum:0,
+            PausedSign:false,
+            getCurrentLyricSign:false,
+
         }
     },
     methods:{
-       /* async fetchLyric(){
-            debugger
-            console.log(this.songId)
-            //歌词
-            // let songLyricUrl = '/api/lyric?songmid='+this.songId
-            if (this.songId){
-                let resOfSongLyric = await this.api.songLyric(this.songId)
-                console.log(resOfSongLyric)
-                let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-                // console.log(resOfSongLyric)
-                // debugger
-                //歌词对象
-                let lyrArr = {}
-                //!* 贪婪匹配,有多少匹配多少
-                let reg = /\[\d*:\d*\.\d*]/g
-                for (let i = 0; i < lyrics.length; i++) {
-                    let timerRegExpArr = lyrics[i].match(reg)
-                    if (!timerRegExpArr) continue
-                    let t = timerRegExpArr[0] //数值格式,取出数据
-                    //取出分钟
-                    let min = Number(t.match(/\[\d*!/).toString().slice(1))
-                    //取出秒
-                    let second = Number(t.match(/:\d*!/).toString().slice(1))
-                    //歌词文本
-                    let content = lyrics[i].replace(timerRegExpArr,"")
-                    //处理版权问题,比如官方翻译无法获取到
-                    if (content){
-                        //计算时间
-                        let time = min*60+second
-                        //时间对应文本
-                        lyrArr[time] = content
-                    }
 
-                }
-                this.songLyric = lyrArr
-                this.getALlKeys(lyrArr)
-                // console.log(lyrArr)
-            }
-
-        },*/
         async fetchLyric(){
             // debugger
             //歌词
             let songLyricUrl = '/api/lyric?songmid='+this.songId
             const resOfSongLyric = await this.$http.get(songLyricUrl)
-            let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-            // console.log(resOfSongLyric)
+            // let lyrics = resOfSongLyric.data.data.lyric.split("\n")
+            // // console.log(resOfSongLyric)
+            // // debugger
+            // //歌词对象
+            // let lyrArr = {}
+            // //* 贪婪匹配,有多少匹配多少
+            // let reg = /\[\d*:\d*\.\d*]/g
+            // for (let i = 0; i < lyrics.length; i++) {
+            //     let timerRegExpArr = lyrics[i].match(reg)
+            //     if (!timerRegExpArr) continue
+            //     let t = timerRegExpArr[0] //数值格式,取出数据
+            //     //取出分钟
+            //     let min = Number(t.match(/\[\d*/).toString().slice(1))
+            //     //取出秒
+            //     let second = Number(t.match(/:\d*/).toString().slice(1))
+            //     //歌词文本
+            //     let content = lyrics[i].replace(timerRegExpArr,"")
+            //     //处理版权问题,比如官方翻译无法获取到
+            //     if (content){
+            //         //计算时间
+            //         let time = min*60+second
+            //         //时间对应文本
+            //         lyrArr[time] = content
+            //     }
+            //
+            // }
+            // this.songLyric = lyrArr
+            // this.getALlKeys(lyrArr)
+            // console.log(lyrArr)
+            let lyrics = resOfSongLyric.data.data.lyric
             // debugger
-            //歌词对象
-            let lyrArr = {}
-            //* 贪婪匹配,有多少匹配多少
-            let reg = /\[\d*:\d*\.\d*]/g
-            for (let i = 0; i < lyrics.length; i++) {
-                let timerRegExpArr = lyrics[i].match(reg)
-                if (!timerRegExpArr) continue
-                let t = timerRegExpArr[0] //数值格式,取出数据
-                //取出分钟
-                let min = Number(t.match(/\[\d*/).toString().slice(1))
-                //取出秒
-                let second = Number(t.match(/:\d*/).toString().slice(1))
-                //歌词文本
-                let content = lyrics[i].replace(timerRegExpArr,"")
-                //处理版权问题,比如官方翻译无法获取到
-                if (content){
-                    //计算时间
-                    let time = min*60+second
-                    //时间对应文本
-                    lyrArr[time] = content
-                }
+            this.initLyric(lyrics)
 
-            }
-            this.songLyric = lyrArr
-            this.getALlKeys(lyrArr)
-            console.log(lyrArr)
+
         },
         //得到所有的Keys
         getALlKeys(lyrArr){
@@ -272,7 +244,37 @@ export default {
         //歌词移动
         lyricMove(){
             // debugger
-            this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
+            this.$nextTick(()=>{
+
+                this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
+            })
+        },
+        initLyric(lyric){
+            // debugger
+            this.currentLyric=new Lyric(lyric,this.handleLyric)
+            //如果歌曲处于播放状态,则播放歌词
+            if(!this.PausedSign){
+                this.currentLyric.play()
+            }else {
+                this.currentLyric.stop()
+
+            }
+        },
+        handleLyric({lineNum,txt}){
+            this.currentLineNum=lineNum
+            // debugger
+            this.$nextTick(()=>{
+
+                this.$refs.lyricWrap.style.transform="translateY("+(26-lineNum*35)+"px)"
+            })
+     /*       if(lineNum>2){
+                let lineEl= this.$refs.lyricLine[lineNum-2]
+                if(this.$refs.lyricList){
+                    this.$nextTick(()=>{
+                        this.$refs.lyricList.scrollToElement(lineEl,1000)//滚动到元素
+                    })
+                }
+            }*/
         },
 
 
@@ -285,23 +287,46 @@ export default {
     },
     watch:{
 
-        currentTime(){
-            // debugger
-            // this.delayer()
-            this.lyricMove()
-
-        },
+        // currentTime(){
+        //     // debugger
+        //     // this.delayer()
+        //     this.lyricMove()
+        //
+        // },
       /*  songId(){
             this.fetchLyric()
         }*/
+        getCurrentLyricSign:{
+            handler(newVal,oldVal){
+                // debugger
+                console.log(newVal)
+                console.log(oldVal)
+                if (newVal!=oldVal&&newVal){
+                    this.fetchLyric()
+                    this.getCurrentLyricSign=false
+                }
+            },
+            deep:true
+        },
+        // $store:{
+        //     handler(val){
+        //         console.log(val)
+        //     },
+        //     deep:true
+        // }
     },
     mounted() {
-        this.$bus.$on('currentTime',currentTime=>{
-
-            this.currentTime=currentTime
-
+        // this.$bus.$on('currentTime',currentTime=>{
+        //
+        //     this.currentTime=currentTime
+        //
+        //     // debugger
+        // })
+        this.$bus.$on('PausedSign',PausedSign=>{
             // debugger
+            this.PausedSign=PausedSign
         })
+
     },
     computed:{
         //类对象 设置歌词
@@ -309,7 +334,7 @@ export default {
 
             return function (item,key,index) {
 
-                if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
+                if (this.currentTime>key&&this.currentTime<this.allKeys[index+1]){
                     // debugger
                     // console.log('currentTime:'+this.currentTime)
                     // console.log('key:'+key+'歌词:'+this.songLyric[key])
@@ -320,6 +345,8 @@ export default {
                     // this.lyricIndex=0
 
                     this.lyricIndex=index
+                    console.log('lyricIndex:'+this.lyricIndex)
+                    console.log('index:'+index)
                     // console.log(this.lyricIndex)
                     return 'currentLyric'
                 }else {
@@ -343,17 +370,23 @@ export default {
                             this.nLyric=true
                         }
                     }else{
-                        this.fetchLyric()
+                        // debugger
+                        this.getCurrentLyricSign=true
                     }
                     this.getALlKeys(item.lyric)
-                    this.lyricIndex=0
-                    this.currentTime=0
+                    // this.lyricIndex=0
+                    // this.currentTime=0
                 }
+                // this.getCurrentLyricSign=false
+
 
                 return item.mid===cur
             }) || null
         },
 
+    },
+    destroyed() {
+        // this.$bus.off('currentTime')
     }
 
 }
@@ -362,7 +395,7 @@ export default {
 .lyric-parsing{
     position: relative;
     //border: 1px solid red;
-    overflow: hidden;
+    //overflow: auto;
     height: 110px;
     width: 340px;
     filter: glow(white,10);

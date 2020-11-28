@@ -8,9 +8,19 @@
                 <!--控制按钮-->
                 <div class="play-btns">
                     <span class="back"><i></i></span>
-                    <span class="startAndStop"
+               <!--     <span class="startAndStop"
                           @click="changeSongStatus()"
                           :class="{stopButton:isPaused}"
+                    ><i></i></span>-->
+                    <!--开始按钮-->
+                    <span class="startButton"
+                          @click="clickStart()"
+                          v-show="!isPlay"
+                    ><i></i></span>
+                    <!--停止按钮-->
+                    <span class="stopButton"
+                          @click="clickStop()"
+                          v-show="isPlay"
                     ><i></i></span>
                     <span class="next"><i></i></span>
                 </div>
@@ -109,7 +119,12 @@ import {mapGetters, mapMutations} from "vuex"
         methods:{
             //播放器开始标志
             setStart(){
+                // debugger
                 this.isPaused=false
+                // console.log(this.$store.state)
+                this.isPlayMutation(true)
+                // console.log(this.$store.state)
+
             },
             //拖拽事件
             move(e){
@@ -209,19 +224,27 @@ import {mapGetters, mapMutations} from "vuex"
                     this.currentTimeOriginal = e.target.currentTime
                     this.currentTime = this.timeFormat(this.currentTimeOriginal);  //获取audio当前播放时间
                     // this.$emit('currentTime',this.currentTimeOriginal)
-                    this.timer = setInterval(()=>{
                         this.$bus.$emit('currentTime',this.currentTimeOriginal)
-                    },1000)
+
                     // console.log('bar的时间:'+Math.floor(this.currentTimeOriginal))
-                }else {
-                    clearInterval(this.timer)
                 }
             },
             //结束操作
             endOpera(){
                 this.isPaused=false
             },
-
+            //开始播放
+            clickStart(){
+                debugger
+                this.isPlayMutation(!this.isPlay)
+                this.audio.play()
+            },
+            //停止播放
+            clickStop(){
+                debugger
+                this.isPlayMutation(!this.isPlay)
+                this.audio.pause()
+            },
             //播放暂停歌曲
             changeSongStatus(){
                 if (this.$refs.audio){
@@ -232,11 +255,12 @@ import {mapGetters, mapMutations} from "vuex"
                         audio.play()  //调用播放
                         this.isPaused=false
                         this.$emit('getPausedSign',this.isPaused)
+                        this.$bus.$emit('PausedSign',false)
                     }else {             //如果播放状态
                         audio.pause()   //调用暂停
                         this.isPaused=true
                         this.$emit('getPausedSign',this.isPaused)
-
+                        this.$bus.$emit('PausedSign',true)
                     }
                 }
 
@@ -323,8 +347,10 @@ import {mapGetters, mapMutations} from "vuex"
 
                 }
             },
+            //mapMutations 提交 this.$store.commit('getAudio',payload)
             ...mapMutations([
-                "getAudio",
+                "getAudio",//获取audio,存入
+                "isPlayMutation",//设置播放状态,存入
 
             ])
 
@@ -370,7 +396,11 @@ import {mapGetters, mapMutations} from "vuex"
                     return item.mid===cur
                 }) || null
             },
-
+            //得到store的数据,在getters.js中处理后,返回值
+            ...mapGetters([
+                "isPlay",//播放状态,读取
+                "audio",//播放组件,读取
+            ])
         },
         mounted() {
             //进度条初始化
@@ -379,7 +409,10 @@ import {mapGetters, mapMutations} from "vuex"
             window.onresize = ()=> {
                 this.progressInit();
             }
-            this.getAudio(this.$refs.audio)
+            if (this.$refs.audio){
+                this.getAudio(this.$refs.audio)
+            }
+            console.log(this.$store.state);
 
         },
         watch:{
