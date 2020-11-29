@@ -162,6 +162,8 @@
 
 <script>
 
+import {mapMutations} from "vuex";
+
 export default {
     props:{
      /*   songId:{
@@ -187,29 +189,28 @@ export default {
         }
     },
     methods:{
-       /* async fetchLyric(){
-            debugger
-            console.log(this.songId)
+
+        async fetchLyric(){
+            // debugger
             //歌词
-            // let songLyricUrl = '/api/lyric?songmid='+this.songId
-            if (this.songId){
-                let resOfSongLyric = await this.api.songLyric(this.songId)
-                console.log(resOfSongLyric)
-                let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-                // console.log(resOfSongLyric)
-                // debugger
+            let songLyricUrl = '/api/lyric?songmid='+this.songId
+            const resOfSongLyric = await this.$http.get(songLyricUrl)
+            let lyrics = resOfSongLyric.data.data.lyric.split("\n")
+            // console.log(resOfSongLyric)
+            // debugger
+            let lyrArr = {}
+            //* 贪婪匹配,有多少匹配多少
+            let reg = /\[\d*:\d*(\.|:)\d*]/g
+            if (lyrics.length>1){
                 //歌词对象
-                let lyrArr = {}
-                //!* 贪婪匹配,有多少匹配多少
-                let reg = /\[\d*:\d*\.\d*]/g
                 for (let i = 0; i < lyrics.length; i++) {
                     let timerRegExpArr = lyrics[i].match(reg)
                     if (!timerRegExpArr) continue
                     let t = timerRegExpArr[0] //数值格式,取出数据
                     //取出分钟
-                    let min = Number(t.match(/\[\d*!/).toString().slice(1))
+                    let min = Number(t.match(/\[\d*/).toString().slice(1))
                     //取出秒
-                    let second = Number(t.match(/:\d*!/).toString().slice(1))
+                    let second = Number(t.match(/:\d*/).toString().slice(1))
                     //歌词文本
                     let content = lyrics[i].replace(timerRegExpArr,"")
                     //处理版权问题,比如官方翻译无法获取到
@@ -224,43 +225,17 @@ export default {
                 this.songLyric = lyrArr
                 this.getALlKeys(lyrArr)
                 // console.log(lyrArr)
+            }else if(lyrics.length===1){//只有一行,通常是提示纯音乐信息
+
+                lyrArr = lyrics[0].replace(reg,"")
+            }else {
+                lyrArr = '此歌曲暂无歌词，请您欣赏音乐'
             }
 
-        },*/
-        async fetchLyric(){
             // debugger
-            //歌词
-            let songLyricUrl = '/api/lyric?songmid='+this.songId
-            const resOfSongLyric = await this.$http.get(songLyricUrl)
-            let lyrics = resOfSongLyric.data.data.lyric.split("\n")
-            // console.log(resOfSongLyric)
-            // debugger
-            //歌词对象
-            let lyrArr = {}
-            //* 贪婪匹配,有多少匹配多少
-            let reg = /\[\d*:\d*\.\d*]/g
-            for (let i = 0; i < lyrics.length; i++) {
-                let timerRegExpArr = lyrics[i].match(reg)
-                if (!timerRegExpArr) continue
-                let t = timerRegExpArr[0] //数值格式,取出数据
-                //取出分钟
-                let min = Number(t.match(/\[\d*/).toString().slice(1))
-                //取出秒
-                let second = Number(t.match(/:\d*/).toString().slice(1))
-                //歌词文本
-                let content = lyrics[i].replace(timerRegExpArr,"")
-                //处理版权问题,比如官方翻译无法获取到
-                if (content){
-                    //计算时间
-                    let time = min*60+second
-                    //时间对应文本
-                    lyrArr[time] = content
-                }
+            let songmid = this.songId
 
-            }
-            this.songLyric = lyrArr
-            this.getALlKeys(lyrArr)
-            // console.log(lyrArr)
+            this.addLyric({songmid,lyrArr})
         },
         //得到所有的Keys
         getALlKeys(lyrArr){
@@ -274,7 +249,9 @@ export default {
         //     // debugger
         //     this.$refs.lyricWrap.style.transform="translateY("+(26-this.lyricIndex*35)+"px)"
         // },
-
+        ...mapMutations([
+          "addLyric",//存入歌词
+        ])
 
     },
     created() {
@@ -310,12 +287,7 @@ export default {
             return function (item,key,index) {
 
                 if (this.currentTime>=key&&this.currentTime<this.allKeys[index+1]){
-                    // debugger
-                    // console.log('currentTime:'+this.currentTime)
-                    // console.log('key:'+key+'歌词:'+this.songLyric[key])
-                    // console.log('index:'+index)
-                    // console.log('next:'+this.allKeys[index+1])
-                    // console.log('歌词:'+this.songLyric[index])
+
                     //当前的歌词位置,即行数
                     // this.lyricIndex=0
                     this.lyricIndex=index
@@ -343,6 +315,7 @@ export default {
                     if (item.lyric){
                         this.songLyric = item.lyric
                         if (!this.songLyric){
+                            // debugger
                             this.nLyric=true
                         }
                     }else{

@@ -20,7 +20,6 @@
                     <span :class="iconList[1]"></span>
                     <i>{{userOperating[1]}}</i>
                 </li>-->
-
                 <!--下载-->
                 <li @click.prevent="checkBox.length>0 ?downSongs() :setNullDeletePanel() "  >
                     <span :class="iconList[2]"></span>

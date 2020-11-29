@@ -1,4 +1,6 @@
 //时间格式化
+import api from "@/api";
+
 function timeFormat(val){
     // debugger
     let min = Math.floor(val/60)
@@ -154,18 +156,28 @@ export const setPlayList = (state,payload)=>{
     state.playList = payload
 }
 
-
+//清空列表
 export const deleteAllSongList = (state) =>{
     state.cur=0,
     state.playList=[],
     state.isPlay=false,
     state.audio=null
 }
-
+//删除选中歌曲
 export const deleteSelectSong = (state,payload) =>{
-    debugger
-    console.log(payload)
+    // console.log(payload)
     payload.forEach(mid=>{
         queryDataMDelete(state,mid)
     })
+}
+//存入歌词
+export const addLyric = (state,payload) =>{
+    let {songmid,lyrArr} = payload
+    // debugger
+    let index = state.playList.findIndex(item=>{
+        return item.mid===songmid
+    })
+    if (index){
+        state.playList[index].lyric=lyrArr
+    }
 }

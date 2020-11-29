@@ -99,7 +99,19 @@ const actions = {
 
 
     },
+/*
+//存入歌词
+    async addLyric({state,oad},songId){
+        let {songmid,lyric} = payload
 
+        let index = state.playList.findIndex(item=>{
+            return item.mid===songmid
+        })
+        if (index){
+            state.playList[index].
+        }
+    }
+*/
 
 
 }

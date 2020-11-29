@@ -8,10 +8,6 @@
                 <!--控制按钮-->
                 <div class="play-btns">
                     <span class="back"><i></i></span>
-               <!--     <span class="startAndStop"
-                          @click="changeSongStatus()"
-                          :class="{stopButton:isPaused}"
-                    ><i></i></span>-->
                     <!--开始按钮-->
                     <span class="startButton"
                           @click="clickStart()"
