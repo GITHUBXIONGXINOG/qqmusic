@@ -8,3 +8,5 @@ export const cur = state => state.cur
 export const currentLyric = state => state.currentLyric
 //当前歌单推荐列表
 export const recommendList = state => state.recommendList.find(item=>item.id===state.curRecId||null)
+//当前新歌首发newSongStarting
+export const newSongStarting = state => state.newSongStarting.find(item=>item.curNewSType===state.curNewSType||null)

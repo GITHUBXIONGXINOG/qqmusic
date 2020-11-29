@@ -302,3 +302,30 @@ export const queryRecommendList = (state,payload) =>{
 
     }
 }
+
+//新歌首发
+export const queryNewSong = (state,payload) =>{
+    // debugger
+    let {
+        type,//地区
+        list,//数据
+    } = payload
+    //当前的id
+
+    state.curNewSType = type
+    //如果list存在,说明传入了数据进行存储
+    if (list){
+        list.forEach(item=>{
+            item.imgUrl=`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`
+            item.singer=item.singer[0].name
+            item.id=item.album.id
+        })
+
+        state.newSongStarting.push({
+            ...list,
+            curNewSType:state.curNewSType,
+        })
+
+    }
+}
+

@@ -11,6 +11,11 @@ const state = {
     recommendList: [],
     //歌单当前的id
     curRecId:0,
+    //新歌首发
+    newSongStarting:[],
+    //新歌的当前地址
+    curNewSType:0,
+
 
 
 

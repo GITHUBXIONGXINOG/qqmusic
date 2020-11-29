@@ -101,12 +101,12 @@ export default {
                     ],
                 //新歌首发
                 [
-                        {path: '/api/new/songs?type=0',name:'最新'},
-                        {path: '/api/new/songs?type=1',name:'内地'},
-                        {path: '/api/new/songs?type=2',name:'港台'},
-                        {path: '/api/new/songs?type=3',name:'欧美'},
-                        {path: '/api/new/songs?type=4',name:'韩国'},
-                        {path: '/api/new/songs?type=5',name:'日本'},
+                        {path: '0',name:'最新'},
+                        {path: '1',name:'内地'},
+                        {path: '2',name:'港台'},
+                        {path: '3',name:'欧美'},
+                        {path: '4',name:'韩国'},
+                        {path: '5',name:'日本'},
                      ],
                 //精彩推荐 去掉
                 //新碟首发

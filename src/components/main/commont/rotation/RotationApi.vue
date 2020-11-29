@@ -169,14 +169,14 @@ export default {
             // console.log(index)
             // const res = await this.$http.get(path)
             let res = []
+            this.apiGetList=[]
             // console.log(res)
             //   debugger
               // console.log(res)
             /*对应不同api的保存数据*/
             //歌单推荐
             if (index==0){
-                debugger
-                //正则表达式匹配第一个为你推荐
+                // debugger
 
 
                 //为你推荐
@@ -218,7 +218,6 @@ export default {
                     await this.$store.dispatch('queryRecommendList',path)
                     // debugger
                     // console.log(this.recommendList)
-                    this.apiGetList=[]
                     // this.apiGetList.push(this.recommendList)
                     for (let i in  this.recommendList){
                         this.apiGetList.push(this.recommendList[i])
@@ -231,7 +230,19 @@ export default {
             }
             else if (index==1){
                 // debugger
-                this.apiGetList = res.data.data.list.map(item => ({
+                await this.$store.dispatch('queryNewSongStarting',path)
+                // debugger
+                // console.log(this.recommendList)
+                // this.apiGetList.push(this.recommendList)
+                // debugger
+                for (let i in  this.newSongStarting){
+                    this.apiGetList.push(this.newSongStarting[i])
+                }
+                //去掉最后的id
+                this.apiGetList.pop()
+                // console.log(this.apiGetList)
+
+          /*      this.apiGetList = res.data.data.list.map(item => ({
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
                     title:item.title,
                     subtitle:item.subtitle,
@@ -240,7 +251,7 @@ export default {
                     // listen_num:item.listen_num,
                     type:item.type,
                     mid:item.mid
-                }))
+                }))*/
                 // debugger
                 // console.log(this.apiGetList.map(item=>item))
 
@@ -297,7 +308,9 @@ export default {
     },
     computed:{
       ...mapGetters([
-        "recommendList"
+        "recommendList",//歌单推荐
+        "newSongStarting"//新歌首发
+
       ])
     },
     created() {
@@ -316,6 +329,9 @@ export default {
                 this.fetchRecommendSwiper(val)
             })
         }
+    },
+    mounted() {
+        console.log(this.$store.state)
     }
 
 }

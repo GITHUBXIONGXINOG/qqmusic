@@ -121,7 +121,7 @@
             setImgList:{
                 immediate:true,
                 handler:function (val) {
-                    debugger
+                    // debugger
                     this.imgList=val
                     // this.imgList=this.recommendList
                     this.pageSize=this.setPageSize

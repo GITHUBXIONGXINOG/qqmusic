@@ -122,6 +122,30 @@ const actions = {
 
             }
         }
+    },
+
+    //新歌首发
+    async queryNewSongStarting({state,commit},type){
+        // debugger
+        //校验是否存在
+        let result = state.newSongStarting.find(item=>{
+            return item.curNewSType===type
+        })
+        if (result){
+            //如果存在,执行commit方法,调用queryData,只改id
+            commit('queryNewSong',{type})
+            return
+        }
+        else {
+            let resOfNewSongStarting = await api.newSongStarting(type)
+            if (parseInt(resOfNewSongStarting.data.result)===100){
+                commit('queryNewSong',{
+                    type,//地区
+                    list:resOfNewSongStarting.data.data.list,
+                })
+
+            }
+        }
     }
 
 

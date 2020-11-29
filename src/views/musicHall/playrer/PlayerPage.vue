@@ -63,10 +63,7 @@
 
 
           },
-            //当前时间
-      /*      setCurrentTime(val){
-              this.currentTime = val
-            },*/
+
             //总时间
             setDurationTime(val){
               this.durationTime=val

@@ -82,6 +82,14 @@ const api = {
                 pageSize:pageSize || 20
             }
         })
+    },
+    //新歌首发
+    newSongStarting(type){
+        return axios.get('/api/new/songs',{
+            params:{
+                type //type: 地区分类，默认为 0 // 0: 最新 1：内地，2：港台，3：欧美，4：韩国，5：日本
+            }
+        })
     }
 
 }
