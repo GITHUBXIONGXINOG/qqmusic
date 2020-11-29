@@ -99,7 +99,7 @@
                     <!--歌曲标题-->
                     <div class="index-title">
                         <li class="song-index" >{{index+1}}</li>
-                        <li class="song-title">{{item.title||item.songname}}</li>
+                        <li class="song-title">{{item.title}}</li>
                     </div>
                     <!--歌手名字-->
                     <li class="song-singer">
@@ -380,9 +380,6 @@ import {mapMutations, mapGetters} from "vuex"
 
                     }
                 })
-
-
-
             },
             //下载
             downloadItem (url,name) {

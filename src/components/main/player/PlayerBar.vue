@@ -61,7 +61,7 @@
                     <!--喜欢-->
                     <span class="loveSelect"><i></i></span>
                     <!--下载-->
-                    <span class="downloadSelect"><i></i></span>
+                    <span class="downloadSelect" @click.prevent="downSongs(songData)"><i></i></span>
                     <!--评论-->
                     <span class="commentSelect"><i></i></span>
                     <!--纯净-->
@@ -92,7 +92,9 @@
 
 <script>
 import {mapGetters, mapMutations} from "vuex"
-import {audio} from "@/store/getters";
+import {audio, cur} from "@/store/getters";
+import api from "@/api";
+import Axios from "axios";
 
     export default {
         props:{
@@ -266,43 +268,6 @@ import {audio} from "@/store/getters";
                 this.audio.pause()
                 // this.lyricTogglePlay()
             },
-       /*
-            //歌词状态切换
-            lyricTogglePlay() {
-                // debugger
-                setTimeout(() => {
-                    // 歌词的播放/暂停
-                    if (this.currentLyric) {
-                        this.currentLyric.togglePlay()
-                    }
-                }, 50)
-            },
-            */
-          /*
-            //播放暂停歌曲
-            changeSongStatus(){
-                if (this.$refs.audio){
-                    // debugger
-                    let audio =this.$refs.audio//获取audio
-
-                    if (audio.paused){//如果暂停状态
-                        audio.play()  //调用播放
-                        this.isPaused=false
-                        this.$emit('getPausedSign',this.isPaused)
-                        this.$bus.$emit('PausedSign',false)
-                    }else {             //如果播放状态
-                        audio.pause()   //调用暂停
-                        this.isPaused=true
-                        this.$emit('getPausedSign',this.isPaused)
-                        this.$bus.$emit('PausedSign',true)
-                    }
-                }
-
-                // console.log('audio暂停状态:'+audio.paused)
-                // console.log('是否暂停:'+this.isPaused)
-            },
-
-            */
 
 
             //当前进度条
@@ -384,6 +349,28 @@ import {audio} from "@/store/getters";
                     this.isMuted = false
 
                 }
+            },
+            //下载链接获取
+            async downSongs(item){
+                let res = await api.downSongs(item.mid)
+                if (res.data.result===100){
+                    this.downloadItem(res.data.data,item.name||item.title)
+                }
+            },
+            //下载
+            downloadItem (url,name) {
+                Axios.get(url, { responseType: 'blob' })
+                  .then(({ data }) => {
+                      // 为了简单起见这里blob的mime类型 固定写死了
+                      let blob = new Blob([data], { type: 'application/vnd.ms-excel' })
+                      let link = document.createElement('a')
+                      link.href = window.URL.createObjectURL(blob)
+                      link.download = name+'.mp3'
+                      this.$nextTick(()=>{
+                          this.downName=name
+                      })
+                      link.click()
+                  })
             },
             //mapMutations 提交 this.$store.commit('getAudio',payload)
             ...mapMutations([
