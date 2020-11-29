@@ -183,28 +183,97 @@ export const addLyric = (state,payload) =>{
 }
 
 //前一首歌曲
-export const preSong = (state) =>{
+export const preSong = (state,order) =>{
     let index = state.playList.findIndex(item=>{
         return item.mid === state.cur
     })
     let songId = ''
-    if (index>1){
-        songId = state.playList[index-1].mid
-    }else {//第一项
-        songId = state.playList[state.playList.length-1].mid
+    //列表长度,默认能取值长度-1
+    let len = state.playList.length-1
+    //顺序播放,播放完后停止
+    if (order===0) {
+        if (index > 0) {
+            songId = state.playList[index-1].mid
+        } else {//第一项
+            songId = state.cur
+        }
     }
-   state.cur=songId
-}
-//后一首歌曲
-export const nextSong = (state) =>{
-    let index = state.playList.findIndex(item=>{
-        return item.mid === state.cur
-    })
-    let songId = ''
-    if (index<state.playList.length-1){
-        songId = state.playList[index+1].mid
-    }else {//最后一项
-        songId = state.playList[0].mid
+    //随机播放
+    else if(order===1){
+        debugger
+        //生成一个不大于列表长度的随机math
+        let math = 0
+        //大于1个歌曲
+        if (len){
+            do{
+                math = Math.floor(Math.random()*len)
+
+            }while (math==index)
+        }else {
+            math=0
+        }
+        songId = state.playList[math].mid
     }
+    //单曲循环
+    else if (order===2){
+        songId = state.cur
+    }
+    //列表循环
+    else if (order===3){
+        if (index>1){
+            songId = state.playList[index-1].mid
+        }else {//最后一项
+            songId = state.playList[len].mid
+        }
+    }
+
     state.cur=songId
 }
+//后一首歌曲
+export const nextSong = (state,order) =>{
+    let index = state.playList.findIndex(item=>{
+        return item.mid === state.cur
+    })
+    let songId = ''
+    //列表长度,默认能取值长度-1
+    let len = state.playList.length-1
+    //顺序播放,播放完后停止
+    if (order===0) {
+        if (index < len) {
+            songId = state.playList[index + 1].mid
+        } else {//最后一项
+            songId = state.cur
+        }
+    }
+    //随机播放
+    else if(order===1){
+        //生成一个不大于列表长度的随机math
+        let math = 0
+        if (len){
+            do{
+                //Math.random取值[0,1),所以要+1
+                math = Math.floor(Math.random()*(len+1))
+
+            }while (math==index)
+        }else {
+            math = 0
+        }
+
+            songId = state.playList[math].mid
+    }
+    //单曲循环
+    else if (order===2){
+        songId = state.cur
+    }
+    //列表循环
+    else if (order===3){
+        if (index<state.playList.length-1){
+            songId = state.playList[index+1].mid
+        }else {//最后一项
+            songId = state.playList[0].mid
+        }
+    }
+
+    state.cur=songId
+}
+

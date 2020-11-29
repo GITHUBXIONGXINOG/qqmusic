@@ -772,11 +772,30 @@
           .listCycle{
             width: 30px;
             height: 100%;
+            //border: 1px solid red;
             i{
               width: 29px;
-              height: 27px;
-              background-position:  0px -204px;
+              height: 23px;
+              //height: 27px;
+              //background-position:  0px -204px;
             }
+            .song-list-order-0{
+              //border: 1px solid red;
+              background-position:  0px -259px;
+            }
+            .song-list-order-1{
+              //border: 1px solid yellow;
+              background-position:  0px -72px;
+            }
+            .song-list-order-2{
+              //border: 1px solid blue;
+              background-position:  0px -232px;
+            }
+            .song-list-order-3{
+              //border: 1px solid green;
+              background-position:  0px -205px;
+            }
+
           }
           //喜欢
           .loveSelect{

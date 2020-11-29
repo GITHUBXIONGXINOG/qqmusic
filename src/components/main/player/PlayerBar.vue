@@ -54,7 +54,9 @@
                 <!--更多操作-->
                 <div class="moreOpera">
                     <!--列表循环-->
-                    <span class="listCycle"><i></i></span>
+                    <span class="listCycle">
+                        <i :class="`song-list-order-${songListOrder}`" @click="clickOrder"></i>
+                    </span>
                     <!--喜欢-->
                     <span class="loveSelect"><i></i></span>
                     <!--下载-->
@@ -115,7 +117,8 @@ import Axios from "axios";
                 timer:null,//定时器
                 audio:null,//播放器初始
                 isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
-                currentTimeSecond:0,
+                currentTimeSecond:0,//当前时间
+                songListOrder:0,//当前列表播放模式
             }
         },
 
@@ -240,7 +243,14 @@ import Axios from "axios";
             //结束操作
             endOpera(){
                 this.isPaused=false
-                this.nextSong()
+                this.nextSong(this.songListOrder)
+                //单曲循环
+                if (this.songListOrder===2){
+                    setTimeout(()=>{
+                        this.audio.load()
+                        this.audio.play()
+                    },3000)
+                }
             },
             //开始播放
             clickStart(){
@@ -268,11 +278,35 @@ import Axios from "axios";
             },
             //上一首歌
             clickBack(){
-                this.preSong()
+                this.preSong(this.songListOrder)
+                //单曲循环
+                if (this.songListOrder===2){
+                    setTimeout(()=>{
+                        this.audio.load()
+                        this.audio.play()
+                    },1000)
+                }
             },
             //下一首歌
             clickNext(){
-                this.nextSong()
+                debugger
+                this.nextSong(this.songListOrder)
+                //单曲循环
+                if (this.songListOrder===2){
+                    setTimeout(()=>{
+                        this.audio.load()
+                        this.audio.play()
+                    },1000)
+                }
+            },
+            //切换列表播放顺序
+            clickOrder(){
+                // debugger
+                if (this.songListOrder<3){
+                    this.songListOrder++
+                }else {
+                    this.songListOrder=0
+                }
             },
 
 
@@ -512,6 +546,7 @@ import Axios from "axios";
         destroyed(){
             this.$bus.$off('clickPlaying')
             this.$bus.$off('resetAudioInfo')
+            this.audio.paused()
         }
     }
 </script>

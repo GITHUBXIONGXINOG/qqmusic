@@ -218,6 +218,7 @@ import {mapMutations, mapGetters} from "vuex"
                     this.downNum=0
                     this.downName=''
                     this.checkBox=[]
+                    this.checked=false
                     this.songList.forEach( (item)=> {
                         item.checked=false
                     })

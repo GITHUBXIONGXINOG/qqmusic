@@ -88,7 +88,7 @@
             //第一次加载时拿到当前路由匹配的id,派发请求
             // this.$store.dispatch('queryDataA',this.$route.params.songId)
             // console.log(this.$route)
-            // debugger
+            debugger
             //歌曲
             let regSong = /songmid=/
             //歌单
