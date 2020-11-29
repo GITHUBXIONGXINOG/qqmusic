@@ -7,7 +7,8 @@
             <div class="audio-control">
                 <!--控制按钮-->
                 <div class="play-btns">
-                    <span class="back"><i></i></span>
+                    <!--上一首歌-->
+                    <span class="back" @click="clickBack"><i></i></span>
                     <!--开始按钮-->
                     <span class="startButton"
                           @click="clickStart()"
@@ -18,7 +19,7 @@
                           @click="clickStop()"
                           v-show="isPlay"
                     ><i></i></span>
-                    <span class="next"><i></i></span>
+                    <span class="next" @click="clickNext"><i></i></span>
                 </div>
                 <!--进度条-->
                 <div class="progress" >
@@ -239,6 +240,7 @@ import Axios from "axios";
             //结束操作
             endOpera(){
                 this.isPaused=false
+                this.nextSong()
             },
             //开始播放
             clickStart(){
@@ -263,6 +265,14 @@ import Axios from "axios";
                 }
                 this.audio.pause()
                 // this.lyricTogglePlay()
+            },
+            //上一首歌
+            clickBack(){
+                this.preSong()
+            },
+            //下一首歌
+            clickNext(){
+                this.nextSong()
             },
 
 
@@ -373,6 +383,8 @@ import Axios from "axios";
                 "getAudio",//获取audio,存入
                 "isPlayMutation",//设置播放状态,存入
                 "setCurrentMid",//当前的歌曲id,存入
+                "preSong",//前一首歌
+                "nextSong",//后一首歌
 
             ])
 

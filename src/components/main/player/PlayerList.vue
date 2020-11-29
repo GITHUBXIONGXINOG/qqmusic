@@ -215,7 +215,6 @@ import {mapMutations, mapGetters} from "vuex"
             //下载状态
             downStatus(){
                 if ( this.downNum>=this.checkBox.length){
-
                     this.downNum=0
                     this.downName=''
                     this.checkBox=[]

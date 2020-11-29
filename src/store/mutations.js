@@ -57,7 +57,7 @@ export const queryDataSong = (state, payload)=>{
         }=payload
         // state.cur = songId || content_id
         state.cur = songId || dataOfFirstSongMid
-        // debugger
+        // 歌曲
         if (dataOfInfo&&dataOfPlay&&detaOfLyric){
             // state.list.push(data)
             //...data 扩展运算符,将data复制一份,并且后面的时间interval的值为
@@ -72,7 +72,7 @@ export const queryDataSong = (state, payload)=>{
                 albumname:dataOfInfo.album.title
             })
         }
-
+        //歌单
         else if (content_id&&dataOfSongList&&dataOfPlay){
             // debugger
             state.playList=[]
@@ -180,4 +180,31 @@ export const addLyric = (state,payload) =>{
     if (index){
         state.playList[index].lyric=lyrArr
     }
+}
+
+//前一首歌曲
+export const preSong = (state) =>{
+    let index = state.playList.findIndex(item=>{
+        return item.mid === state.cur
+    })
+    let songId = ''
+    if (index>1){
+        songId = state.playList[index-1].mid
+    }else {//第一项
+        songId = state.playList[state.playList.length-1].mid
+    }
+   state.cur=songId
+}
+//后一首歌曲
+export const nextSong = (state) =>{
+    let index = state.playList.findIndex(item=>{
+        return item.mid === state.cur
+    })
+    let songId = ''
+    if (index<state.playList.length-1){
+        songId = state.playList[index+1].mid
+    }else {//最后一项
+        songId = state.playList[0].mid
+    }
+    state.cur=songId
 }
