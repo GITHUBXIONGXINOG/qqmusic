@@ -29,8 +29,6 @@
                             {{v.singer}}
                         </div>
 
-
-
                         <!--mv-->
                         <div v-else>
                             <a href="javascript:;">{{v.singer}}</a>
@@ -284,7 +282,7 @@
             ])
         },
         mounted() {
-            console.log(this.recommendList)
+            // console.log(this.recommendList)
         }
     }
 

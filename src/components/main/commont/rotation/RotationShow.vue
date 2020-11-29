@@ -1,11 +1,5 @@
 <template>
     <div class="rotation-show">
-<!--yyy
-        {{recommendList[0].title}}
-&lt;!&ndash;        {{recommendList}}&ndash;&gt;
-<div v-for="(item,index) in recommendList" :key="index">
-   {{index}}&#45;&#45; {{item}}
-</div>-->
         <div class="slide-content"
              :class="`content-${index}`">
             <!--图片内容-->
@@ -114,7 +108,7 @@
 
             //页数
             pages () {
-                debugger
+                // debugger
                 const pages = []
                 this.setPage(this.index)
                 const savePage = Math.floor(this.slideList.length/this.p)
