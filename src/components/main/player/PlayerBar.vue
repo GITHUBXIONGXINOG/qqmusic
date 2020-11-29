@@ -464,7 +464,7 @@ import {audio} from "@/store/getters";
                     this.getAudio(this.$refs.audio)
                 }
             })
-            console.log(this.$store.state);
+            // console.log(this.$store.state);
 
         },
         watch:{

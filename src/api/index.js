@@ -32,7 +32,41 @@ const api = {
             }
         })
     },
+    //添加到歌单 登录权限
+    addSongList(mid,dirid){
+        debugger
+        let type = Object.prototype.toString.call(mid)
+        let mids = ''
+        if (type==='[object Array]'){
 
+            mid.forEach(item=>{
+                mids += item + ','
+            })
+        }
 
+        let res = axios.get('/api/songlist/add',{
+            params:{
+                mid:mid,
+                dirid:dirid
+            }
+        })
+
+        return res
+        /*
+        *
+        * {"result":301,"errMsg":"先登录！"}
+        * */
+    },
+    //下载
+    downSongs(mid,type){
+        return axios.get('/api/song/url',{
+            params:{
+                id:mid,
+                type:type || 128,
+                isRedirect:0
+            }
+        })
+
+    }
 }
 export default api

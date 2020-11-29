@@ -10,22 +10,28 @@
                 </span>
             </a>-->
             <ul class="icon-wrap">
-                <li class="">
+                <!--收藏-->
+             <!--   <li @click="addSongList(201)">
                     <span :class="iconList[0]"></span>
                     <i>{{userOperating[0]}}</i>
-                </li>
-                <li class="">
+                </li>-->
+                <!--添加到-->
+              <!--  <li class="">
                     <span :class="iconList[1]"></span>
                     <i>{{userOperating[1]}}</i>
-                </li>
-                <li class="">
+                </li>-->
+
+                <!--下载-->
+                <li @click.prevent="checkBox.length>0 ?downSongs() :setNullDeletePanel() "  >
                     <span :class="iconList[2]"></span>
                     <i>{{userOperating[2]}}</i>
                 </li>
+                <!--删除-->
                 <li @click="checkBox.length>0 ? deletePanelFlag=1 : setNullDeletePanel()">
                     <span :class="iconList[3]"></span>
                     <i>{{userOperating[3]}}</i>
                 </li>
+                <!--清空列表-->
                 <li @click="deletePanelFlag=2">
                     <span :class="iconList[4]"></span>
                     <i>{{userOperating[4]}}</i>
@@ -58,6 +64,11 @@
             <div class="null-delete-panel" v-show="ShowCheckedNull">
                 <span class="iconfont icon-jinggao"></span>
                 <span class="null-err-info">请选择操作的单曲</span>
+            </div>
+            <!--下载面板-->
+            <div class="down-panel" ref="downPanel" v-show="downNum>0">
+                <span>{{downStatus}}</span>
+                <i>{{downInfo}}</i>
             </div>
         </ul>
         <div class="rank-wrap">
@@ -141,6 +152,8 @@
 </template>
 
 <script>
+import api from "@/api";
+import Axios from 'axios'
 
 import {mapMutations, mapGetters} from "vuex"
     export default {
@@ -176,6 +189,8 @@ import {mapMutations, mapGetters} from "vuex"
                 checkBox:[],//选中列表
                 checked:"",//全选框
                 ShowCheckedNull:false,
+                downName:'',//下载名字
+                downNum:0,//下载数量
             }
         },
 
@@ -198,6 +213,29 @@ import {mapMutations, mapGetters} from "vuex"
               // "currentLyric",//歌词元素,读取
 
             ]),
+            //下载状态
+            downStatus(){
+                if ( this.downNum>=this.checkBox.length){
+
+                    this.downNum=0
+                    this.downName=''
+                    this.checkBox=[]
+                    this.songList.forEach( (item)=> {
+                        item.checked=false
+                    })
+                    return '下载完成'
+                }
+                // this.downNum++
+                return '正在下载:'
+            },
+            //下载信息
+            downInfo(){
+                if (this.downName){
+                    this.downNum++
+                    return this.downName+' '+ this.downNum+'/'+this.checkBox.length
+                }
+                return ''
+            }
 
 
 
@@ -319,14 +357,50 @@ import {mapMutations, mapGetters} from "vuex"
             },
             //空选中删除
             setNullDeletePanel(){
-                debugger
                 this.ShowCheckedNull=true
                 //1.5秒后关闭
                 setTimeout(item=>{
                     this.ShowCheckedNull=false
                 },1500)
-            }
+            },
+            //添加歌单
+          /*  async addSongList(dirid){
+                let res = await api.addSongList(this.checkBox,dirid)
 
+            }*/
+            //下载链接获取
+             downSongs(){
+                // debugger
+                 this.checkBox.forEach(async mid=>{
+                    let res = await api.downSongs(mid)
+                    if (res.data.result===100){
+                        let index = this.songList.findIndex(item=>item.mid==mid)
+                        let name = this.songList[index].title
+                        this.downloadItem(res.data.data,name)
+
+                    }
+                })
+
+
+
+            },
+            //下载
+            downloadItem (url,name) {
+                Axios.get(url, { responseType: 'blob' })
+                  .then(({ data }) => {
+                      // 为了简单起见这里blob的mime类型 固定写死了
+                      let blob = new Blob([data], { type: 'application/vnd.ms-excel' })
+                      let link = document.createElement('a')
+                      link.href = window.URL.createObjectURL(blob)
+                      link.download = name+'.mp3'
+                      this.$nextTick(()=>{
+                          this.downName=name
+                      })
+                      link.click()
+
+
+                  })
+            }
         },
 
         created() {

@@ -176,6 +176,16 @@
 
         }
       }
+      //正在下载框
+      .down-panel{
+        //border: 1px solid #ff7142;
+        display: flex;
+        align-items: center;
+        color: #999999;
+        span{
+          margin: 0 10px;
+        }
+      }
     }
     //播放列表
     .rank-wrap{
