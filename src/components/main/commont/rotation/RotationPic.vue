@@ -6,7 +6,6 @@
                  :class="`imgList-${index}`"
                  ref="imgList"
             >
-
                 <div class="imgList-inner" v-for="(v,i) in item" :key="i"
                      :class="`slide-img-${i}`"
                 >
@@ -15,6 +14,8 @@
                     <picture-show :imgUrl=imgUrl(v)
                                   :songId="songsId(v)"
                     />
+
+
                     <!--图片标题内容-->
                     <div class="text-info" >
                         <a href="javascript:;">{{v.title}}</a>
@@ -255,7 +256,7 @@
             imgUrl(){
                 return function (v) {
                     // debugger
-                    // console.log(v)
+                    console.log(v)
                     if (v.img){
                         return v.img
                     }else if (v.imgUrl){

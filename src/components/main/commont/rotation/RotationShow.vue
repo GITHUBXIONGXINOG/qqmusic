@@ -7,6 +7,7 @@
                  v-for="(page,indexPage) in pageAll" :key="indexPage"
                  v-show="n==indexPage"
             >
+
                 <div v-if="index!=3">
                     <rotation-pic
                       :set-img-list="slideList"
@@ -108,9 +109,10 @@
 
             //页数
             pages () {
-                // debugger
+                debugger
                 const pages = []
                 this.setPage(this.index)
+                console.log(this.slideList)
                 const savePage = Math.floor(this.slideList.length/this.p)
                 this.slideList.forEach((item, index) => {
                     // debugger

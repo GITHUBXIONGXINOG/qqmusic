@@ -122,6 +122,7 @@ export default {
                 // console.log(this.apiGetList.map(item=>item))
 
             }
+            //新碟首发
             else if (index==2){
                 this.apiGetList = res.data.data.list.map(item => ({
                     id:item.id,
@@ -133,7 +134,7 @@ export default {
                     type:item.type,
                     mid:item.mid,
                 }))
-            }//新碟首发
+            }
             else if (index==3){//排行榜
 
                 this.apiGetList = res.data.data[0].list.map(item => ({
@@ -255,18 +256,32 @@ export default {
                 // debugger
                 // console.log(this.apiGetList.map(item=>item))
 
-            }
+            }//新歌首发
             else if (index==2){
-                this.apiGetList = res.data.data.list.map(item => ({
-                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
-                    title:item.name,
-                    // subtitle:item.subtitle,
-                    singer:item.singers[0].name,
-                    id:item.id,
-                    // listen_num:item.listen_num,
-                    type:item.type
-                }))
-            }
+                await this.$store.dispatch('queryNewRecordStarting',path)
+                debugger
+                console.log(this.newRecordStarting);
+
+                for (let i in  this.newRecordStarting){
+                    this.apiGetList.push(this.newRecordStarting[i])
+                }
+                //去掉最后的id
+                this.apiGetList.pop()
+                debugger
+                console.log( this.apiGetList)
+
+
+
+                /*            this.apiGetList = res.data.data.list.map(item => ({
+                                img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
+                                title:item.name,
+                                // subtitle:item.subtitle,
+                                singer:item.singers[0].name,
+                                id:item.id,
+                                // listen_num:item.listen_num,
+                                type:item.type
+                            }))*/
+            }//新碟首发
             else if (index==3){//排行榜
 
                 // console.log(res.data)
@@ -309,7 +324,8 @@ export default {
     computed:{
       ...mapGetters([
         "recommendList",//歌单推荐
-        "newSongStarting"//新歌首发
+        "newSongStarting",//新歌首发
+        "newRecordStarting",//新碟首发
 
       ])
     },

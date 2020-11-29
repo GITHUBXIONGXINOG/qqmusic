@@ -146,8 +146,32 @@ const actions = {
 
             }
         }
-    }
+    },
 
+    //新碟首发
+    async queryNewRecordStarting({state,commit},type){
+        // debugger
+        //校验是否存在
+        let result = state.newSongStarting.find(item=>{
+            return item.cueNewRType===type
+        })
+        if (result){
+            //如果存在,执行commit方法,调用queryData,只改id
+            commit('newRecordStarting',{type})
+            return
+        }
+        else {
+            debugger
+            let resOfNewRecordStarting = await api.newRecordStarting(type)
+            if (parseInt(resOfNewRecordStarting.data.result)===100){
+                commit('queryNewRecord',{
+                    type,//地区
+                    list:resOfNewRecordStarting.data.data.list,
+                })
+
+            }
+        }
+    }
 
 
 }

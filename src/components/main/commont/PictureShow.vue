@@ -1,10 +1,10 @@
 <template>
     <div class="picture-show"  :style="{'--width':imgWidth,'--height':imgHeight}">
-
         <div class="img-wrap ">
             <img  class="img-info  checked-style"
                   :src="imgUrl"
             >
+
             <nav>
                 <router-link :to="`/player/`+songId"   class="img_cover_wrap">
                     <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">

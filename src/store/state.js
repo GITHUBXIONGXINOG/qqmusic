@@ -15,6 +15,11 @@ const state = {
     newSongStarting:[],
     //新歌的当前地址
     curNewSType:0,
+    //新碟首发
+    newRecordStarting:[],
+    //当前新碟位置
+    cueNewRType:0,
+
 
 
 

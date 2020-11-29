@@ -111,12 +111,12 @@ export default {
                 //精彩推荐 去掉
                 //新碟首发
                 [
-                    {path: '/api/new/album?type=1&num=20',name:'内地'},
-                    {path: '/api/new/album?type=2&num=20',name:'港台'},
-                    {path: '/api/new/album?type=3&num=20',name:'欧美'},
-                    {path: '/api/new/album?type=4&num=20',name:'韩国'},
-                    {path: '/api/new/album?type=5&num=20',name:'日本'},
-                    {path: '/api/new/album?type=6&num=20',name:'其它'},
+                    {path: '1',name:'内地'},
+                    {path: '2',name:'港台'},
+                    {path: '3',name:'欧美'},
+                    {path: '4',name:'韩国'},
+                    {path: '5',name:'日本'},
+                    {path: '6',name:'其它'},
                 ],
                 //排行榜
                 [
