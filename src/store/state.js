@@ -7,8 +7,13 @@ const state = {
     audio: null,
     //是否正在播放
     isPlay:false,
-    //歌词元素
-    // currentLyric:null
+    //首页歌单推荐
+    recommendList: [],
+    //歌单当前的id
+    curRecId:0,
+
+
+
 }
 
 export default state

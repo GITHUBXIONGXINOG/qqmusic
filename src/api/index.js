@@ -8,7 +8,7 @@ const api = {
             }
         })
     },
-   //歌词
+    //歌词
     songLyric(songId){
         return axios.get('/api/lyric',{
             params:{
@@ -67,6 +67,22 @@ const api = {
             }
         })
 
+    },
+    //推荐歌单
+    //为你推荐歌单
+    recommendForU(){
+        return axios.get('/api/recommend/playlist/u')
+    },
+    //按分类推荐歌单
+    recommendPlayList(id,pageNo,pageSize){
+        return axios.get('/api/recommend/playlist',{
+            params:{
+                id,
+                pageNo:pageNo || 1,
+                pageSize:pageSize || 20
+            }
+        })
     }
+
 }
 export default api

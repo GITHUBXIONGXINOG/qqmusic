@@ -72,6 +72,7 @@
 <script>
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
 import RotationApi from "@/components/main/commont/rotation/RotationApi";
+import api from "@/api";
 export default {
     /*
     * rotation-tile是父组件homepage的子组件
@@ -91,12 +92,12 @@ export default {
             List:[
                 //歌单推荐
                 [
-                        {path: '/api/recommend/playlist/u',name:'为你推荐'},
-                        {path: '/api/recommend/playlist',name:'官方歌单'},
-                        {path: '/api/songlist/list?category=148',name:'情歌'},
-                        {path: '/api/songlist/list?category=146',name:'网络歌曲'},
-                        {path: '/api/songlist/list?category=136',name:'经典'},
-                        {path: '/api/songlist/list?category=141',name:'KTV热歌'},
+                        {path: 'u',name:'为你推荐'},
+                        {path: '3317',name:'官方歌单'},
+                        {path: '71',name:'情歌'},
+                        {path: '3056',name:'网络歌曲'},
+                        {path: '59',name:'经典'},
+                        {path: '64',name:'KTV热歌'},
                     ],
                 //新歌首发
                 [
@@ -156,7 +157,7 @@ export default {
             // this.clickPath=path
             this.$refs.api.clickPath(path,index)
             this.clickFlag=clickIndex
-        },
+         },
 
         isClickFlag(flag){
            return  flag==this.clickFlag ? true :false

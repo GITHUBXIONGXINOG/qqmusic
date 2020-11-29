@@ -277,3 +277,28 @@ export const nextSong = (state,order) =>{
     state.cur=songId
 }
 
+//首页歌单推荐
+export const queryRecommendList = (state,payload) =>{
+    // debugger
+    let {
+        id,//歌单id
+        list,//数据
+    } = payload
+    //当前的id
+
+    state.curRecId = id
+    //如果list存在,说明传入了数据进行存储
+    if (list){
+        list.forEach(item=>{
+            item.imgUrl=item.cover_url_small||item.cover_url_medium
+            item.content_id=item.tid
+            item.listen_num=item.access_num
+        })
+
+        state.recommendList.push({
+            ...list,
+            id,
+        })
+
+    }
+}

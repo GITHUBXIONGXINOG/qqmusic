@@ -99,19 +99,31 @@ const actions = {
 
 
     },
-/*
-//存入歌词
-    async addLyric({state,oad},songId){
-        let {songmid,lyric} = payload
 
-        let index = state.playList.findIndex(item=>{
-            return item.mid===songmid
+    //首页歌单推荐
+    async queryRecommendList({state,commit},id){
+        // debugger
+        //校验是否存在
+        let result = state.recommendList.find(item=>{
+            return item.id===id
         })
-        if (index){
-            state.playList[index].
+        if (result){
+            //如果存在,执行commit方法,调用queryData,只改id
+            commit('queryRecommendList',{id})
+            return
+        }
+        else {
+            let resOfSongRecommendList = await api.recommendPlayList(id)
+            if (parseInt(resOfSongRecommendList.data.result)===100){
+                commit('queryRecommendList',{
+                    id,
+                    list:resOfSongRecommendList.data.data.list
+                })
+
+            }
         }
     }
-*/
+
 
 
 }

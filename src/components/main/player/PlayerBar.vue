@@ -546,7 +546,9 @@ import Axios from "axios";
         destroyed(){
             this.$bus.$off('clickPlaying')
             this.$bus.$off('resetAudioInfo')
-            this.audio.paused()
+            if ( this.audio){
+                this.audio.paused()
+            }
         }
     }
 </script>

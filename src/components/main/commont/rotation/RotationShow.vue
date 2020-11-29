@@ -1,6 +1,11 @@
 <template>
     <div class="rotation-show">
-
+<!--yyy
+        {{recommendList[0].title}}
+&lt;!&ndash;        {{recommendList}}&ndash;&gt;
+<div v-for="(item,index) in recommendList" :key="index">
+   {{index}}&#45;&#45; {{item}}
+</div>-->
         <div class="slide-content"
              :class="`content-${index}`">
             <!--图片内容-->
@@ -74,6 +79,7 @@
 
 <script>
     import RotationPic from "@/components/main/commont/rotation/RotationPic";
+    import {mapGetters} from "vuex";
 
     export default {
        /*
@@ -108,10 +114,9 @@
 
             //页数
             pages () {
-                // debugger
+                debugger
                 const pages = []
                 this.setPage(this.index)
-                //savePage为保留页数,只保留slideList为5倍数的页数
                 const savePage = Math.floor(this.slideList.length/this.p)
                 this.slideList.forEach((item, index) => {
                     // debugger
@@ -222,15 +227,18 @@
             // this.setWord(this.index)
         },
         computed:{
-
+            ...mapGetters([
+              'recommendList'
+            ])
 
         },
         created() {
-
+            // console.log('this.recommendList)
         },
         watch:{
             //监听到传入内容数组,进行分页处理
             slideList(){
+                // console.log('slideList:'+this.slideList())
                 // this.setData(this.slideList)
                 this.pages()
             },

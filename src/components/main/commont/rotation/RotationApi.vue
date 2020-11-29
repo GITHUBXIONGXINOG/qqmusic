@@ -14,6 +14,8 @@
 
 <script>
 import RotationShow from "@/components/main/commont/rotation/RotationShow";
+import api from "@/api";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 export default {
     props:{
         /*定义接收来自父组件的index
@@ -39,6 +41,9 @@ export default {
         // RotationTitle
     },
     methods:{
+        // ...mapActions({
+        //     queryRecommendList: 'queryRecommendList'
+        // }),
         //apiSet 初始化 默认地址
         apiSet(index){
             // debugger
@@ -100,14 +105,7 @@ export default {
                         )
                     }
                 }
-              /*  this.apiGetList = res.data.data.list.map(item => ({
-                    id:item.content_id,
-                    img:item.cover,
-                    title:item.title,
-                    singer:item.username,
-                    listen_num:item.listen_num,
-                    type:item.type
-                }))*/
+
             }
             //新歌首发
             else if (index==1){
@@ -169,19 +167,118 @@ export default {
             // debugger
             // console.log(path)
             // console.log(index)
-            const res = await this.$http.get(path)
-
+            // const res = await this.$http.get(path)
+            let res = []
             // console.log(res)
             //   debugger
               // console.log(res)
             /*对应不同api的保存数据*/
+            //歌单推荐
             if (index==0){
-                this.apiGetList = res.data.data.list.map(item => ({
+                debugger
+                //正则表达式匹配第一个为你推荐
+
+
+                //为你推荐
+                if (path=='u'){
+                    let recommentForU = localStorage.getItem('recommentForU')
+                    if (recommentForU){
+                        recommentForU = JSON.parse(recommentForU)
+                        if (new Date().getTime()-recommentForU.time<30*60*1000){
+                            this.apiGetList = recommentForU.data
+                        }else {
+                            let res = await api.recommendForU()
+                            if (parseInt(res.data.result)===100){
+                                this.apiGetList=res.data.data.list
+                                localStorage.setItem(
+                                  'recommentForU',
+                                  JSON.stringify({
+                                      time:new Date().getTime(),
+                                      data:res.data.data.list
+                                  })
+                                )
+                            }
+                        }
+                    }else {
+                        let res = await api.recommendForU()
+                        if (parseInt(res.data.result)===100){
+                            this.apiGetList=res.data.data.list
+                            localStorage.setItem(
+                              'recommentForU',
+                              JSON.stringify({
+                                  time:new Date().getTime(),
+                                  data:res.data.data.list
+                              })
+                            )
+                        }
+                    }
+                }
+                //其它分类推荐
+                else {
+                    await this.$store.dispatch('queryRecommendList',path)
+                    debugger
+                    console.log(this.recommendList)
+                    this.apiGetList=[]
+                    // this.apiGetList.push(this.recommendList)
+                    for (let i in   this.recommendList){
+                        this.apiGetList.push(this.recommendList[i])
+                        // console.log(this.apiGetList)
+                    }
+                //去掉最后的id
+                this.apiGetList.pop()
+                    // console.log(this.apiGetList)
+                    // console.log(this.apiGetList.length)
+
+                    // res = await api.recommendPlayList(path)
+                    //
+                    // let recommentByClass = localStorage.getItem('recommentByClass')
+                    // if (recommentByClass){
+                    //     recommentByClass = JSON.parse(recommentByClass)
+                    //     if (new Date().getTime()-recommentByClass.time<30*60*1000){
+                    //         this.apiGetList = recommentByClass.data
+                    //     }else {
+                    //         let res = await api.recommendForU()
+                    //         if (parseInt(res.data.result)===100){
+                    //             this.apiGetList=res.data.data.list
+                    //             localStorage.setItem(
+                    //               'recommentForU',
+                    //               JSON.stringify({
+                    //                   time:new Date().getTime(),
+                    //                   data:res.data.data.list
+                    //               })
+                    //             )
+                    //         }
+                    //     }
+                    // }else {
+                    //     let res = await api.recommendForU()
+                    //     if (parseInt(res.data.result)===100){
+                    //         this.apiGetList=res.data.data.list
+                    //         localStorage.setItem(
+                    //           'recommentForU',
+                    //           JSON.stringify({
+                    //               time:new Date().getTime(),
+                    //               data:res.data.data.list
+                    //           })
+                    //         )
+                    //     }
+                    // }
+
+                }
+                // console.log(res)
+
+
+
+                // let url = '/api/recommend/playlist?&pageNo=1&pageSize=20&id='+path
+                // const res = await this.$http.get(url)
+
+
+
+           /*     this.apiGetList = res.data.data.list.map(item => ({
                     img:item.cover || item.cover_url_medium || item.imgurl || item.imgurl,
                     title:item.title || item.dissname,
                     id:item.content_id || item.dissid,
                     listen_num:item.listen_num || item.access_num || item.listennum,
-                }))
+                }))*/
 /*                debugger
                 console.log(this.apiGetList.map(item=>item))*/
             }
@@ -250,6 +347,11 @@ export default {
 
         }
 
+    },
+    computed:{
+      ...mapGetters([
+        "recommendList"
+      ])
     },
     created() {
 

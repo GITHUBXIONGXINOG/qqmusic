@@ -1,5 +1,6 @@
 <template>
     <div class="rotation-pic">
+
         <div class="imgShowStation">
             <div class="imgList-wrap  " v-for="(item,index) in imgList" :key="item.id"
                  :class="`imgList-${index}`"
@@ -45,7 +46,7 @@
                 </div>
             </div>
         </div>
-
+<!-- {{recommendList.title}}-->
 
 
         <!--后退按钮-->
@@ -85,6 +86,7 @@
 </template>
 <script>
     import PictureShow from "@/components/main/commont/PictureShow";
+    import {mapGetters} from "vuex";
     export default {
         components:{
             PictureShow
@@ -114,12 +116,16 @@
                 clickFlag:false,//点击标识
             }
         },
+        created() {
+
+        },
         watch:{
             setImgList:{
                 immediate:true,
                 handler:function (val) {
-                    // debugger
+                    debugger
                     this.imgList=val
+                    // this.imgList=this.recommendList
                     this.pageSize=this.setPageSize
                     this.pages()
                     // console.log(this.imgList)
@@ -254,6 +260,8 @@
                     // console.log(v)
                     if (v.img){
                         return v.img
+                    }else if (v.imgUrl){
+                        return v.imgUrl
                     }else if (v.cover){
                         return v.cover
                     }
@@ -261,7 +269,7 @@
 
 
             },
-            //歌曲或专辑id
+            //歌曲或歌单id
             songsId(){
                 return function (v) {
                     if (v.mid){
@@ -270,7 +278,13 @@
                         return 'content_id='+v.content_id
                     }
                 }
-            }
+            },
+            ...mapGetters([
+              'recommendList'
+            ])
+        },
+        mounted() {
+            console.log(this.recommendList)
         }
     }
 
