@@ -27,9 +27,12 @@
                                   :src="v.img"
                             >
                             <nav>
-                                <a href="javascript:;" class="img_cover_wrap" >
+                           <!--     <a href="javascript:;" class="img_cover_wrap" >
                                     <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
-                                </a>
+                                </a>-->
+                                <router-link :to="`/player/topId=`+v.topId"   class="img_cover_wrap">
+                                    <img src="../../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button select">
+                                </router-link>>
                             </nav>
                         </div>
 

@@ -136,7 +136,7 @@ export default {
             else if (index==3){//排行榜
 
                 this.apiGetList = res.data.data[0].list.map(item => ({
-                    id:item.topId,
+                    topId:item.topId,
                     img:item.picUrl,
                     label:item.label,
                     song:item.song,
@@ -280,15 +280,17 @@ export default {
                             }))*/
             }//新碟首发
             else if (index==3){//排行榜
-                // debugger
+                debugger
                 this.apiGetList = res.data.data[0].list.map(item => ({
                     label:item.label,
                     song:item.song,
-                    id:item.topId,
+                    // id:item.topId,
                     singer:item.listenNum,
                     // type:item.type
                     img:item.picUrl,
+                    topId:item.topId
                 }))
+                console.log(this.apiGetList)
             }
             else if (index==4){
                 this.apiGetList = res.data.data.list.map(item => ({

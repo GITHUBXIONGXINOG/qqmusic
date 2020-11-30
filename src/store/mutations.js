@@ -55,6 +55,7 @@ export const queryDataSong = (state, payload)=>{
             dataOfFirstSongMid,//歌单第一个歌曲id
             dataOfSongLyrics,//歌词
             albummid,//专辑
+            topId,//排行榜
         }=payload
         // state.cur = songId || content_id
         state.cur = songId || dataOfFirstSongMid
@@ -140,6 +141,24 @@ export const queryDataSong = (state, payload)=>{
 
                 // debugger
 
+            })
+            // state.list.push({...dataOfSongList.songlist})
+        }
+        //排行榜
+        else if (topId&&dataOfSongList&&dataOfPlay){
+            debugger
+            state.playList=[]
+            dataOfSongList.forEach((item,index)=>{
+                // console.log(dataOfSongLyrics);
+                    state.playList.push({
+                        ...item,
+                        interval:timeFormat(item.interval),//时间
+                        playerUrl:dataOfPlay[index],//播放链接
+                        singerName:item.singerName,//歌手名字
+                        songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albumMid}.jpg`,//歌曲图片
+                        mid:item.mid,
+                        title:item.title
+                    })
             })
             // state.list.push({...dataOfSongList.songlist})
         }

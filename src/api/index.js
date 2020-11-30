@@ -110,7 +110,8 @@ const api = {
     },
     //排行榜
     rankList(id,pageSize){
-        return axios.get('api/top/category',{
+
+        return axios.get('/api/top',{
             params:{
                 id: id,//榜单id 62 飙升榜,26 热歌榜,27 新歌榜,4 流行指数榜,67 听歌识曲榜
                 pageSize: pageSize || 100

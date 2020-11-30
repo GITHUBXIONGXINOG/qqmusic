@@ -19,6 +19,7 @@ const state = {
     newRecordStarting:[],
     //当前新碟位置
     cueNewRType:0,
+    //
 
 
 

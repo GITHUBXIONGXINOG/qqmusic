@@ -85,13 +85,16 @@
             //第一次加载时拿到当前路由匹配的id,派发请求
             // this.$store.dispatch('queryDataA',this.$route.params.songId)
             // console.log(this.$route)
-            debugger
+            // debugger
             //歌曲
             let regSong = /songmid=/
             //歌单
             let regSongList = /content_id=/
             //专辑
             let regAlbums = /albummid=/
+            //排行榜
+            let regRank = /topId=/
+
             let idInfo = ''
             //歌曲
             if (this.$route.params.songId.match(regSong)){
@@ -105,10 +108,15 @@
                 this.$store.dispatch('queryDataASongList',idInfo)
             }
             //专辑
-            else {
+            else if (this.$route.params.songId.match(regAlbums)){
                 idInfo=this.$route.params.songId.replace(regAlbums,'')
                 this.$store.dispatch('queryDataAlbum',idInfo)
 
+            }
+            //排行榜
+            else if(this.$route.params.songId.match(regRank)){
+                idInfo=this.$route.params.songId.replace(regRank,'')
+                this.$store.dispatch('queryDataRank',idInfo)
             }
 
 
