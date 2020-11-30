@@ -10,7 +10,7 @@ function timeFormat(val){
     return min + ':' + s
 
 }
-//歌词格式化
+//歌词格式化 时间
 function formatLyric(lyric) {
     let lyrics = lyric.split("\n")
     //歌词对象
@@ -39,12 +39,32 @@ function formatLyric(lyric) {
     // debugger
     return lyrArr
 }
-
+//歌词格式化 文本显示
+function formatLyricHtml(lyric) {
+    let lyrics = lyric.split("\n")
+    //歌词对象
+    let lyrArr = []
+    //* 贪婪匹配,有多少匹配多少
+    let reg = /\[\d*:\d*\.\d*]/g
+    for (let i = 0; i < lyrics.length; i++) {
+        let timerRegExpArr = lyrics[i].match(reg)
+        if (!timerRegExpArr) continue
+        let t = timerRegExpArr[0] //数值格式,取出数据
+        //取出分钟
+         Number(t.match(/\[\d*/).toString().slice(1))
+        //取出秒
+         Number(t.match(/:\d*/).toString().slice(1))
+        //歌词文本
+         lyrArr += lyrics[i].replace(timerRegExpArr,"") + '<br />'
+    }
+    // debugger
+    return lyrArr
+}
 
     //state 原始状态
 //payload 只能传一个参数,通过解构出想要的值
 export const queryDataSong = (state, payload)=>{
-        debugger
+        // debugger
         let {
             songId,//歌词id
             dataOfInfo,//歌曲信息
@@ -386,7 +406,7 @@ export const queryNewSong = (state,payload) =>{
 
 //新碟首发
 export const queryNewRecord = (state,payload) =>{
-    debugger
+    // debugger
     let {
         type,//地区
         list,//数据
@@ -411,3 +431,44 @@ export const queryNewRecord = (state,payload) =>{
     }
 }
 
+//歌曲详细页
+export const queryDataSongInfo = (state, payload)=>{
+    // debugger
+    let {
+        songId,//歌曲id
+        songid,//歌曲关联id
+        dataOfSongInfo,//歌曲信息
+        dataOfRelatedSongList,//相关歌单
+        dataOfRelatedMV,//相关mv
+        dataOfRelatedComment,//相关评论
+        dataOfSongLyrics,//歌词
+    }=payload
+    // state.cur = songId || content_id
+    state.curSongInfoId = songId
+    // 歌曲
+    if (songId&&dataOfSongInfo){
+        state.songInfoPages.push({
+            songId,//歌曲id
+            songid,//歌曲关联id
+            imgUrl:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${dataOfSongInfo.data.track_info.album.pmid}.jpg` ,
+            title: dataOfSongInfo.data.track_info.title,//歌名
+            singer: dataOfSongInfo.data.track_info.singer,//歌手
+            album: dataOfSongInfo.data.track_info.album.title,//专辑
+            genre:dataOfSongInfo.data.info.genre||null,//流派
+            pub_time:dataOfSongInfo.data.info.pub_time.content[0].value||null,//发行时间
+            lan:dataOfSongInfo.data.info.lan.content[0].value||null,//语种
+            company:dataOfSongInfo.data.info.company.content[0].value||null,//唱片公司
+            lyric:formatLyricHtml(dataOfSongLyrics),//歌词
+            commend:dataOfRelatedComment,//评论
+            RelatedSongList:dataOfRelatedSongList.data,//相关歌单
+            RelatedMV:dataOfRelatedMV.data,//相关mv
+        })
+    }
+    //评论修改
+    else if (dataOfRelatedComment){
+        debugger
+        let index = state.songInfoPages.findIndex(item=>item.songId==state.curSongInfoId)
+        state.songInfoPages[index].commend=dataOfRelatedComment
+    }
+
+}

@@ -46,12 +46,12 @@
                                         <span class="rank-number">
                                             {{v.song[p].rank}}
                                         </span>
-                                        <a class="rank-title" href="javascript:;">
+                                        <router-link :to="`/songinfo/`+v.song[p].mid" class="rank-title" href="javascript:;">
                                             <!--                                            {{v.song[p].title}}-->
                                             {{v.song[p].title.length>10
                                           ? v.song[p].title.slice(0,9)+'...'
                                           : v.song[p].title}}
-                                        </a>
+                                        </router-link>
                                     </div>
                                     <!--隐藏超出的文字-->
                                     <a class="rank-singerName" href="javascript:;" >

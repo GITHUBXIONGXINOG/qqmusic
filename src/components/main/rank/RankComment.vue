@@ -73,6 +73,7 @@
 <script>
     import paging from "@/components/main/commont/paging";
     import Comment from "@/components/main/commont/comment/Comment";
+    import {mapGetters} from "vuex";
     export default {
         props:{
             commentList:{
@@ -117,6 +118,9 @@
               this.isReply=val
             }
         },
+        created() {
+
+        },
         computed:{
             //时间戳转换
             timeConversion(){
@@ -130,11 +134,14 @@
                     let m = (unixTimestamp.getMinutes() > 10 ? unixTimestamp.getMinutes() : '0' + unixTimestamp.getMinutes())
                     return M+'月'+D+'日'+' '+H+':'+m
                 }
-            }
+            },
+            ...mapGetters([
+              'songInfoPage'
+            ])
         },
         watch:{
             commentList:function(){
-                // debugger
+                debugger
                 // console.log(this.commentList)
                 this.commentTotal=this.commentList.commenttotal
                 this.comments=this.commentList.commentlist
@@ -146,7 +153,11 @@
             Comment
         },
         mounted() {
-
+            // debugger
+            if (this.songInfoPage.commend){
+                this.commentTotal=this.songInfoPage.commend.data.hotComment.commenttotal
+                this.comments=this.songInfoPage.commend.data.hotComment.commentlist
+            }
         }
     }
 </script>

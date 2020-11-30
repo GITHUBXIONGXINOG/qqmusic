@@ -12,3 +12,5 @@ export const recommendList = state => state.recommendList.find(item=>item.id===s
 export const newSongStarting = state => state.newSongStarting.find(item=>item.curNewSType===state.curNewSType||null)
 //当前新碟首发
 export const newRecordStarting = state => state.newRecordStarting.find(item=>item.cueNewRType===state.cueNewRType||null)
+//歌曲详细页信息
+export const songInfoPage = state => state.songInfoPages.find(item=>item.songId===state.curSongInfoId||null)

@@ -150,7 +150,6 @@ export default {
 </script>
 
 <style lang="scss">
-// 注意 这里因为v-html的原因 不能使用scoped 不然样式不能失效
 /*最外层边框*/
 .comment-wrap {
   left: 0;

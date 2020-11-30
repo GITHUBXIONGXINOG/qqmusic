@@ -19,7 +19,10 @@ const state = {
     newRecordStarting:[],
     //当前新碟位置
     cueNewRType:0,
-    //
+    //歌曲详细信息
+    songInfoPages:[],
+    //当前详细页
+    curSongInfoId:0,
 
 
 

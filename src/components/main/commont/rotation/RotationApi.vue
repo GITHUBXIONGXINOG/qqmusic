@@ -69,6 +69,7 @@ export default {
         //默认初始化输出
         async fetchRecommendSwiper(index){
             const res = await this.$http.get(this.apiSetList.path)
+
           /*  debugger
             console.log(res)*/
             /*对应不同api的保存数据*/
@@ -133,17 +134,48 @@ export default {
                     albummid:item.mid,
                 }))
             }
-            else if (index==3){//排行榜
+            //排行榜
+            else if (index==3){
+                let path = [62,26,27,4,67]
+                //62 飙升榜,26 热歌榜,27 新歌榜,4 流行指数榜,67
+                let list = []
+                path.map(async (item)=>{
+                    // debugger
+                    let res =  await api.rankList(item,3)
+                    // console.log(res.data.data.list)
+                    list.push(res.data.data)
+                    if (list.length===path.length){
+                        this.apiGetList = list.map(item=>({
+                            topId:item.id,
+                            img:item.info.picUrl,
+                            label:item.info.title,
+                            song:item.list,
+                            listen_num:item.listenNum,
+                        }))
+                        // console.log( this.apiGetList)
+                    }
+                })
 
-                this.apiGetList = res.data.data[0].list.map(item => ({
+                // console.log(list)
+        /*        res.data.data[0].list.map(async (item)=>{
+                    debugger
+                    let res =  await api.rankList(item.topId,3)
+                    console.log(res)
+                    item.song.map(i=>{
+                        // console.log(i)
+                        // console.log(item.topId)
+                        i.mid=res.data.data.list[i].mid
+                    })
+                })*/
+
+ /*               this.apiGetList = res.data.data[0].list.map(item => ({
                     topId:item.topId,
                     img:item.picUrl,
                     label:item.label,
                     song:item.song,
                     listen_num:item.listenNum,
                     // type:item.type
-
-                }))
+                }))*/
 
             }
             else if (index==4){
@@ -335,7 +367,7 @@ export default {
         }
     },
     mounted() {
-        console.log(this.$store.state)
+        // console.log(this.$store.state)
     }
 
 }

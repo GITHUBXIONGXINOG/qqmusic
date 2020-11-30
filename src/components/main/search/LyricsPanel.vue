@@ -25,6 +25,7 @@
 <script>
     export default {
         props:{
+            //传入歌词内容
             setLyricsContent:{
                 type: String,
                 require: true
@@ -45,6 +46,7 @@
             clickShowChange(){
                 this.isMoreShow= !this.isMoreShow
             },
+            //歌词初始化
             lyricsFormat(){
                 this.msg=''
                 this.msg = this.setLyricsContent

@@ -110,7 +110,6 @@ const api = {
     },
     //排行榜
     rankList(id,pageSize){
-
         return axios.get('/api/top',{
             params:{
                 id: id,//榜单id 62 飙升榜,26 热歌榜,27 新歌榜,4 流行指数榜,67 听歌识曲榜
@@ -118,6 +117,33 @@ const api = {
             }
         })
     },
+    //相关热门歌单
+    RelatedSongList(id){
+        return axios.get('/api/song/playlist',{
+            params:{
+                id, //歌曲songid
+            }
+        })
+    },
+    //相关MV
+    RelatedMV(id){
+        return axios.get('/api/song/mv',{
+            params:{
+                id, //歌曲songid
+            }
+        })
+    },
+    //相关评论
+    RelatedComment(id,pageNo,type){
+        return axios.get('/api/comment',{
+            params:{
+                id, //歌曲songid
+                pageNo:pageNo||1,//页数
+                type:type||0,// 默认 0 // 0：获取最新评论，1：获取热评
+            }
+        })
+    },
+
 
 }
 export default api

@@ -235,12 +235,12 @@ const actions = {
 
     //排行榜queryDataRank
     async queryDataRank({state,commit},topId){
-        debugger
+        // debugger
         //校验是否存在
         let result = state.playList.find(item=>{
             return item.topId===topId
         })
-        console.log(result)
+        // console.log(result)
         if (result){
             //如果存在,执行commit方法,调用queryDataM,只改ID
             commit('queryDataSong',{topId})
@@ -294,6 +294,65 @@ const actions = {
 
 
     },
+
+    //歌曲详细页
+    async queryDataSongInfo({state,commit},songId){
+        // debugger
+        let result = state.playList.find(item=>{
+            return item.songId===songId
+        })
+        // console.log(result)
+        if (result){
+            //如果存在,执行commit方法,调用queryDataM,只改ID
+            commit('queryDataSongInfo',{songId})
+            return
+        }
+        //不存在,从服务器重新获取
+        //歌曲信息
+        let resultOfSongInfo = await api.songInfo(songId)
+        //相关热门歌单
+        let resultOfRelatedSongList = await api.RelatedSongList(songId)
+        //相关MV
+        let resultOfRelatedMV = await api.RelatedMV(songId)
+        //用于查询关联的歌曲id
+        let songid = resultOfSongInfo.data.data.track_info.id
+        //评论
+        let resultOfRelatedComment = await api.RelatedComment(songid)
+        //歌词
+        let resultOfSongLyrics = await api.songLyric(songId)
+
+
+        if (parseInt(resultOfSongInfo.data.result)===100){
+            commit('queryDataSongInfo',{
+                songId,//用于查询歌曲信息
+                songid,//用于查询歌曲关联信息
+                dataOfSongInfo:resultOfSongInfo.data,
+                dataOfRelatedSongList:resultOfRelatedSongList.data,
+                dataOfRelatedMV:resultOfRelatedMV.data,
+                dataOfRelatedComment:resultOfRelatedComment.data,
+                dataOfSongLyrics:resultOfSongLyrics.data.data.lyric,
+            })
+
+        }
+
+    },
+    //详细页评论页数更改
+    async queryDataSongInfoCommendPage({state,commit},page){
+        debugger
+        console.log(state.songInfoPages);
+        //评论
+        let resultOfRelatedComment = await api.RelatedComment(songid,page)
+
+        if (parseInt(resultOfRelatedComment.data.result)===100){
+            commit('queryDataSongInfo',{
+                dataOfRelatedComment:resultOfRelatedComment.data,
+            })
+
+        }
+
+    },
+
+
 }
 export default actions
 

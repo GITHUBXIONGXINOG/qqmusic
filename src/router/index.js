@@ -17,6 +17,7 @@ import DigitalAlbum from './musichall/digitalablum'
 import Search from '@/views/musicHall/search/Search'
 import Player from '@/views/musicHall/playrer/PlayerPage'
 import Error from '@/components/Error.vue'
+import SongInfoPage from "@/views/musicHall/infopage/SongInfoPage";
 export default new VueRouter({
     // meta: {
     //     keepAlive: true // true需要缓存，false不需要缓存
@@ -44,6 +45,12 @@ export default new VueRouter({
                     name: 'search',
                     component: Search,
                 },
+                {
+                    path: '/songinfo/:songId',
+                    name: 'SongInfo',
+                    component: SongInfoPage,
+                    props: true
+                }
 
             ]
         },
