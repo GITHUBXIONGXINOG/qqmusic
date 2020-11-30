@@ -128,11 +128,9 @@ export default {
                     id:item.id,
                     img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.photo.pic_mid}.jpg`,
                     title:item.name,
-                    // subtitle:item.subtitle,
                     singer:item.singers[0].name,
-                    // listen_num:item.listen_num,
                     type:item.type,
-                    mid:item.mid,
+                    albummid:item.mid,
                 }))
             }
             else if (index==3){//排行榜
@@ -153,7 +151,6 @@ export default {
                     id:item.mvid,
                     img:item.picurl,
                     title:item.mvtitle,
-                    // subtitle:item.subtitle,
                     singer:item.singername,
                     listen_num:item.listennum,
                     type:item.mvtitle
@@ -283,11 +280,7 @@ export default {
                             }))*/
             }//新碟首发
             else if (index==3){//排行榜
-
-                // console.log(res.data)
                 // debugger
-                // console.log(res.data.data)
-                // console.log(res.data.data[0].list.map(item=>item))
                 this.apiGetList = res.data.data[0].list.map(item => ({
                     label:item.label,
                     song:item.song,
@@ -295,11 +288,7 @@ export default {
                     singer:item.listenNum,
                     // type:item.type
                     img:item.picUrl,
-
                 }))
-                // debugger
-                /*               console.log(res)*/
-                // console.log(this.apiGetList.map(item=>item))
             }
             else if (index==4){
                 this.apiGetList = res.data.data.list.map(item => ({
@@ -311,9 +300,6 @@ export default {
                     listen_num:item.listennum,
                     type:item.mvtitle
                 }))
-                /*                debugger
-                                console.log(res)
-                                console.log(this.apiGetList.map(item=>item))*/
             }
 
 

@@ -16,7 +16,7 @@
                     />
                 </div>
 
-
+                <!--排行榜单独设置-->
                 <div v-if="index==3" class="rank">
                     <div class="slide-img  " v-for="(v,i) in page" :key="i"
                          :class="`slide-img-${i}`"
@@ -109,10 +109,10 @@
 
             //页数
             pages () {
-                debugger
+                // debugger
                 const pages = []
                 this.setPage(this.index)
-                console.log(this.slideList)
+                // console.log(this.slideList)
                 const savePage = Math.floor(this.slideList.length/this.p)
                 this.slideList.forEach((item, index) => {
                     // debugger

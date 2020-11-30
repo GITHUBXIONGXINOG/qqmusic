@@ -27,6 +27,7 @@
                         >
                                 {{item.name}}
                             </i>
+                            <!--排行榜-->
                             <div v-if="isRank(item)" class="isrank">
                                 <div v-for((v,i) in 3)>
                                         <i class="singerList-rank">{{this.songList[i].rank}}</i>
@@ -120,11 +121,11 @@ export default {
                 ],
                 //排行榜
                 [
-                    {path: '/api/homepage/recommend',name:'飙升'},
-                    {path: '/api/homepage/officialplaylist',name:'热歌'},
-                    {path: '/api/homepage/lovesong',name:'新歌'},
-                    {path: '/api/homepage/networksong',name:'流行指数'},
-                    {path: '/api/homepage/classic',name:'听歌识曲'},
+                    {path: '62',name:'飙升'},
+                    {path: '26',name:'热歌'},
+                    {path: '27',name:'新歌'},
+                    {path: '4',name:'流行指数'},
+                    {path: '67',name:'听歌识曲'},
                 ],
                 //MV
                 [

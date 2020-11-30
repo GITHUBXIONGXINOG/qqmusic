@@ -101,17 +101,22 @@ const api = {
     },
     //新碟首发
     newRecordStarting(type,num){
-        // debugger
-        // if (type===3){
-        //     num=11
-        // }
         return axios.get('/api/new/album',{
             params:{
                 type, //type: 地区分类，默认为 1 // 1：内地，2：港台，3：欧美，4：韩国，5：日本，6：其他
                 num:num || 11,//默认 10
             }
         })
-    }
+    },
+    //排行榜
+    rankList(id,pageSize){
+        return axios.get('api/top/category',{
+            params:{
+                id: id,//榜单id 62 飙升榜,26 热歌榜,27 新歌榜,4 流行指数榜,67 听歌识曲榜
+                pageSize: pageSize || 100
+            }
+        })
+    },
 
 }
 export default api
