@@ -1,14 +1,14 @@
 <template>
     <div class="song-info-show">
         <div class="song-info-heard-wrap">
-            <div class="song-img">
-                <img :src="songInfoPage.imgUrl" alt="" v-show="songInfoPage.imgUrl">
+            <div class="song-img"  v-if="songInfoPage">
+                <img :src="songInfoPage.imgUrl" alt="">
             </div>
-            <div class="text-info-wrap">
-                <div class="song-title">
+            <div class="text-info-wrap" v-if="songInfoPage&&songInfoPage.title">
+                <div class="song-title" >
                     {{songInfoPage.title}}
                 </div>
-                <div class="text-info">
+                <div class="text-info" >
                     <div class="singer-info">
                         <span class="iconfont icon-ren"></span>
                         {{singerName}}
@@ -37,10 +37,10 @@
                     </div>
                 </div>
                 <div class="operating">
-                    <div class="playing">
+                    <router-link :to="`/player/songmid=` + songInfoPage.songId" tag="div" class="playing">
                         <span class="iconfont icon-bofang1"></span>
                         <i>播放</i>
-                    </div>
+                    </router-link>
                     <div class="playing">
                         <span class="iconfont icon-shoucang"></span>
                         <i>收藏</i>
@@ -48,6 +48,7 @@
                     <div class="playing">
                         <span class="iconfont icon-pinglun2"></span>
                         <i>评论</i>
+                        <i>({{songInfoPage.commend.data.comment.commenttotal}})</i>
                     </div>
                     <div class="playing">
                         <span class="iconfont icon-gengduo"></span>
@@ -56,21 +57,42 @@
                 </div>
             </div>
         </div>
-        <div class="song-info-left-part">
-            <div class="lyric-wrap">
-                <span class="lyric-title">歌词</span>
-                <lyrics-panel
-                  :setLyricsContent="songInfoPage.lyric"
-                />
+        <div class="song-info-main-part">
+            <div class="song-info-left-part">
+                <div class="lyric-wrap" v-if="songInfoPage&&songInfoPage.lyric">
+                    <span class="lyric-title">歌词</span>
+                    <lyrics-panel
+                      :setLyricsContent="songInfoPage.lyric"
+                    />
+                </div>
+                <div class="comment-wrap">
+                    <rank-comment v-if="songInfoPage&&songInfoPage.commend"
+                                  :commentList="songInfoPage.commend.data.comment"
+                                  @change="setCommendPageChange"
+                    />
+                </div>
             </div>
-            <div class="comment-wrap">
-                <rank-comment
-                  :commentList="songInfoPage.commend.data.comment"
-                  @change="setCommendPageChange"
-                />
+            <div class="related-part">
+                <div class="related-hotSongList" v-if="songInfoPage&&songInfoPage.RelatedSongList">
+                    <span class="hosSong-title">相关热门歌单</span>
+                    <div class="hotSong-wrap" >
+                        <div class="hotSong-list" v-for="item in songInfoPage.RelatedSongList">
+                            <img :src="item.imgurl" alt="">
+                            <span class="hotSong-info">{{item.dissname}}</span>
+                            <span class="hotSong-creator">{{item.creator}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="related-mv" v-if="songInfoPage&&songInfoPage.RelatedMV">
+                    <span class="related-mv-title">相关mv</span>
+                    <div class="mv-wrap">
+                        <img :src="songInfoPage.RelatedMV[0].picurl" alt="">
+                        <span class="mv-title">{{songInfoPage.RelatedMV[0].title}}</span>
+                        <span class="mv-singers">{{singerName}}</span>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -90,8 +112,7 @@ import {songInfoPage} from "@/store/getters";
             RankComment,//评论组件
         },
         created() {
-          debugger
-          console.log(this.songInfoPage.commend)
+
         },
         computed:{
             ...mapGetters([

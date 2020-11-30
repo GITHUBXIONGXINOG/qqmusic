@@ -1,9 +1,6 @@
 <template>
     <div class="song-info-page">
-<!--        {{songId}}-->
-<!--        <img :src="songInfoPage.imgUrl" alt="">-->
-<!--        {{songInfoPage.title}}-->
-<!--        {{songInfoPage.singer}}-->
+
         <song-info-show />
     </div>
 </template>
@@ -24,6 +21,9 @@
 
             }
         },
+        created() {
+
+        },
         methods:{
         },
         computed:{
@@ -38,6 +38,10 @@
         },
         components:{
             SongInfoShow,
+        },
+        destroyed() {
+            // window.location.reload();
         }
+
     }
 </script>

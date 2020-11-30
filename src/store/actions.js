@@ -310,27 +310,29 @@ const actions = {
         //不存在,从服务器重新获取
         //歌曲信息
         let resultOfSongInfo = await api.songInfo(songId)
-        //相关热门歌单
-        let resultOfRelatedSongList = await api.RelatedSongList(songId)
-        //相关MV
-        let resultOfRelatedMV = await api.RelatedMV(songId)
-        //用于查询关联的歌曲id
-        let songid = resultOfSongInfo.data.data.track_info.id
-        //评论
-        let resultOfRelatedComment = await api.RelatedComment(songid)
         //歌词
         let resultOfSongLyrics = await api.songLyric(songId)
+
+        //用于查询关联的歌曲id
+        let songid = resultOfSongInfo.data.data.track_info.id
+        //相关热门歌单
+        let resultOfRelatedSongList = await api.RelatedSongList(songid)
+        //相关MV
+        let resultOfRelatedMV = await api.RelatedMV(songid)
+        //评论
+        let resultOfRelatedComment = await api.RelatedComment(songid)
+
 
 
         if (parseInt(resultOfSongInfo.data.result)===100){
             commit('queryDataSongInfo',{
                 songId,//用于查询歌曲信息
                 songid,//用于查询歌曲关联信息
-                dataOfSongInfo:resultOfSongInfo.data,
-                dataOfRelatedSongList:resultOfRelatedSongList.data,
-                dataOfRelatedMV:resultOfRelatedMV.data,
-                dataOfRelatedComment:resultOfRelatedComment.data,
-                dataOfSongLyrics:resultOfSongLyrics.data.data.lyric,
+                dataOfSongInfo:resultOfSongInfo.data,//歌曲信息
+                dataOfRelatedSongList:resultOfRelatedSongList.data.data,//相关歌单
+                dataOfRelatedMV:resultOfRelatedMV.data.data,//相关mv
+                dataOfRelatedComment:resultOfRelatedComment.data,//相关评论
+                dataOfSongLyrics:resultOfSongLyrics.data.data.lyric,//歌词
             })
 
         }
@@ -338,8 +340,13 @@ const actions = {
     },
     //详细页评论页数更改
     async queryDataSongInfoCommendPage({state,commit},page){
-        debugger
-        console.log(state.songInfoPages);
+        // debugger
+        // console.log(state.songInfoPages);
+        let index = state.songInfoPages.findIndex(item=>item.songId===state.curSongInfoId)
+        let songid =0
+        if (index>=0){
+            songid = state.songInfoPages[index].songid
+        }
         //评论
         let resultOfRelatedComment = await api.RelatedComment(songid,page)
 

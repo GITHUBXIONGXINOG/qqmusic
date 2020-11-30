@@ -444,7 +444,9 @@ export const queryDataSongInfo = (state, payload)=>{
         dataOfSongLyrics,//歌词
     }=payload
     // state.cur = songId || content_id
-    state.curSongInfoId = songId
+    if (songId){
+        state.curSongInfoId = songId
+    }
     // 歌曲
     if (songId&&dataOfSongInfo){
         state.songInfoPages.push({
@@ -460,13 +462,13 @@ export const queryDataSongInfo = (state, payload)=>{
             company:dataOfSongInfo.data.info.company.content[0].value||null,//唱片公司
             lyric:formatLyricHtml(dataOfSongLyrics),//歌词
             commend:dataOfRelatedComment,//评论
-            RelatedSongList:dataOfRelatedSongList.data,//相关歌单
-            RelatedMV:dataOfRelatedMV.data,//相关mv
+            RelatedSongList:dataOfRelatedSongList,//相关歌单
+            RelatedMV:dataOfRelatedMV,//相关mv
         })
     }
     //评论修改
     else if (dataOfRelatedComment){
-        debugger
+        // debugger
         let index = state.songInfoPages.findIndex(item=>item.songId==state.curSongInfoId)
         state.songInfoPages[index].commend=dataOfRelatedComment
     }

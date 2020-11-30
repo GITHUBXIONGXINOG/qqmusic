@@ -139,7 +139,7 @@ const api = {
             params:{
                 id, //歌曲songid
                 pageNo:pageNo||1,//页数
-                type:type||0,// 默认 0 // 0：获取最新评论，1：获取热评
+                type:type||1,// 默认 0 // 0：获取最新评论，1：获取热评
             }
         })
     },

@@ -141,7 +141,7 @@
         },
         watch:{
             commentList:function(){
-                debugger
+                // debugger
                 // console.log(this.commentList)
                 this.commentTotal=this.commentList.commenttotal
                 this.comments=this.commentList.commentlist
@@ -155,8 +155,8 @@
         mounted() {
             // debugger
             if (this.songInfoPage.commend){
-                this.commentTotal=this.songInfoPage.commend.data.hotComment.commenttotal
-                this.comments=this.songInfoPage.commend.data.hotComment.commentlist
+                this.commentTotal=this.songInfoPage.commend.data.comment.commenttotal
+                this.comments=this.songInfoPage.commend.data.comment.commentlist
             }
         }
     }

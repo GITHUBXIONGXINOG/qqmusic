@@ -23,7 +23,7 @@ export default new VueRouter({
     //     keepAlive: true // true需要缓存，false不需要缓存
     // },
   mode:'history',
-  base:process.env.BASE_URL,
+    base:process.env.BASE_URL,
     routes:[
         { path:'/',
             component:Main,
@@ -67,7 +67,14 @@ export default new VueRouter({
             component:Error
         }
 
-  ]
+  ],
+    scrollBehavior(to, from, saveTop) {
+        if (saveTop) {
+            return saveTop;
+        } else {
+            return { x: 0, y: 0 }
+        }
+    },
 
 })
 
