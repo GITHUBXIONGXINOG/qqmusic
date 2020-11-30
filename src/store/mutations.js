@@ -44,7 +44,7 @@ function formatLyric(lyric) {
     //state 原始状态
 //payload 只能传一个参数,通过解构出想要的值
 export const queryDataSong = (state, payload)=>{
-        // debugger
+        debugger
         let {
             songId,//歌词id
             dataOfInfo,//歌曲信息
@@ -54,6 +54,7 @@ export const queryDataSong = (state, payload)=>{
             dataOfSongList,//歌单数据
             dataOfFirstSongMid,//歌单第一个歌曲id
             dataOfSongLyrics,//歌词
+            albummid,//专辑
         }=payload
         // state.cur = songId || content_id
         state.cur = songId || dataOfFirstSongMid
@@ -99,6 +100,41 @@ export const queryDataSong = (state, payload)=>{
                         songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.albummid}.jpg`,//歌曲图片
                         mid:item.songmid,
                         title:item.songname
+                    })
+                }
+
+                // debugger
+
+            })
+            // state.list.push({...dataOfSongList.songlist})
+        }
+        //专辑
+        else if (albummid&&dataOfSongList&&dataOfPlay){
+            // debugger
+            state.playList=[]
+            dataOfSongList.forEach((item,index)=>{
+                // console.log(dataOfSongLyrics);
+                if (index<1){
+                    // console.log(dataOfSongLyrics[0]);
+                    state.playList.push({
+                        ...item,
+                        interval:timeFormat(item.interval),//时间
+                        playerUrl:dataOfPlay[index],//播放链接
+                        singerName:item.singer[0].name,//歌手名字
+                        songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,//歌曲图片
+                        lyric:formatLyric(dataOfSongLyrics[0]),
+                        mid:item.mid,
+                        title:item.title
+                    })
+                }else{
+                    state.playList.push({
+                        ...item,
+                        interval:timeFormat(item.interval),//时间
+                        playerUrl:dataOfPlay[index],//播放链接
+                        singerName:item.singer[0].name,//歌手名字
+                        songPic: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,//歌曲图片
+                        mid:item.mid,
+                        title:item.title
                     })
                 }
 
@@ -341,10 +377,12 @@ export const queryNewRecord = (state,payload) =>{
     state.cueNewRType = type
     //如果list存在,说明传入了数据进行存储
     if (list){
+        debugger
         list.forEach(item=>{
             item.imgUrl=`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`
             item.singer=item.singers[0].name
             item.title=item.name
+            item.albummid=item.mid
         })
         state.newRecordStarting.push({
             ...list,

@@ -32,6 +32,14 @@ const api = {
             }
         })
     },
+    //专辑
+    albumList(albummid){
+        return axios.get('/api/album/songs',{
+            params:{
+                albummid:albummid
+            }
+        })
+    },
     //添加到歌单 登录权限
     addSongList(mid,dirid){
         debugger

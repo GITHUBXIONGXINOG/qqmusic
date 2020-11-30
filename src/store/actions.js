@@ -171,8 +171,68 @@ const actions = {
 
             }
         }
-    }
+    },
 
+    //专辑
+
+    async queryDataAlbum({state,commit},albummid){
+        debugger
+        //校验是否存在
+        let result = state.playList.find(item=>{
+            return item.albummid===albummid
+        })
+        if (result){
+            //如果存在,执行commit方法,调用queryDataM,只改ID
+            commit('queryDataSong',{albummid})
+            return
+        }
+        //不存在,从服务器重新获取
+        // result = await api.songInfo(songId)
+        let resultOfSongList = await api.albumList(albummid)
+        //歌词
+        let dataOfSongLyrics = []
+
+        //切割,只显示前30个
+        // resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,35)
+        //获取所有歌曲id
+        let songMids = ''
+        // debugger
+        // console.log(dataOfFirstSongMid)
+        let songmid = ''
+
+        for (let item in resultOfSongList.data.data.list){
+            songmid = resultOfSongList.data.data.list[item].mid
+            songMids +=  songmid+','
+            // dataOfSongLyrics.push ((await api.songLyric(item)).data.data.lyric)
+        }
+
+
+        // debugger
+        let firstSongMid =  resultOfSongList.data.data.list[0].mid
+        dataOfSongLyrics.push ((await api.songLyric(firstSongMid)).data.data.lyric)
+        // debugger
+
+        // console.log(songMids)
+        //id: 歌曲的 songmid，必填，多个用逗号分割
+        let dataOfPlay = await api.songPlayer(songMids)
+        // debugger
+        // console.log(playerUrl)
+        if (parseInt(resultOfSongList.data.result)===100){
+
+            commit('queryDataSong',{
+                albummid,
+                dataOfSongList:resultOfSongList.data.data.list,
+                // dataOfPlay:Object.values(dataOfPlay.data.data),
+                dataOfPlay:Object.values(dataOfPlay.data.data),
+
+                dataOfFirstSongMid:firstSongMid,//第一个歌曲id
+                dataOfSongLyrics
+            })
+
+        }
+
+
+    },
 
 }
 export default actions

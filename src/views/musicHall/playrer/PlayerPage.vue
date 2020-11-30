@@ -93,15 +93,21 @@
             //专辑
             let regAlbums = /albummid=/
             let idInfo = ''
+            //歌曲
             if (this.$route.params.songId.match(regSong)){
                  idInfo=this.$route.params.songId.replace(regSong,'')
                 this.$store.dispatch('queryDataSong',idInfo)
-            }else if (this.$route.params.songId.match(regSongList)){
+            }
+            //歌单
+            else if (this.$route.params.songId.match(regSongList)){
                 idInfo=this.$route.params.songId.replace(regSongList,'')
                 this.deleteAllSongList()
                 this.$store.dispatch('queryDataASongList',idInfo)
-            }else {
-                idInfo=this.$route.params.songId.replace(regSongList,'')
+            }
+            //专辑
+            else {
+                idInfo=this.$route.params.songId.replace(regAlbums,'')
+                this.$store.dispatch('queryDataAlbum',idInfo)
 
             }
 

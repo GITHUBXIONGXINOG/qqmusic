@@ -196,7 +196,7 @@ import {mapMutations, mapGetters} from "vuex"
         computed:{
             //vuex数据
             songData(){
-                // debugger
+                debugger
                 const {cur,playList}=this.$store.state
                 this.songList=playList
                 // console.log(this.songList)

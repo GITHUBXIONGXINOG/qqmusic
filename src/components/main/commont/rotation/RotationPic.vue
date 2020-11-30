@@ -256,7 +256,7 @@
             imgUrl(){
                 return function (v) {
                     // debugger
-                    console.log(v)
+                    // console.log(v)
                     if (v.img){
                         return v.img
                     }else if (v.imgUrl){
@@ -271,10 +271,13 @@
             //歌曲或歌单id
             songsId(){
                 return function (v) {
-                    if (v.mid){
-                        return 'songmid='+v.mid
-                    }else if (v.content_id){
+                    debugger
+                    if (v.content_id){
                         return 'content_id='+v.content_id
+                    }else if (v.albummid){
+                        return 'albummid='+v.albummid
+                    }else if (v.mid){
+                        return 'songmid='+v.mid
                     }
                 }
             },
