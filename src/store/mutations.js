@@ -506,7 +506,7 @@ export const queryMvRecommend = (state,payload) =>{
     }
 }
 //mv播放
-//mv推荐
+
 export const queryMvPlaying = (state,payload) =>{
     debugger
     let {
@@ -529,9 +529,7 @@ export const queryMvPlaying = (state,payload) =>{
 
         }))
         // console.log(res)
-        //清空,视频信息只保留上一个
-        state.MvPlaying=[]
-        state.MvPlaying.push({
+        state.MvList.push({
             mvUrl:dataOdMvPlaying,//mv播放链接
             imgUrl:dataOfMvInfo.info.cover_pic,
             MvVid:vid,//当前mv的vid

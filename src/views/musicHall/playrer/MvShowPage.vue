@@ -2,7 +2,7 @@
     <div class="mv-show-page">
         MvShowPageaaaascacas
         ascasc
-
+{{MvList}}
     </div>
 </template>
 
@@ -22,17 +22,20 @@
                 }
         },
         created() {
-
+            debugger
+            let idInfo=this.vid.replace(/vid=/,'')
+            this.$store.dispatch('queryDataMvPlayer',idInfo)
 
         },
         computed:{
             ...mapGetters([
-              // 'MvList'
+              'MvList'
             ])
         },
         mounted() {
-            // console.log(this.MvList)
-        }
+            console.log(this.MvList)
+        },
+
 
     }
 </script>
