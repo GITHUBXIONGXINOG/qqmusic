@@ -413,7 +413,7 @@ export const queryNewRecord = (state,payload) =>{
     } = payload
     //当前的id
 
-    state.cueNewRType = type
+    state.curNewRType = type
     //如果list存在,说明传入了数据进行存储
     if (list){
         debugger
@@ -425,7 +425,7 @@ export const queryNewRecord = (state,payload) =>{
         })
         state.newRecordStarting.push({
             ...list,
-            cueNewRType:state.cueNewRType,
+            curNewRType:state.curNewRType,
         })
 
     }
@@ -473,4 +473,71 @@ export const queryDataSongInfo = (state, payload)=>{
         state.songInfoPages[index].commend=dataOfRelatedComment
     }
 
+}
+
+//mv推荐
+export const queryMvRecommend = (state,payload) =>{
+    // debugger
+    let {
+        type,//地区
+        list,//数据
+    } = payload
+    //当前的id
+    state.curMvType = type
+    //如果list存在,说明传入了数据进行存储
+    if (list){
+        // debugger
+        let res = list.map(item=>({
+            ...item,
+            imgUrl:item.picurl,//图片
+            singer:item.singername,
+            title:item.mvtitle,
+            // albummid:item.mid,//
+            listen_num:item.listennum,//观看人数
+            type:item.mvtitle,
+            songId:'vid='+item.vid
+        }))
+        // console.log(res)
+        state.MvRecommend.push({
+            ...res,
+            MvType:state.curMvType,
+        })
+
+    }
+}
+//mv播放
+//mv推荐
+export const queryMvPlaying = (state,payload) =>{
+    debugger
+    let {
+        vid,//mv的vid
+        dataOdMvPlaying,//mv播放链接
+        dataOfMvInfo,//mv信息
+    } = payload
+    //当前的id
+    state.curMvVid = vid
+    //如果list存在,说明传入了数据进行存储
+    if (dataOdMvPlaying&&dataOfMvInfo){
+        debugger
+        let recommend = dataOfMvInfo.recommend.map(item=>({
+            ...item,
+            imgUrl:item.cover_pic,//图片
+            title:item.name,
+            singer:item.uploader_nick,
+            MvVid:vid,
+            songId:"vid="+item.vid
+
+        }))
+        // console.log(res)
+        //清空,视频信息只保留上一个
+        state.MvPlaying=[]
+        state.MvPlaying.push({
+            mvUrl:dataOdMvPlaying,//mv播放链接
+            imgUrl:dataOfMvInfo.info.cover_pic,
+            MvVid:vid,//当前mv的vid
+            recommend:recommend
+
+        })
+
+    }
 }

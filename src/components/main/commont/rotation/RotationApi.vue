@@ -155,37 +155,15 @@ export default {
                         // console.log( this.apiGetList)
                     }
                 })
-
-                // console.log(list)
-        /*        res.data.data[0].list.map(async (item)=>{
-                    debugger
-                    let res =  await api.rankList(item.topId,3)
-                    console.log(res)
-                    item.song.map(i=>{
-                        // console.log(i)
-                        // console.log(item.topId)
-                        i.mid=res.data.data.list[i].mid
-                    })
-                })*/
-
- /*               this.apiGetList = res.data.data[0].list.map(item => ({
-                    topId:item.topId,
-                    img:item.picUrl,
-                    label:item.label,
-                    song:item.song,
-                    listen_num:item.listenNum,
-                    // type:item.type
-                }))*/
-
             }
+            //mv
             else if (index==4){
                 this.apiGetList = res.data.data.list.map(item => ({
-                    id:item.mvid,
-                    img:item.picurl,
-                    title:item.mvtitle,
-                    singer:item.singername,
-                    listen_num:item.listennum,
-                    type:item.mvtitle
+                    img:item.picurl,//图片
+                    title:item.mvtitle,//标题
+                    singer:item.singername,//歌手
+                    listen_num:item.listennum,//播放量
+                    type:item.mvtitle//种类
                 }))
 
             }
@@ -195,14 +173,9 @@ export default {
         //点击歌单地址后输出
         async  clickPath(path,index){
             // debugger
-            // console.log(path)
-            // console.log(index)
-            // const res = await this.$http.get(path)
             let res = []
             this.apiGetList=[]
             // console.log(res)
-            //   debugger
-              // console.log(res)
             /*对应不同api的保存数据*/
             //歌单推荐
             if (index==0){
@@ -272,47 +245,20 @@ export default {
                 this.apiGetList.pop()
                 // console.log(this.apiGetList)
 
-          /*      this.apiGetList = res.data.data.list.map(item => ({
-                    img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.album.pmid}.jpg`,
-                    title:item.title,
-                    subtitle:item.subtitle,
-                    singer:item.singer[0].name,
-                    id:item.album.id,
-                    // listen_num:item.listen_num,
-                    type:item.type,
-                    mid:item.mid
-                }))*/
-                // debugger
-                // console.log(this.apiGetList.map(item=>item))
 
             }//新歌首发
             else if (index==2){
                 await this.$store.dispatch('queryNewRecordStarting',path)
-                debugger
-                console.log(this.newRecordStarting);
-
+                // debugger
                 for (let i in  this.newRecordStarting){
                     this.apiGetList.push(this.newRecordStarting[i])
                 }
                 //去掉最后的id
                 this.apiGetList.pop()
-                debugger
-                console.log( this.apiGetList)
 
-
-
-                /*            this.apiGetList = res.data.data.list.map(item => ({
-                                img:`https://y.gtimg.cn/music/photo_new/T002R300x300M000${item.mid}.jpg`,
-                                title:item.name,
-                                // subtitle:item.subtitle,
-                                singer:item.singers[0].name,
-                                id:item.id,
-                                // listen_num:item.listen_num,
-                                type:item.type
-                            }))*/
             }//新碟首发
-            else if (index==3){//排行榜
-                debugger
+            else if (index==3){
+                // debugger
                 this.apiGetList = res.data.data[0].list.map(item => ({
                     label:item.label,
                     song:item.song,
@@ -322,10 +268,20 @@ export default {
                     img:item.picUrl,
                     topId:item.topId
                 }))
-                console.log(this.apiGetList)
-            }
+                // console.log(this.apiGetList)
+            }//排行榜
             else if (index==4){
-                this.apiGetList = res.data.data.list.map(item => ({
+                await this.$store.dispatch('queryDataMvRecommend',path)
+                // debugger
+                for (let i in  this.MvRecommend){
+                    this.apiGetList.push(this.MvRecommend[i])
+                }
+                //去掉最后的id
+                this.apiGetList.pop()
+
+
+
+/*                this.apiGetList = res.data.data.list.map(item => ({
                     img:item.picurl,
                     title:item.mvtitle,
                     // subtitle:item.subtitle,
@@ -333,8 +289,8 @@ export default {
                     id:item.mvid,
                     listen_num:item.listennum,
                     type:item.mvtitle
-                }))
-            }
+                }))*/
+            }//mv
 
 
 
@@ -346,7 +302,7 @@ export default {
         "recommendList",//歌单推荐
         "newSongStarting",//新歌首发
         "newRecordStarting",//新碟首发
-
+        "MvRecommend",//mv推荐
       ])
     },
     created() {

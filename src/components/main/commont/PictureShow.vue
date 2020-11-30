@@ -6,9 +6,11 @@
             >
 
             <nav>
-                <router-link :to="`/player/`+songId"   class="img_cover_wrap">
+
+                <router-link :to="`/${routePath}/`+songId"   class="img_cover_wrap">
                     <img src="../../../../public/img/cover_play@2x.png" alt="" class="img_cover_button">
                 </router-link>
+
             </nav>
         </div>
 <!--        {{songId}}-->
@@ -16,6 +18,8 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
+
     export default {
         props:{
             //图片地址
@@ -26,6 +30,11 @@
             //对应的歌曲id
             songId:{
                 type: [String,Number],
+                require: true
+            },
+            //判断mv
+            isMv:{
+                type: Boolean,
                 require: true
             }
         },
@@ -49,6 +58,14 @@
           },
         },
         computed:{
+            routePath(){
+                if (!this.isMv){
+                    return 'player'
+                }else {
+                    return 'mvplayer'
+                }
+            }
+
 
         },
         watch:{
@@ -63,7 +80,6 @@
 
         },
         mounted() {
-
         }
     }
 </script>

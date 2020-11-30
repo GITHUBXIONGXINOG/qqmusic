@@ -143,7 +143,29 @@ const api = {
             }
         })
     },
-
-
+    //mv推荐
+    MvRecommend(type){
+        return axios.get('/api/new/mv',{
+            params:{
+                type:type||0, //type: 地区分类，默认为 0, 0: 精选 1：内地，2：港台，3：欧美，4：韩国，5：日本
+            }
+        })
+    },
+    //mv播放
+    MvPlaying(vid){
+        return axios.get('/api/mv/url',{
+            params:{
+                id:vid||0, //id: 视频的 vid , 必填，多个用,分割
+            }
+        })
+    },
+    //mv信息
+    MvInfo(vid){
+        return axios.get('/api/mv',{
+            params:{
+                id:vid||0, //id: 视频的 vid , 必填，多个用,分割
+            }
+        })
+    },
 }
 export default api

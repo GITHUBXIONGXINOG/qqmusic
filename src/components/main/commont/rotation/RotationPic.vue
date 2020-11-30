@@ -13,6 +13,7 @@
                     <!--图片-->
                     <picture-show :imgUrl=imgUrl(v)
                                   :songId="songsId(v)"
+                                  :isMv="isMv"
                     />
 
 
@@ -113,6 +114,7 @@
                 activeIndex:1,//当前活动
                 aListName:[],//class集合
                 clickFlag:false,//点击标识
+                isMv:false,//判断mv
             }
         },
         created() {
@@ -272,15 +274,20 @@
             songsId(){
                 return function (v) {
                     // debugger
+                    // this.isMv=false
                     if (v.content_id){
                         return 'content_id='+v.content_id
                     }else if (v.albummid){
                         return 'albummid='+v.albummid
                     }else if (v.mid){
                         return 'songmid='+v.mid
+                    }else if (v.vid){ //判断mv
+                        this.isMv=true
+                        return 'vid='+v.vid
                     }
                 }
             },
+
             ...mapGetters([
               'recommendList'
             ])
@@ -343,8 +350,10 @@
                     height: 224px;
                 }
                 .text-info{
+                    //border: 1px solid red;
                     font-size: 14px;
                     margin-top: 15px;
+                    width: 224px;
                     text-overflow: ellipsis;
                     white-space: nowrap;
                     overflow: hidden;

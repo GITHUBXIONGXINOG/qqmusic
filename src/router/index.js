@@ -16,6 +16,7 @@ import Mv from './musichall/mv/'
 import DigitalAlbum from './musichall/digitalablum'
 import Search from '@/views/musicHall/search/Search'
 import Player from '@/views/musicHall/playrer/PlayerPage'
+import MvPlayer from '@/views/musicHall/playrer/MvShowPage'
 import Error from '@/components/Error.vue'
 import SongInfoPage from "@/views/musicHall/infopage/SongInfoPage";
 export default new VueRouter({
@@ -50,13 +51,19 @@ export default new VueRouter({
                     name: 'SongInfo',
                     component: SongInfoPage,
                     props: true
-                }
+                },
+                {
+                    path: '/mvplayer/:vid',
+                    name: 'MvPlayer',
+                    component: MvPlayer,
+                    props: true
+
+                },
 
             ]
         },
         {
             path: '/player/:songId',
-            // path: '/player',
             name: 'Player',
             component: Player,
             props: true

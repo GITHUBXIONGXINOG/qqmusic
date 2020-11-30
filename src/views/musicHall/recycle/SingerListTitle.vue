@@ -16,7 +16,7 @@ export default {
     toPath(path){
      this.$router.push(path)
 
-      console.log(path)
+      // console.log(path)
     }
   },
   components: {

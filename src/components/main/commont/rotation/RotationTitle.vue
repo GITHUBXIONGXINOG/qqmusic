@@ -129,18 +129,17 @@ export default {
                 ],
                 //MV
                 [
-                    {path: '/api/new/mv?type=0',name:'精选'},
-                    {path: '/api/new/mv?type=1',name:'内地'},
-                    {path: '/api/new/mv?type=2',name:'韩国'},
-                    {path: '/api/new/mv?type=3',name:'港台'},
-                    {path: '/api/new/mv?type=4',name:'欧美'},
-                    {path: '/api/new/mv?type=5',name:'日本'},
+                    {path: '0',name:'精选'},
+                    {path: '1',name:'内地'},
+                    {path: '2',name:'韩国'},
+                    {path: '3',name:'港台'},
+                    {path: '4',name:'欧美'},
+                    {path: '5',name:'日本'},
                 ],
-            ],
-            songList:null,
-            // RecommendList:[]
-            clickFlag:0,
-            clickPath:[],
+            ],//保存的地址参数
+            songList:null,//歌曲列表
+            clickFlag:0,//点击标志
+            clickPath:[],//点击地址
         }
     },
 

@@ -153,7 +153,7 @@ const actions = {
         // debugger
         //校验是否存在
         let result = state.newSongStarting.find(item=>{
-            return item.cueNewRType===type
+            return item.curNewRType===type
         })
         if (result){
             //如果存在,执行commit方法,调用queryData,只改id
@@ -253,12 +253,8 @@ const actions = {
         //歌词
         let dataOfSongLyrics = []
 
-        //切割,只显示前30个
-        // resultOfSongList.data.data.songlist=resultOfSongList.data.data.songlist.slice(0,35)
         //获取所有歌曲id
         let songMids = ''
-        // debugger
-        // console.log(dataOfFirstSongMid)
         let songmid = ''
 
         for (let item in resultOfSongList.data.data.list){
@@ -359,6 +355,56 @@ const actions = {
 
     },
 
+    //mv
+    async queryDataMvRecommend({state,commit},type){
+        // debugger
+        //校验是否存在
+        let result = state.MvRecommend.find(item=>{
+            return item.curMvType===type
+        })
+        if (result){
+            //如果存在,执行commit方法,调用queryData,只改id
+            commit('queryMvRecommend',{type})
+            return
+        }
+        else {
+            // debugger
+            let resOfMvRecommend = await api.MvRecommend(type)
+            if (parseInt(resOfMvRecommend.data.result)===100||parseInt(resOfMvRecommend.data.resultL)===100){
+                commit('queryMvRecommend',{
+                    type,//地区
+                    list:resOfMvRecommend.data.data.list,
+                })
+
+            }
+        }
+    },
+    //mv播放
+    async queryDataMvPlayer({state,commit},vid){
+        debugger
+        //校验是否存在
+        let result = state.MvList.find(item=>{
+            return item.curMvVid===vid
+        })
+        if (result){
+            //如果存在,执行commit方法,调用queryData,只改id
+            commit('queryMvPlaying',{vid})
+            return
+        }
+        else {
+            debugger
+            let resOfMvPlaying = await api.MvPlaying(vid)
+            let resOfMvInfo = await api.MvInfo(vid)
+            if (parseInt(resOfMvPlaying.data.result)===100||parseInt(resOfMvPlaying.data.resultL)===100){
+                commit('queryMvPlaying',{
+                    vid,//地区
+                    dataOdMvPlaying:resOfMvPlaying.data.data,
+                    dataOfMvInfo:resOfMvInfo.data.data
+                })
+
+            }
+        }
+    },
 
 }
 export default actions

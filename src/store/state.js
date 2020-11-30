@@ -18,12 +18,19 @@ const state = {
     //新碟首发
     newRecordStarting:[],
     //当前新碟位置
-    cueNewRType:0,
+    curNewRType:0,
     //歌曲详细信息
     songInfoPages:[],
     //当前详细页
     curSongInfoId:0,
-
+    //首页mv推荐
+    MvRecommend:[],
+    //当前的mv类型
+    curMvType:0,
+    //mv列表
+    MvList:[],
+    //当前mv的vid
+    curMvVid:0,
 
 
 

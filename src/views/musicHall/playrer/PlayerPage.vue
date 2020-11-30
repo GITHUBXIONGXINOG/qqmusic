@@ -94,6 +94,8 @@
             let regAlbums = /albummid=/
             //排行榜
             let regRank = /topId=/
+            //mv
+            let regMv = /vid=/
 
             let idInfo = ''
             //歌曲
@@ -118,6 +120,12 @@
                 idInfo=this.$route.params.songId.replace(regRank,'')
                 this.$store.dispatch('queryDataRank',idInfo)
             }
+            //mv
+            // else if (this.$route.params.songId.match(regMv)){
+            //     idInfo=this.$route.params.songId.replace(regMv,'')
+            //     this.$store.dispatch('queryDataMvPlayer',idInfo)
+            //     this.$router.push('/mvplayer/'+idInfo)
+            // }
 
 
 
