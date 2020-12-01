@@ -1,10 +1,56 @@
 .mv-show-page{
-  border: 1px solid red;
-  display: flex;
-  justify-content: center;
+  //border: 1px solid red;
+  //display: flex;
+  //justify-content: center;
+  //height: 2000px;
+  //mv播放
   .mv-video-wrap{
-    border: 1px solid red;
-
-    background: #000;
+    //mv介绍
+    .mv-info-wrap{
+      background: #333333;
+      //border: 1px solid red;
+      //height: 2000px;
+      display: flex;
+      justify-content: center;
+      .mv-info-inner{
+        width: 1200px;
+        color: white;
+        margin: 20px 0;
+        .mv-title{
+          font-size: 20px;
+          margin: 0 5px 0 0;
+        }
+        .player-num{
+          color: #999999;
+        }
+      }
+    }
   }
+  //视频简介
+  .mv-Introduction-wrap{
+    display: flex;
+    justify-content: center;
+    .mv-Introduction-inner{
+      width: 1200px;
+      .mv-introduce-title{
+        font-size: 25px;
+        margin: 15px 0;
+      }
+      .mv-introduce-info{
+        .singer-name{
+          margin: 0 20px 0 0;
+        }
+        .public-time{
+          margin: 0 10px;
+          font-weight: 300;
+        }
+        //视频简介
+        .info-content{
+          line-height: 30px;
+
+        }
+      }
+    }
+  }
+
 }

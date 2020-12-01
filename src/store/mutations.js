@@ -10,6 +10,17 @@ function timeFormat(val){
     return min + ':' + s
 
 }
+// 时间戳
+function timeConversion(UnixTime){
+        // debugger
+        let unixTimestamp = new Date( UnixTime * 1000)
+        let Y = unixTimestamp.getFullYear()
+        let M = ((unixTimestamp.getMonth() + 1) >= 10 ? (unixTimestamp.getMonth() + 1) : '0' + (unixTimestamp.getMonth() + 1))
+        let D = (unixTimestamp.getDate() > 10 ? unixTimestamp.getDate() : '0' + unixTimestamp.getDate())
+        let H = (unixTimestamp.getHours() > 10 ? unixTimestamp.getHours() : '0' + unixTimestamp.getHours())
+        let m = (unixTimestamp.getMinutes() > 10 ? unixTimestamp.getMinutes() : '0' + unixTimestamp.getMinutes())
+        return Y + '-' + M+'-'+D
+}
 //歌词格式化 时间
 function formatLyric(lyric) {
     let lyrics = lyric.split("\n")
@@ -531,9 +542,14 @@ export const queryMvPlaying = (state,payload) =>{
         // console.log(res)
         state.MvList.push({
             mvUrl:dataOdMvPlaying,//mv播放链接
-            imgUrl:dataOfMvInfo.info.cover_pic,
+            imgUrl:dataOfMvInfo.info.cover_pic,//图片
+            singer:dataOfMvInfo.info.singers,//歌手
+            title:dataOfMvInfo.info.name,//标题
+            desc:dataOfMvInfo.info.desc,//视频简介
+            listen_num:dataOfMvInfo.info.playcnt,//观看人数
+            time:timeConversion(dataOfMvInfo.info.pubdate),//上传时间
             MvVid:vid,//当前mv的vid
-            recommend:recommend
+            recommend:recommend,//相关推荐
 
         })
 

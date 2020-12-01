@@ -1,8 +1,10 @@
 <template>
     <div class="mv-player">
-        <div class="mv-video-wrap" v-if="MvList">
-            <video :src="mvUrl"  ref="video" @canplay="getDuration" @timeupdate="updateTime"></video>
-            <div class="video-control">
+        <div class="mv-video-wrap" v-if="MvList" ref="videoWrap" @mouseenter="setShowControlPanel">
+            <video :src="mvUrl"  ref="video" @canplay="getDuration" @timeupdate="updateTime"
+                @ended="endOpera"
+            ></video>
+            <div class="video-control" v-show="isShowControl">
                 <!--控制按钮-->
                 <div class="play-btns">
                     <!--开始按钮-->
@@ -47,15 +49,16 @@
                     <!--音量-->
                     <div class="volume">
                         <!--音量图标-->
-                        <span class="volumeLog" @click="clickShoeVolume"
+                        <span class="volumeLog" @click="clickShowVolume"
                               :class="{'mutedStyle':isMuted}"
                         ><i></i></span>
                         <!--音量条-->
-                        <div class="progressVolume" v-show="isVolumeShow">
+                        <div class="progressVolume" v-show="isVolumeShow" @mouseleave="hideVolumePanel"
+                        >
                             <!--总长度-->
-                            <div class="bgSlotVolume" ref="bgSlotVolume" @click="clickProgressVolume"></div>
+                            <div class="bgSlotVolume" ref="bgSlotVolume" @click.stop="clickProgressVolume"></div>
                             <!--已播放长度-->
-                            <div class="overTimeVolume" ref="overTimeVolume" @click="clickProgressVolume"></div>
+                            <div class="overTimeVolume" ref="overTimeVolume" ></div>
                             <!--当前进度指示原点-->
                             <div class="currentTimeVolume" ref="currentTimeVolume"
                                  @mousedown="moveVolume"
@@ -64,25 +67,29 @@
                     </div>
                     <!--列表循环-->
                     <span class="listCycle">
-                        <i :class="`song-list-order-${songListOrder}`" @click="clickOrder"></i>
+                        <i :class="songListOrder ? 'song-list-order-0' : 'song-list-order-1'" @click="clickOrder"></i>
                     </span>
-                    <!--全屏-->
-                    <span>
+                    <!--清晰度选中-->
+                    <span class="clarity-select">
+                        {{ClarityText}}
+                    </span>
+                    <!--点击全屏-->
+                    <span class="noFullscreen-select" v-show="!isFullscreen" @click="FullScreen">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-quanping"></use>
                         </svg>
                     </span>
 
                     <!--取消全屏-->
-                    <span>
+                    <span class="fullscreen-select" v-show="isFullscreen" @click="exitFullscreen">
                         <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-quxiaoquanping"></use>
+                            <use xlink:href="#icon-tubiaoku-"></use>
                         </svg>
                     </span>
 
                 </div>
 
-            </div>
+            </div  >
         </div>
     </div>
 </template>
@@ -103,7 +110,7 @@
             return{
                 Clarity:3,//清晰度,0-3,3最高,0最低
                 isPlay:false,//播放状态
-                songListOrder:0,//当前列表播放模式
+                songListOrder:false,//当前列表播放模式
                 isMuted:false,//是否静音
                 currentTimeOriginal:0,//当前时间
                 durationOriginal:0,//总时间初始格式
@@ -121,6 +128,8 @@
                 audio:null,//播放器初始
                 isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
                 isVolumeShow:false,//音量面板
+                isFullscreen:false,//全屏
+                isShowControl:true,//显示控制面板
             }
         },
         created() {
@@ -226,8 +235,15 @@
                 };
             },
             //音量显示
-            clickShoeVolume(){
+            clickShowVolume(){
               this.isVolumeShow=!this.isVolumeShow
+            },
+            //隐藏音量
+            hideVolumePanel(){
+                if (this.isVolumeShow){
+                    this.isVolumeShow=false
+                }
+
             },
             //获取总时间
             getDuration() {
@@ -240,7 +256,6 @@
                     // this.$emit('durationTime',this.durationOriginal)
                     //获取音量
                     this.getVolume()
-                    this.$refs.video.play()
                 }
             },
             //获取当前播放时间
@@ -262,13 +277,12 @@
             //结束操作
             endOpera(){
                 this.isPaused=false
-                this.nextSong(this.songListOrder)
                 //单曲循环
-                if (this.songListOrder===2){
+                if (this.songListOrder){
                     setTimeout(()=>{
                         this.video.load()
                         this.video.play()
-                    },3000)
+                    },5000)
                 }
             },
             //开始播放
@@ -296,12 +310,19 @@
             },
             //切换列表播放顺序
             clickOrder(){
-                // debugger
-                if (this.songListOrder<1){
-                    this.songListOrder++
+                this.songListOrder=!this.songListOrder
+
+            },
+            //控制面板
+            setShowControlPanel(){
+                if (this.isShowControl){
+                    setTimeout(()=>{
+                        this.isShowControl=false
+                    },10000)
                 }else {
-                    this.songListOrder=0
+                    this.isShowControl=true
                 }
+
             },
             //当前进度条
             currentProgress(){
@@ -351,7 +372,6 @@
                 this.$refs.currentTime.style.left=(e.offsetX-5)+'px'
                 this.$refs.video.currentTime=(through/100)*this.durationOriginal
             },
-
             //音量条初始化
             getVolume(){
                 this.$refs.bgSlotVolume.style.height=100+'px';
@@ -360,23 +380,12 @@
             },
             //点击音量
             clickProgressVolume(event){
+                debugger
                 const e = event || window.event
-                this.$refs.overTimeVolume.style.height=e.offsetY+'px'
+                this.$refs.overTimeVolume.style.height=(100-e.offsetY)+'px'
                 this.$refs.currentTimeVolume.style.top=(e.offsetY)+'px'
                 this.$refs.video.volume=e.offsetY/100
             },
-         /*   //静音
-            clickMuted(){
-                if (this.isMuted){
-                    this.$refs.video.muted=false
-                    this.isMuted=false
-                }else {
-                    this.$refs.video.muted=true
-                    this.isMuted=true
-
-
-                }
-            },*/
             //当前音乐进度条
             currentProgressVolume(){
                 // debugger
@@ -392,17 +401,44 @@
 
                 }
             },
+            //全屏
+            FullScreen() {
+                // this.isFullscreen=true;
+                let ele = this.$refs.video;
+                if (ele.requestFullscreen) {
+                    ele.requestFullscreen();
+                 } else if (ele.mozRequestFullScreen) {
+                    ele.mozRequestFullScreen();
+                } else if (ele.webkitRequestFullScreen) {
+                    ele.webkitRequestFullScreen();
+                }
+            },
+            //退出全屏
+            exitFullscreen() {
+                this.isFullscreen=false;
+                let de = this.$refs.video;
+                if (de.exitFullscreen) {
+                    de.exitFullscreen();
+                } else if (de.mozCancelFullScreen) {
+                    de.mozCancelFullScreen();
+                } else if (de.webkitCancelFullScreen) {
+                    de.webkitCancelFullScreen();
+                }
+            }
 
 
         },
         mounted() {
             // let width = 0
-   /*         window.onload=function () {
+              /*         window.onload=function () {
               debugger
                 console.log(document.body.clientWidth)
                 width=document.body.clientWidth*90
             }*/
             // this.progressInit()
+            document.addEventListener('fullscreenchange', function(){
+                this.isFullscreen=false;
+            });
 
 
         },
@@ -435,6 +471,25 @@
                     return min + ':' + s
                 }
             },
+            //清晰度
+            ClarityText(){
+                let ClarityInfo = ''
+                switch (this.Clarity){
+                    case 3:
+                        ClarityInfo = '全高清'
+                        break;
+                    case 2:
+                        ClarityInfo =  '超清720p'
+                        break;
+                    case 1:
+                        ClarityInfo = '高清480p'
+                        break;
+                    case 0:
+                        ClarityInfo =  '标清360p'
+                        break;
+                }
+                return ClarityInfo
+            },
         },
         watch:{
 
@@ -444,15 +499,15 @@
 
 <style lang="scss">
     .mv-player{
-        border: 1px solid red;
+        //border: 1px solid red;
         display: flex;
         justify-content: center;
         background: #333333;
+        //播放mv
         .mv-video-wrap{
-            border: 1px solid red;
+            //border: 1px solid red;
             width: 1200px;
             position: relative;;
-
             video{
                 width: 1200px;
                 height: 674px;
@@ -461,7 +516,7 @@
             .video-control{
                 width: 1200px;
                 height: 68px;
-                border: 1px solid blue;
+                //border: 1px solid blue;
                 display: flex;
                 align-items: center;
                 position: absolute;
@@ -619,8 +674,8 @@
 
                 //更多操作
                 .moreOpera{
-                    border: 1px solid red;
-                    height: 100%;
+                    //border: 1px solid red;
+                    height: 40px;
                     min-width: 280px;
                     display: flex;
                     justify-content: space-between;
@@ -648,6 +703,7 @@
                         width: 30px;
                         height: 100%;
                         //border: 1px solid red;
+                        left: 10px;
                         i{
                             width: 29px;
                             height: 23px;
@@ -655,23 +711,41 @@
                             //background-position:  0px -204px;
                         }
                         .song-list-order-0{
-                            //border: 1px solid blue;
                             background-position:  0px -232px;
                         }
                         .song-list-order-1{
-                            //border: 1px solid green;
                             background-position:  0px -205px;
                         }
 
                     }
+                    //清晰度选中
+                    .clarity-select{
+                        border: 1px solid white;
+                        border-radius: 12px;
+                        height: 25px;
+                        width: 60px;
+                        display: flex;
+                        justify-content: center;
+                        margin: 6px 0 0 0;
+                    }
+                    //未全屏
+                    .noFullscreen-select{
+                        font-size: 35px;
 
+                    }
+                    //全屏
+                    .fullscreen-select{
+                        font-size: 20px;
+                        color: white;
+                        margin: 0 9px 0 8px;
+                    }
 
 
                 }
                 //音量
                 .volume{
                     //border: 1px solid red;
-                    width: 100px;
+                    width: 30px;
                     height: 100%;
                     margin: 0 0 0 15px;
                     display: flex;

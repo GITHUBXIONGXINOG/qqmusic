@@ -35,10 +35,10 @@
                         <i v-else>{{item}}&nbsp;</i>
                     </a>
                 </div>
-                <div class="Reserved">
+       <!--         <div class="Reserved">
                     <i>{{ReservedList[0]}}</i>
                     <a href="javascript:;"><i>{{ReservedList[1]}}</i></a>
-                </div>
+                </div>-->
         </div>
     </div>
 </template>
@@ -103,10 +103,10 @@
                     '客服中心',
                     '网站导航',
                 ],
-                ReservedList:[
+        /*        ReservedList:[
                     'Copyright © 1998 - 2020 Tencent. ',
                     'All Rights Reserved.'
-                ]
+                ]*/
             }
         },
 
