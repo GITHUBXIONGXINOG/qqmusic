@@ -47,11 +47,11 @@
                     <!--音量-->
                     <div class="volume">
                         <!--音量图标-->
-                        <span class="volumeLog" @click="clickMuted"
+                        <span class="volumeLog" @click="clickShoeVolume"
                               :class="{'mutedStyle':isMuted}"
                         ><i></i></span>
                         <!--音量条-->
-                        <div class="progressVolume">
+                        <div class="progressVolume" v-show="isVolumeShow">
                             <!--总长度-->
                             <div class="bgSlotVolume" ref="bgSlotVolume" @click="clickProgressVolume"></div>
                             <!--已播放长度-->
@@ -120,6 +120,7 @@
                 timer:null,//定时器
                 audio:null,//播放器初始
                 isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
+                isVolumeShow:false,//音量面板
             }
         },
         created() {
@@ -223,6 +224,10 @@
                 document.onmouseup = (e) => {
                     isGragFlag=false
                 };
+            },
+            //音量显示
+            clickShoeVolume(){
+              this.isVolumeShow=!this.isVolumeShow
             },
             //获取总时间
             getDuration() {
@@ -346,19 +351,12 @@
                 this.$refs.currentTime.style.left=(e.offsetX-5)+'px'
                 this.$refs.video.currentTime=(through/100)*this.durationOriginal
             },
-            //进度条初始化
-  /*          progressInit(){
-                debugger
-                this.bgSlotWidth = (document.body.clientWidth)
-                if (this.$refs.bgSlot)
-                    this.$refs.bgSlot.style.width=  this.bgSlotWidth + 'px'
 
-            },*/
             //音量条初始化
             getVolume(){
                 this.$refs.bgSlotVolume.style.height=100+'px';
                 this.$refs.overTimeVolume.style.height=this.$refs.video.volume* 100 + 'px'
-                // this.$refs.currentTimeVolume.style.top=this.$refs.overTimeVolume.style.top
+                this.$refs.currentTimeVolume.style.top=5+'px'
             },
             //点击音量
             clickProgressVolume(event){
@@ -367,7 +365,7 @@
                 this.$refs.currentTimeVolume.style.top=(e.offsetY)+'px'
                 this.$refs.video.volume=e.offsetY/100
             },
-            //静音
+         /*   //静音
             clickMuted(){
                 if (this.isMuted){
                     this.$refs.video.muted=false
@@ -378,7 +376,7 @@
 
 
                 }
-            },
+            },*/
             //当前音乐进度条
             currentProgressVolume(){
                 // debugger
