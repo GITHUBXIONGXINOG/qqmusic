@@ -80,12 +80,7 @@
         },
         created() {
            this.fetchPlayerApi()
-            //$route存储当前路由所有信息
-            // 路由设置里面 path: '/player/:songId',所以params里面有songId
-            //第一次加载时拿到当前路由匹配的id,派发请求
-            // this.$store.dispatch('queryDataA',this.$route.params.songId)
-            // console.log(this.$route)
-            debugger
+            // debugger
             //歌曲
             let regSong = /songmid=/
             //歌单

@@ -158,12 +158,15 @@ export default {
             }
             //mv
             else if (index==4){
+                // debugger
                 this.apiGetList = res.data.data.list.map(item => ({
                     img:item.picurl,//图片
                     title:item.mvtitle,//标题
                     singer:item.singername,//歌手
                     listen_num:item.listennum,//播放量
-                    type:item.mvtitle//种类
+                    type:item.mvtitle,//种类
+                    vid:item.vid//mv的mvid
+
                 }))
 
             }

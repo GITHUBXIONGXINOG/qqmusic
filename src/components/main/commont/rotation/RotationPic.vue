@@ -282,6 +282,7 @@
                     }else if (v.mid){
                         return 'songmid='+v.mid
                     }else if (v.vid){ //判断mv
+                        // debugger
                         this.isMv=true
                         return 'vid='+v.vid
                     }

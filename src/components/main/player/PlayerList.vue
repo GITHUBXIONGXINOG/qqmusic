@@ -3,23 +3,9 @@
 <!--        {{songList}}-->
         <!--用户操作按钮-->
         <ul class="userOpera">
-<!--            <a href="javascript:;" v-for="(item,index) in userOperating" :key="index" ref="userOperating">
-                <span class="icon-wrap">
-                    <span :class="iconList[0]"></span>
-                    <i>{{item}}</i>
-                </span>
-            </a>-->
+
             <ul class="icon-wrap">
-                <!--收藏-->
-             <!--   <li @click="addSongList(201)">
-                    <span :class="iconList[0]"></span>
-                    <i>{{userOperating[0]}}</i>
-                </li>-->
-                <!--添加到-->
-              <!--  <li class="">
-                    <span :class="iconList[1]"></span>
-                    <i>{{userOperating[1]}}</i>
-                </li>-->
+
                 <!--下载-->
                 <li @click.prevent="checkBox.length>0 ?downSongs() :setNullDeletePanel() "  >
                     <span :class="iconList[2]"></span>

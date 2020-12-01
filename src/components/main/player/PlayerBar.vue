@@ -58,13 +58,13 @@
                         <i :class="`song-list-order-${songListOrder}`" @click="clickOrder"></i>
                     </span>
                     <!--喜欢-->
-                    <span class="loveSelect"><i></i></span>
+                    <span class="loveSelect" @click="clickLove" :class="{'loveSelected':isLoveShow||isLove}"><i></i></span>
                     <!--下载-->
                     <span class="downloadSelect" @click.prevent="downSongs(songData)"><i></i></span>
                     <!--评论-->
                     <span class="commentSelect"><i></i></span>
                     <!--纯净-->
-                    <span class="openPure"><i></i></span>
+<!--                    <span class="openPure"><i></i></span>-->
                 </div>
                 <!--音量-->
                 <div class="volume">
@@ -119,6 +119,8 @@ import Axios from "axios";
                 isResetAudio:false,//接收playerlist传递的重新获取audio元素请求
                 currentTimeSecond:0,//当前时间
                 songListOrder:0,//当前列表播放模式
+                isLove:false,//喜欢
+                songId:'',//歌曲的id
             }
         },
 
@@ -308,7 +310,38 @@ import Axios from "axios";
                     this.songListOrder=0
                 }
             },
+            //喜欢
+            clickLove() {
+                debugger
+                let loveSong = localStorage.getItem('loveSong')
+                if (loveSong) {
+                    loveSong = JSON.parse(loveSong)
+                    let index = loveSong.findIndex(item => {
+                        return  item === this.songData.songmid|| item === this.songData.mid})
+                    //如果存在,则代表取消喜欢,不存在则添加
+                    if (index>=0){
+                        loveSong.splice(index,1)
+                        this.isLove=false
+                    }else {
+                        loveSong.push(this.songData.songmid||this.songData.mid)
+                        this.isLove=true
 
+                    }
+                    localStorage.setItem(
+                      'loveSong',
+                      JSON.stringify(loveSong)
+                    )
+
+                }else {
+                    let arr = []
+                    arr.push(this.songData.songmid||this.songData.mid)
+                    localStorage.setItem(
+                      'loveSong',
+                      JSON.stringify(arr)
+                    )
+                }
+
+            },
 
             //当前进度条
             currentProgress(flag){
@@ -419,30 +452,12 @@ import Axios from "axios";
                 "setCurrentMid",//当前的歌曲id,存入
                 "preSong",//前一首歌
                 "nextSong",//后一首歌
-
             ])
 
         },
         created() {
-
-          /*  this.$bus.$on('clickPlaying',clickInfo=>{
-                // this.isPaused=!this.isPaused
-                // this.changeSongStatus()
-                let {clickFlag,clickMid} = clickInfo
-
-                // 如果点击的id是当前歌曲的id 暂停
-                if (this.songData.mid==clickMid){
-                    this.clickFlag=clickFlag
-                }else {//如果不是进行切换
-                    this.$store.dispatch('queryDataSong',clickMid)
-                }
-
-            }),*/
-              this.currentTimeOriginal=0
-
+            this.currentTimeOriginal=0
             this.progressInit()
-
-
 
         },
         computed:{
@@ -469,7 +484,28 @@ import Axios from "axios";
             ...mapGetters([
                 "isPlay",//播放状态,读取
               "currentLyric",//歌词元素,读取
-            ])
+            ]),
+            //喜欢
+            isLoveShow(){
+                // debugger
+                let loveSong = localStorage.getItem('loveSong')
+                if (loveSong) {
+                    loveSong = JSON.parse(loveSong)
+                    if ( this.songData){
+                        let index = loveSong.findIndex(item => {
+                            return  item === this.songData.songmid|| item === this.songData.mid})
+                        //如果存在,则代表喜欢
+                        if (index>=0){
+                            return true
+                        }else {
+                            return false
+                        }
+                    }
+
+                }
+                    return false
+            }
+
         },
         mounted() {
             this.$nextTick(()=>{
@@ -510,6 +546,7 @@ import Axios from "axios";
             clickFlag(val){
                 this.changeSongStatus()
             },
+            //进度条长度
             progressLen:{
                 handler:function () {
                     this.dragProgress()
@@ -538,7 +575,11 @@ import Axios from "axios";
                     }
                 }
 
-            }
+            },
+            //监视
+            songData(){
+              this.isLove=false
+            },
 
         },
         components:{

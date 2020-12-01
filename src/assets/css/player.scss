@@ -8,7 +8,7 @@
   font-size: 14px;
   //播放列表和歌词外框
   .pageInfo{
-    border: 1px solid red;
+    //border: 1px solid red;
     //width: 85%;
     height: 688px;
     position: relative;
@@ -18,7 +18,7 @@
   }
   //播放列表
   .player-list{
-    border: 1px solid black;
+    //border: 1px solid black;
     z-index: 2;
     //width: 56%;
     //position: absolute;
@@ -189,7 +189,7 @@
     }
     //播放列表
     .rank-wrap{
-      border: 1px solid red;
+      //border: 1px solid red;
       height: 90%;
       display: flex;
       flex-direction: column;
@@ -490,7 +490,7 @@
   }
   //正在播放
   .player-now{
-    border: 1px solid black;
+    //border: 1px solid black;
     z-index: 2;
     font-size: 14px;
     color: #bdbdbe;
@@ -805,6 +805,14 @@
               width: 29px;
               height: 25px;
               background-position:  0px -95px;
+            }
+          }
+          //喜欢选中
+          .loveSelected{
+
+            i{
+
+              background-position:  -30px -92px!important;
             }
           }
           //下载

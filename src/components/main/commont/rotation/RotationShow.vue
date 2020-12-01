@@ -132,9 +132,7 @@
                     }
                 })
                 this.pageAll =  pages
-                // this.pageAll =  this.setData(pages)
-                // console.log(this.pageAll)
-                // debugger
+
             },
 
 
@@ -202,12 +200,6 @@
             },
             //判读排行
             isRank(res){
-
-                // console.log(this.apiGetList)
-                // console.log(res)
-   /*             if (!res.song){
-                    return false
-                }*/
                 this.rankList = res.song.map(item=>({
                     rank:item.rank,
                     singerName:item.singerName,
@@ -236,9 +228,9 @@
         },
         watch:{
             //监听到传入内容数组,进行分页处理
-            slideList(){
-                // console.log('slideList:'+this.slideList())
-                // this.setData(this.slideList)
+            slideList(val){
+                // console.log('slideList:'+val)
+                // debugger
                 this.pages()
             },
             //页面设置后,监听到页面变化,对页面进行处理
