@@ -381,7 +381,7 @@ const actions = {
     },
     //mv播放
     async queryDataMvPlayer({state,commit},vid){
-        debugger
+        // debugger
         //校验是否存在
         let result = state.MvList.find(item=>{
             return item.curMvVid===vid
@@ -392,7 +392,7 @@ const actions = {
             return
         }
         else {
-            debugger
+            // debugger
             let resOfMvPlaying = await api.MvPlaying(vid)
             let resOfMvInfo = await api.MvInfo(vid)
             if (parseInt(resOfMvPlaying.data.result)===100||parseInt(resOfMvPlaying.data.resultL)===100){

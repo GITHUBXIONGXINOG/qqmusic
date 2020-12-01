@@ -63,10 +63,13 @@
             这样就可以通过this.$refs.api.属性名或
             this.$refs.api.方法名 来调子组件的数据或方法
         -->
-        <rotation-api
-            :index="index"
-            ref="api"
-        />
+        <keep-alive>
+            <rotation-api
+              :index="index"
+              ref="api"
+            />
+        </keep-alive>
+
     </div>
 </template>
 

@@ -40,7 +40,7 @@
             SongInfoShow,
         },
         destroyed() {
-            // window.location.reload();
+            window.location.reload();
         }
 
     }

@@ -1,14 +1,19 @@
 <template>
     <div class="mv-show-page">
-        MvShowPageaaaascacas
-        ascasc
-{{MvList}}
+
+        <div class="mv-video-wrap">
+            <mv-player
+                   :vid="vid"
+             />
+        </div>
+
+
     </div>
 </template>
 
 <script>
     import {mapGetters} from "vuex";
-
+    import MvPlayer from '@/components/main/mv/MvPlayer'
     export default {
         props:{
             vid: {
@@ -17,25 +22,35 @@
             }
         },
         data(){
-                return{
+            return{
 
-                }
+            }
         },
         created() {
-            debugger
-            let idInfo=this.vid.replace(/vid=/,'')
-            this.$store.dispatch('queryDataMvPlayer',idInfo)
+            // debugger
+
 
         },
         computed:{
             ...mapGetters([
               'MvList'
-            ])
+            ]),
+
+   /*         mvUrl(){
+                if (this.MvList.mvUrl&&this.MvList){
+                    let key = this.vid.replace(/vid=/,'')
+                    return this.MvList.mvUrl[key][this.Clarity]
+                }
+                return ''
+            },*/
         },
         mounted() {
-            console.log(this.MvList)
+            // console.log(this.MvList)
         },
 
+        components:{
+            MvPlayer,
+        }
 
     }
 </script>

@@ -508,7 +508,7 @@ export const queryMvRecommend = (state,payload) =>{
 //mv播放
 
 export const queryMvPlaying = (state,payload) =>{
-    debugger
+    // debugger
     let {
         vid,//mv的vid
         dataOdMvPlaying,//mv播放链接
@@ -518,7 +518,7 @@ export const queryMvPlaying = (state,payload) =>{
     state.curMvVid = vid
     //如果list存在,说明传入了数据进行存储
     if (dataOdMvPlaying&&dataOfMvInfo){
-        debugger
+        // debugger
         let recommend = dataOfMvInfo.recommend.map(item=>({
             ...item,
             imgUrl:item.cover_pic,//图片
