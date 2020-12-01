@@ -18,10 +18,11 @@
                     :class="{'img-show':index<10&&currentPage==1&&activeIndex.index==0}"
                 >
                     <div class="singer-wrap">
-                        <a href="javascript:;"  v-if="index<10&&currentPage==1&&activeIndex.index==0">
+<!--                        {{item.singer_mid}}-->
+                        <router-link :to="`/singerinfopage/`+item.singer_mid"  v-if="index<10&&currentPage==1&&activeIndex.index==0">
                             <img :src="item.singer_pic" alt=""
                                  class="singer-cover">
-                        </a>
+                        </router-link>
 
                             <a href="javascript:;">
                                 <span>{{item.singer_name}}</span>
@@ -79,8 +80,8 @@
              let url=`http://81.70.93.91:3200/getSingerList?page=${this.currentPage}`
              //通过传入params对象进行类别选项
              const res = await this.$http.get(url, {params})
-             debugger
-             console.log(res)
+             // debugger
+             // console.log(res)
              this.tags=res.data.response.singerList.data.tags
              // console.log(res.data.response.singerList.data.singerlist)
              this.SingerList=res.data.response.singerList.data.singerlist

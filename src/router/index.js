@@ -19,6 +19,7 @@ import Player from '@/views/musicHall/playrer/PlayerPage'
 import MvPlayer from '@/views/musicHall/playrer/MvShowPage'
 import Error from '@/components/Error.vue'
 import SongInfoPage from "@/views/musicHall/infopage/SongInfoPage";
+import SingerInfoPage from "@/views/musicHall/singer/SingerInfoPage";
 export default new VueRouter({
     // meta: {
     //     keepAlive: true // true需要缓存，false不需要缓存
@@ -59,6 +60,14 @@ export default new VueRouter({
                     props: true
 
                 },
+                {
+                    path: '/singerinfopage/:singermid',
+                    name: 'SingerInfoPage',
+                    component: SingerInfoPage,
+                    props: true
+
+                },
+
 
             ]
         },
@@ -69,6 +78,7 @@ export default new VueRouter({
             props: true
 
         },
+
         {
             path:'*',
             component:Error

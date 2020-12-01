@@ -167,5 +167,53 @@ const api = {
             }
         })
     },
+    //歌手介绍
+    SingerIntroduction(singermid){
+        return axios.get('/api/singer/desc',{
+            params:{
+                singermid: singermid
+            }
+        })
+    },
+    //歌手关注人数
+    SingerFollowers(singermid){
+        return axios.get('http://www.cqxiong.ml:3200/getSingerStarNum',{
+            params:{
+                singermid: singermid
+            }
+        })
+    },
+    //歌手热门歌曲
+    SingerHotSong(singermid){
+        return axios.get('/api/singer/songs',{
+            params:{
+                singermid: singermid
+            }
+        })
+    },
+    //歌手专辑
+    SingerAlbum(singermid){
+        return axios.get('/api/singer/album',{
+            params:{
+                singermid: singermid
+            }
+        })
+    },
+    //歌手mv
+    SingerMv(singermid){
+        return axios.get('/api/singer/mv',{
+            params:{
+                singermid: singermid
+            }
+        })
+    },
+    //相似歌手
+    SingerSimilar(singermid){
+        return axios.get('/api/singer/sim',{
+            params:{
+                singermid: singermid
+            }
+        })
+    }
 }
 export default api
