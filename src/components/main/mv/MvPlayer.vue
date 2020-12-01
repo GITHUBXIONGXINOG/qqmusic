@@ -184,29 +184,36 @@
             //音量拖拽
             moveVolume(e){
                 let el = e.target
-                let disX = e.clientX - el.offsetLeft;
+                let disY = e.clientY - el.offsetTop;
                 let isGragFlag = true
                 e.preventDefault()
                 document.onmousemove = (e)=>{
                     if (isGragFlag&&!this.dragFlag){
                         //鼠标按下并移动的事件
                         //移动后当前的视口水平位置减去父元素的视口水平位置,就是当前距离父元素的位置
-                        let x = e.clientX - disX
-                        // let y = e.clientY - disY
+                        // let x = e.clientX - disX
+                        let y = e.clientY - disY
                         //父元素的边界处理
-                        if (x<=0){
-                            x = 0
-                        }else if (x>=70){
-                            x = 70
+                        if (y<=5){
+                            y = 5
+                        }else if (y>=100){
+                            y = 100
                         }
                         if (el.style){
-                            this.volumeLen=x
-                            if (x<=60&&x>=5){
-                                el.style.left =x + 'px'
-                            }else if (x<5){
-                                el.style.left =0 + 'px'
+                            this.volumeLen=100-y
+                          /*  if (y<=90&&y>=5){
+                                el.style.top =y + 'px'
+                            }else if (y<0){
+                                el.style.top =0 + 'px'
                             }else{
-                                el.style.left =60 + 'px'
+                                el.style.top =90 + 'px'
+                            }*/
+                            if (y>=100){
+                                el.style.top =100 + 'px'
+
+                            }else {
+                                el.style.top =y + 'px'
+
                             }
 
                             this.currentProgressVolume()
@@ -349,16 +356,16 @@
             },*/
             //音量条初始化
             getVolume(){
-                this.$refs.bgSlotVolume.style.width=70+'px';
-                this.$refs.overTimeVolume.style.width=this.$refs.video.volume* 70 + 'px'
-                this.$refs.currentTimeVolume.style.left=this.$refs.overTimeVolume.style.width
+                this.$refs.bgSlotVolume.style.height=100+'px';
+                this.$refs.overTimeVolume.style.height=this.$refs.video.volume* 100 + 'px'
+                // this.$refs.currentTimeVolume.style.top=this.$refs.overTimeVolume.style.top
             },
             //点击音量
             clickProgressVolume(event){
                 const e = event || window.event
-                this.$refs.overTimeVolume.style.width=e.offsetX+'px'
-                this.$refs.currentTimeVolume.style.left=(e.offsetX)+'px'
-                this.$refs.video.volume=e.offsetX/70
+                this.$refs.overTimeVolume.style.height=e.offsetY+'px'
+                this.$refs.currentTimeVolume.style.top=(e.offsetY)+'px'
+                this.$refs.video.volume=e.offsetY/100
             },
             //静音
             clickMuted(){
@@ -375,8 +382,11 @@
             //当前音乐进度条
             currentProgressVolume(){
                 // debugger
-                this.$refs.overTimeVolume.style.width=this.volumeLen+'px'
-                this.$refs.video.volume=this.volumeLen/70
+
+                    this.$refs.overTimeVolume.style.height=(this.volumeLen)+'px'
+
+
+                this.$refs.video.volume=this.volumeLen/100
                 if (this.volumeLen==0){
                     this.isMuted = true
                 }else {
@@ -384,28 +394,8 @@
 
                 }
             },
-            //下载链接获取
-            async downSongs(item){
-                let res = await api.downSongs(item.mid)
-                if (res.data.result===100){
-                    this.downloadItem(res.data.data,item.name||item.title)
-                }
-            },
-            //下载
-            downloadItem (url,name) {
-                Axios.get(url, { responseType: 'blob' })
-                  .then(({ data }) => {
-                      // 为了简单起见这里blob的mime类型 固定写死了
-                      let blob = new Blob([data], { type: 'application/vnd.ms-excel' })
-                      let link = document.createElement('a')
-                      link.href = window.URL.createObjectURL(blob)
-                      link.download = name+'.mp3'
-                      this.$nextTick(()=>{
-                          this.downName=name
-                      })
-                      link.click()
-                  })
-            },
+
+
         },
         mounted() {
             // let width = 0
@@ -676,16 +666,7 @@
                         }
 
                     }
-                    //喜欢
-                    .loveSelect{
-                        width: 26px;
-                        height: 100%;
-                        i{
-                            width: 29px;
-                            height: 25px;
-                            background-position:  0px -95px;
-                        }
-                    }
+
 
 
                 }
@@ -699,6 +680,7 @@
                     //background: #000;
                     align-items: center;
                     position: relative;
+
                     //音量图标
                     .volumeLog{
                         //border: 1px solid red;
@@ -724,40 +706,55 @@
                             background-position-y: -180px;
                         }
                     }
+                    //音量进度条
                     .progressVolume{
-                        border: 1px solid red;
-                        height: 8px;
-                        position: relative;
-                        top: 2px;
-
+                        //border: 1px solid red;
+                        width: 47px;
+                        height: 114px;
+                        position: absolute;
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-end;
+                        left: -15px;
+                        top: -130px;
+                        padding: 0 0 5px 0;
+                        background: rgba(0,0,0,.7);
+                        border-radius: 3px;
                         &:hover{
                             cursor: pointer;
                         }
                         //进度条总长度
                         .bgSlotVolume{
-                            width: 70px;
-                            height: 2px;
+                            width: 3px;
+                            height: 100px;
                             position: relative;
-                            //border: 1px solid black;
                             background: rgba(255,255,255,.3);
                             top: 0px;
-                            bottom: 10px;
+                            bottom: 20px;
+                            display: flex;
+                            justify-content: center;
                         }
                         //已播放长度
                         .overTimeVolume{
-                            width: 10px;
-                            background: white;
-                            height: 2px;
-                            position: absolute;
+                            width:   3px;
+                            background: #31c27c;
+                            height:  10px;
+                            //position: absolute;
+                            position: relative;
+                            left: -3px;
                             top: 0;
+                            //display: flex;
                         }
                         //当前进度指示原点
                         .currentTimeVolume{
+                            //border: 1px solid red;
                             width: 10px;
                             height: 10px;
                             background: white;
                             position: absolute;
-                            top: -4px;
+                            top: 10px;
+                            left: 17px;
+                            //top: -4px;
                             //left: -5px;
                             //margin-left: 40px ;
                             border-radius: 50%;
@@ -765,7 +762,19 @@
                                 cursor: pointer;
                             }
                         }
+                        &::after{
+                            display: block;
+                            content: '';
+                            width: 0px;
+                            //height: 50px;
+                            //background: #000;
+                            border: 10px solid;
+                            border-color: rgba(0,0,0,.7) transparent transparent transparent;
+                            bottom: -20px;
+                            position: absolute;
+                        }
                     }
+
 
                 }
             }
