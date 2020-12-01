@@ -79,8 +79,8 @@
              let url=`http://81.70.93.91:3200/getSingerList?page=${this.currentPage}`
              //通过传入params对象进行类别选项
              const res = await this.$http.get(url, {params})
-
-             // console.log(res)
+             debugger
+             console.log(res)
              this.tags=res.data.response.singerList.data.tags
              // console.log(res.data.response.singerList.data.singerlist)
              this.SingerList=res.data.response.singerList.data.singerlist
@@ -149,8 +149,3 @@
 </script>
 
 
-<!--
-area=200&genre=-100&index=-100&sex=-100
-
-
--->
