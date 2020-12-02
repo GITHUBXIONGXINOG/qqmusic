@@ -1,7 +1,7 @@
 <template>
     <div class="player-page">
 <!--        播放: {{songId}}-->
-        <router-link to="/homepage" class="back-home">
+        <router-link :to="`/`+pathFrom" class="back-home">
             <span class="iconfont icon-cuowu"></span>
         </router-link>
         <div class="pageInfo">
@@ -33,7 +33,7 @@
     import PlayerList from '@/components/main/player/PlayerList'
     import PlayerNow from '@/components/main/player/PlayerNow'
     import PlayerBar from '@/components/main/player/PlayerBar'
-    import {mapMutations} from "vuex";
+    import {mapGetters, mapMutations} from "vuex";
     export default {
         props:{
             songId: {
@@ -131,7 +131,10 @@
                 return playList.find(item=>{
                     return item.mid===cur
                 }) || null
-            }
+            },
+            ...mapGetters([
+              'pathFrom'
+            ])
         },
         mounted() {
 
@@ -163,6 +166,10 @@
             PlayerList,//播放列表
             PlayerNow,//正在播放
             PlayerBar,//播放控制组件
+        },
+        destroyed() {
+            location.reload();
         }
+
     }
 </script>

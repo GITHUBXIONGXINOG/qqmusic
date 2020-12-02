@@ -57,19 +57,21 @@
                 }))
                 // console.log(this.albumsInfo)
             },
-            $route: {
-                handler: function(val, oldVal){
-                    debugger
-                    console.log(val);
-                },
-                // 深度观察监听
-                deep: true
-            }
 
         },
         mounted() {
             // this.showList()
-        }
+        },
+ /*       created() {
+            this.$router.beforeEach((to, from, next) => {
+                debugger
+                console.log(to);
+                console.log(from.path)
+                next();
+            });
+        }*/
+
+
 
 
     }

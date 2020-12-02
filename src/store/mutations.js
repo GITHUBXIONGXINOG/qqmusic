@@ -555,3 +555,10 @@ export const queryMvPlaying = (state,payload) =>{
 
     }
 }
+
+//之前的路由
+export const queryPathFrom = (state,path) =>{
+    // debugger
+    state.pathFrom=path
+
+}

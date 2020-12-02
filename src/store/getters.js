@@ -18,3 +18,5 @@ export const songInfoPage = state => state.songInfoPages.find(item=>item.songId=
 export const MvRecommend = state => state.MvRecommend.find(item=>item.MvType===state.curMvType||null)
 //mv播放
 export const MvList = state => state.MvList.find(item=>item.MvVid===state.curMvVid||null)
+//之前的地址
+export const pathFrom = state => state.pathFrom

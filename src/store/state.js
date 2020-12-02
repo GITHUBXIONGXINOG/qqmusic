@@ -31,7 +31,8 @@ const state = {
     MvList:[],
     //当前mv的vid
     curMvVid:0,
-
+    //路由跳转之前的地址
+    pathFrom:'',
 
 
 

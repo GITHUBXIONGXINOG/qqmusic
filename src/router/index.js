@@ -79,10 +79,10 @@ export default new VueRouter({
 
         },
 
-        {
+/*        {
             path:'*',
             component:Error
-        }
+        }*/
 
   ],
     scrollBehavior(to, from, saveTop) {
