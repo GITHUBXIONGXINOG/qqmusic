@@ -92,6 +92,7 @@
         },
 
         methods:{
+            //获取数据
             async fetchApi (){
                 let url = '/api/mv/category'
                 const res = await this.$http.get(url)

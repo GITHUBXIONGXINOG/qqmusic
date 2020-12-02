@@ -2,8 +2,11 @@
     <div class="mv-content">
         <div class="content-wrap">
             <div class="content" v-for="item in contentList">
+<!--                {{item}}-->
                 <picture-show
                   :imgUrl="item.picurl"
+                  :songId="`vid=`+item.vid"
+                  :is-mv="true"
                 />
                 <div class="content-title"><a href="javascript:;" >{{item.title}}</a></div>
                 <div class="content-name"><a href="javascript:;" >{{item.singers[0].name}}</a></div>

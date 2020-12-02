@@ -22,25 +22,18 @@
             </div>
         </div>
         <!--mv简介-->
-        <div class="mv-Introduction-wrap" v-if="MvList">
-            <div class="mv-Introduction-inner">
+        <div class="mv-Introduction-wrap" v-if="MvList" :class="{'nullIntroduction':isNullComment}">
+            <div class="mv-Introduction-inner" >
                 <div class="mv-introduce-title">视频简介</div>
                 <div class="mv-introduce-info">
                     <span class="singer-name">{{singerName}}</span>
                     <span>发行时间:</span>
                     <span class="public-time">{{MvList.time}}</span>
-                    <p class="info-content">
+                    <p class="info-content" >
                         {{infoContent}}
                     </p>
                 </div>
             </div>
-        </div>
-        <!--评论-->
-        <div class="comment-wrap">
-            <rank-comment v-if="songInfoPage&&songInfoPage.commend"
-                          :commentList="songInfoPage.commend.data.comment"
-                          @change="setCommendPageChange"
-            />
         </div>
     </div>
 </template>
@@ -58,7 +51,7 @@
         },
         data(){
             return{
-
+                isNullComment:false,//无评论
             }
         },
         created() {
@@ -94,8 +87,10 @@
             //视频简介
             infoContent(){
                 if (this.MvList.desc){
+                    this.isNullComment=false
                     return this.MvList.desc
                 }
+                this.isNullComment=true
                 return '暂无视频简介'
             }
 

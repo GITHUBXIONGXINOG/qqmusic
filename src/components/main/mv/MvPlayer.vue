@@ -1,6 +1,9 @@
 <template>
     <div class="mv-player">
-        <div class="mv-video-wrap" v-if="MvList" ref="videoWrap" @mouseenter="setShowControlPanel">
+        <div class="mv-video-wrap" v-if="MvList" ref="videoWrap"
+             @mouseenter="setShowControlPanel"
+             @mouseleave="setHideControlPanel"
+        >
             <video :src="mvUrl"  ref="video" @canplay="getDuration" @timeupdate="updateTime"
                 @ended="endOpera"
             ></video>
@@ -315,14 +318,16 @@
             },
             //控制面板
             setShowControlPanel(){
+                if (!this.isShowControl)
+                    this.isShowControl=true
+
+            },
+            setHideControlPanel(){
                 if (this.isShowControl){
                     setTimeout(()=>{
                         this.isShowControl=false
-                    },10000)
-                }else {
-                    this.isShowControl=true
+                    },3000)
                 }
-
             },
             //当前进度条
             currentProgress(){

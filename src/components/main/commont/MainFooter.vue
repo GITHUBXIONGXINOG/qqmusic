@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="footer-wrap">
+<!--        <div class="footer-wrap">
                 <div class="about">
                     <a href="javascript:;"
                        v-for="(item,index) in aboutList" :key="index"
@@ -35,11 +35,11 @@
                         <i v-else>{{item}}&nbsp;</i>
                     </a>
                 </div>
-       <!--         <div class="Reserved">
+       &lt;!&ndash;         <div class="Reserved">
                     <i>{{ReservedList[0]}}</i>
                     <a href="javascript:;"><i>{{ReservedList[1]}}</i></a>
-                </div>-->
-        </div>
+                </div>&ndash;&gt;
+        </div>-->
     </div>
 </template>
 
