@@ -84,7 +84,7 @@
                     <!--歌曲标题-->
                     <div class="index-title">
                         <li class="song-index" >{{index+1}}</li>
-                        <li class="song-title">{{item.title}}</li>
+                        <span class="song-title">{{item.title}}</span>
                     </div>
                     <!--歌手名字-->
                     <li class="song-singer">

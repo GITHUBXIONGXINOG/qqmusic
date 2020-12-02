@@ -42,11 +42,7 @@
                 let urlTitle = '/api/top/category'
                 // console.log(urlTitle)
                 const resTitle = await this.$http.get(urlTitle)
-                // console.log(resTitle)
 
-                // console.log(resTitle.data.data)
-                // let topList = resTitle.response.data.topList
-                // console.log(resTitle.data.response.data.topList)
                 this.resTitleList = resTitle.data.data.map(item=>({
                     title:item.title,
                     list:item.list
@@ -61,11 +57,12 @@
                 }
                 const resContent = await this.$http.get(urlContent,{params})
                 // debugger
-                // console.log(params)
-                // console.log(resContent.data.data)
-
-                // debugger
-                this.resContentList = resContent.data.data
+               let resList = resContent.data.data.list.map(item=>({
+                   ...item,
+                    rankmid: 'albummid='+item.albumMid
+                }))
+                resContent.data.data.list=resList
+                this.resContentList =  resContent.data.data
                 // console.log(this.resContentList)
 
                 //评论

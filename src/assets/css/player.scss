@@ -358,8 +358,12 @@
           //歌名
           .song-title{
             //border: 1px salmon solid;
-            //width: 500px;
+            line-height: 50px;
+            width: 350px;
             //flex: 1;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
           }
         }
 

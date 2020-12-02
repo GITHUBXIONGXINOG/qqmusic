@@ -177,7 +177,8 @@
                     title:item.dissname,
                     singers:item.creator.name,
                     listennum:item.listennum,
-                    id:item.dissid
+                    id:item.dissid,
+                    content_id:'content_id='+item.dissid
                 }))
                 // console.log(this.contentList)
 

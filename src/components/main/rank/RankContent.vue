@@ -56,7 +56,13 @@
                             <ul class="song-operating"
                                 v-show="songOperatingShow==index"
                             >
-                                <li v-for="n in operatingList">
+                                <!--播放-->
+                                <router-link :to="`/player/`+item.rankmid" tag="li" >
+                                   <i class="iconfont icon-bofang2">
+                                   </i>
+                                </router-link>
+
+                                 <li v-for="n in operatingList">
                                    <i :class="['iconfont',`icon-${n}`]">
                                    </i>
                                 </li>
@@ -95,7 +101,6 @@
                 ],//操作对应的图标
                 contentNav:['歌曲','歌手','时长'],
                 operatingList:[
-                    'bofang2',
                     'jia',
                     'xiazai',
                     'fenxiang'
@@ -108,7 +113,6 @@
                     '#rank-comment',
                 ],//操作对应的链接
                 songOperatingShow:'',//显示操作标识
-
             }
         },
         methods:{
@@ -116,7 +120,6 @@
             setContent(){
                 // debugger
                 // console.log(this.contentList.list);
-
                 this.storageContent = this.tempContent.list.map(item=>({
                    rank:item.rank,//排名
                    rankValue:item.rankValue,//排名变化
@@ -143,7 +146,8 @@
                    singer:item.singer,
                    singerMid:item.singerMid,
                    songId:item.songId,
-                   time_public:item.time_public,
+                    time_public:item.time_public,
+                    rankmid:item.rankmid,
                }))
                 // console.log(this.storageContent)
             },

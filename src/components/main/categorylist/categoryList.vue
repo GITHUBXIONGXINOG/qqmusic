@@ -3,11 +3,12 @@
         <div class="category-wrap">
             <ul class="category-ul">
                 <li v-for="(item,index) in contentList" :key="index">
+<!--                    {{item}}-->
                     <a href="javascript:;"><img :src="item.img" alt="" class="record-img"></a>
                     <nav>
-                        <a href="javascript:;" class="img_cover_wrap" >
+                        <router-link :to="`/player/`+item.content_id" class="img_cover_wrap" >
                             <img src="../../../../public/img/cover_play@2x.png" alt=""  class="record-img-button">
-                        </a>
+                        </router-link>
                     </nav>
                     <div class="category-title"><a href="javascript:;" >{{item.title}}</a></div>
                     <div class="category-name"><a href="javascript:;" >{{item.name}}</a></div>
