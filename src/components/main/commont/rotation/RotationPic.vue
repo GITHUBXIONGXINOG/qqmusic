@@ -273,7 +273,7 @@
             //歌曲或歌单id
             songsId(){
                 return function (v) {
-                    debugger
+                    // debugger
                     // this.isMv=false
                     if (v.content_id){
                         return 'content_id='+v.content_id

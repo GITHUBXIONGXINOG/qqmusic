@@ -1,6 +1,9 @@
 <template>
     <div class="picture-show"  :style="{'--width':imgWidth,'--height':imgHeight}">
         <div class="img-wrap ">
+           <!-- <img  class="img-info  checked-style"
+                  :src="imgUrl"
+            >-->
             <img  class="img-info  checked-style"
                   :src="imgUrl"
             >

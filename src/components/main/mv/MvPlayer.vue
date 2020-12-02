@@ -5,7 +5,7 @@
              @mouseleave="setHideControlPanel"
         >
             <video :src="mvUrl"  ref="video" @canplay="getDuration" @timeupdate="updateTime"
-                @ended="endOpera"
+                @ended="endOpera" @dblclick="changeState"
             ></video>
             <div class="video-control" v-show="isShowControl">
                 <!--控制按钮-->
@@ -286,6 +286,20 @@
                         this.video.load()
                         this.video.play()
                     },5000)
+                }
+            },
+            //改变状态
+            changeState(){
+                if (!this.video){
+                    this.video = this.$refs.video
+                }
+                if (this.isPlay) {
+                    this.video.pause()
+                    this.isPlay=false
+
+                }else {
+                    this.video.play()
+                    this.isPlay=true
                 }
             },
             //开始播放
