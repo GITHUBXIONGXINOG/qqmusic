@@ -1,0 +1,295 @@
+.singer-info-page{
+  //border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  //height: 1000px;
+  .singer-info-wrap{
+    //border: 1px solid red;
+    display: flex;
+    width: 1200px;
+    margin: 0 0 10px 0;
+    .singer-pic{
+      //border: 1px solid red;
+      width: 250px;
+      img{
+        border-radius: 50%;
+        width: 250px;
+      }
+
+    }
+    .singer-info-text{
+      margin: 29px 0 0 55px;
+      .singer-name{
+        font-size: 40px;
+      }
+      .singer-info{
+        //border: 1px solid red;
+
+        .singer-Introduction{
+          width: 900px;
+          display: flex;
+          margin: 13px 0px 0 1px;
+          .text-info{
+            //border: 1px solid black;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 720px;
+            font-size: 14px;
+          }
+          .more-panel{
+            position: relative;
+            right: -135px;
+            .desc{
+              position: absolute;
+              width: 580px;
+              height: 460px;
+              overflow: auto;
+              padding: 30px 20px;
+              background: white;
+              box-shadow: 0 0 4px rgba(0,0,0,.35);
+              border-radius: 4px;
+              border: 1px solid #ddd;
+              right: 10px;
+              top: 29px;
+            }
+            &::before{
+              content: '';
+              display: block;
+              position: absolute;
+              top: 10px;
+              right: 148px;
+              border: 10px solid;
+              border-color: transparent transparent white transparent;
+              z-index: 3;
+            }
+            &::after{
+              content: '';
+              display: block;
+              position: absolute;
+              top: 9px;
+              right: 148px;
+              border: 10px solid;
+              border-color: transparent transparent #e7e7e7 transparent;
+              z-index: 2;
+            }
+          }
+
+          .more-op{
+            //border: 1px solid black;
+
+          }
+        }
+      }
+      .song-info{
+        display: flex;
+        div{
+          //width: 100px;
+          padding: 0 15px 0 0;
+          margin: 0 25px 0 0 ;
+          span{
+            font-size: 20px;
+            border-right: 1px solid #999999;
+            padding: 0 25px 0 0 ;
+
+          }
+          i{
+            font-size: 22px;
+            font-weight: 300;
+          }
+          &:last-child span{
+            border: none;
+          }
+
+        }
+      }
+      .play-op{
+        display: flex;
+        margin: 20px 0;
+        div{
+          width: 169px;
+          height: 38px;
+          border: 1px solid #999999;
+          display: flex;
+          justify-content: center;
+          line-height: 38px;
+          color: black;
+          border-radius:2px ;
+          font-size: 14px;
+          span{
+            margin: 0 5px;
+          }
+          &:hover{
+            cursor: pointer;
+            background-color: rgba(0,0,0,.1);
+          }
+        }
+        .player-hot-song{
+          background: #31c27c;
+          color: white;
+          margin: 0 5px 0 0 ;
+          border: none;
+          &:hover{
+            background-color: #2caf6f;
+          }
+        }
+      }
+    }
+  }
+  .rank-title{
+    width: 1200px;
+    font-size: 20px;
+
+  }
+  //榜单内容
+  .rank-wrap{
+    //border: 1px solid red;
+    //height: 1200px;
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0 10px 0px;
+    //内容标题
+    .content-nav-ul{
+      //border: 1px solid red;
+      display: flex;
+      //justify-content: space-between;
+      //width: 1200px;
+      height: 50px;
+      padding:0 95px 0 50px;
+      background: #fcfcfc;
+      color: #999999;
+      li{
+        //border: 1px solid black;
+        line-height: 50px;
+      }
+      .nav-li-0{
+        width: 490px;
+        height: 49.6px;
+      }
+      .nav-li-1{
+        width: 450px;
+        height: 49.6px;
+      }
+      .nav-li-2{
+        height: 49.6px;
+      }
+    }
+
+    //排行榜内容
+    .rank-info{
+      //border: 1px solid red;
+      font-family: poppin,Tahoma,Arial,\5FAE\8F6F\96C5\9ED1,sans-serif;
+      margin: 0 0 100px 0;
+      .rank-info-ul{
+        //border: 1px solid black;
+        height: 60px;
+        .rank-info-li{
+          display: flex;
+          font-size: 14px;
+          height: 60px;
+
+          //排名
+          .rank-value{
+            //border: 1px solid red;
+            margin: 0 24px 0 10px;
+            line-height: 60px;
+          }
+
+          //歌曲标题
+          .song-title-wrap{
+            //border: 1px solid red;
+            width: 500px;
+            display: flex;
+            height: 60px;
+            align-items: center;
+            position: relative;
+
+            //justify-content: center;
+            img{
+              width: 70px;
+              height: 70px;
+              cursor: pointer;
+
+            }
+            .song-title{
+              //border: 1px solid red;
+              height: 70px;
+              line-height: 70px;
+              padding-left: 10px;
+              cursor: pointer;
+
+            }
+            //独家
+            .song-isonly{
+              font-size: 14px;
+              color: #3fc785;
+              margin: 0 5px;
+            }
+            //mv
+            .song-ismv{
+              font-size: 24px;
+              color: #3fc785;
+              margin: 0 5px;
+            }
+            //vip
+            .song-isvip{
+              font-size: 13px;
+              color: #3fc785;
+              margin: 0 5px;
+            }
+            //用户操作
+            .song-operating{
+              //border: 1px solid red;
+              display: flex;
+              position: absolute;
+              right: 20px;
+              background: transparent;
+              & :hover{
+                color: #3fc785;
+                border-color: #3fc785;
+                cursor: pointer;
+
+              }
+              li{
+                width: 35px;
+                height: 35px;
+                border-radius: 36px;
+                border: 1px solid #cecece;
+                color: #a2a2a2;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+
+            }
+          }
+          //专辑
+          .rank-singername{
+            //border: 1px solid red;
+            line-height: 60px;
+            width: 450px;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+            overflow:hidden;
+          }
+          //时间
+          .rank-time{
+            line-height: 60px;
+            color: #999999;
+          }
+
+        }
+
+      }
+      ul:nth-child(even){
+        background: #fcfcfc;
+      }
+      ul:nth-child(odd){
+        background: #ffffff;
+      }
+    }
+  }
+}

@@ -1,12 +1,23 @@
 <template>
     <div class="SingerInfoShow">
-        SingerInfoShow
+
     </div>
 </template>
 
 <script>
 
-    export default {
+export default {
+    data(){
+        return{
 
-    }
+        }
+    },
+    methods:{
+
+    },
+    computed:{
+
+    },
+
+}
 </script>
