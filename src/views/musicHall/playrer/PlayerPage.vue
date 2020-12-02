@@ -149,13 +149,13 @@
             },
             //to 跳转的页面 to和$route一样,存储当前路由的信息
             // $route(to,from){
-            //     console.log(to)
+            //     console.log(from)
             //     debugger
             //     console.log(to)
-            //     this.$store.dispatch('queryDataA',to.params.songId)
+            //     // this.$store.dispatch('queryDataA',to.params.songId)
             //
             // },
-            //监听路由
+
 
 
         },
