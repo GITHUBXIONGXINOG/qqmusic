@@ -19,4 +19,4 @@ export const MvRecommend = state => state.MvRecommend.find(item=>item.MvType===s
 //mv播放
 export const MvList = state => state.MvList.find(item=>item.MvVid===state.curMvVid||null)
 //之前的地址
-export const pathFrom = state => state.pathFrom
+export const pathFrom = state => state.pathFrom.slice(1)

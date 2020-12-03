@@ -24,7 +24,7 @@ export default new VueRouter({
     // meta: {
     //     keepAlive: true // true需要缓存，false不需要缓存
     // },
-  mode:'history',
+  mode:'hash',
     base:process.env.BASE_URL,
     routes:[
         { path:'/',
