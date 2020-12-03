@@ -5,7 +5,7 @@
                   :src="imgUrl"
             >-->
             <img  class="img-info  checked-style"
-                  :src="imgUrl"
+                  v-lazy="imgObj"
             >
 
             <nav>
@@ -21,8 +21,6 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
-
     export default {
         props:{
             //图片地址
@@ -46,6 +44,11 @@
                 //图片宽高
                 imgWidth:0,
                 imgHeight:0,
+                //图片懒加载
+                imgObj:{
+                    src: this.imgUrl,
+                    loading: require('@/assets/img/replace.png')
+                }
             }
         },
         methods:{
@@ -59,8 +62,10 @@
               this.imgWidth=img.width+'px'
               this.imgHeight=img.height+'px'
           },
+
         },
         computed:{
+            //路径跳转
             routePath(){
                 if (!this.isMv){
                     return 'player'
@@ -83,6 +88,7 @@
 
         },
         mounted() {
+
         }
     }
 </script>

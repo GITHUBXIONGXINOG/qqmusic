@@ -2,6 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+//图片懒加载
+import vueLazy from 'vue-lazyload'
+Vue.use(vueLazy)
 
 import './assets/css/style.scss'
 Vue.config.productionTip = false
