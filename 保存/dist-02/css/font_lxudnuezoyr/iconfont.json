@@ -1,0 +1,72 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "376107",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e6b4",
+      "unicode_decimal": 59060
+    },
+    {
+      "icon_id": "826105",
+      "name": "播放次数",
+      "font_class": "bofangcishu",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "1111274",
+      "name": "mac",
+      "font_class": "mac",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "1567411",
+      "name": "android",
+      "font_class": "android",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "2325951",
+      "name": "win",
+      "font_class": "win",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "2674927",
+      "name": "箭头 上",
+      "font_class": "jiantoushang",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "9743050",
+      "name": "播放",
+      "font_class": "bofang",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "13743955",
+      "name": "mac",
+      "font_class": "mac1",
+      "unicode": "e689",
+      "unicode_decimal": 59017
+    },
+    {
+      "icon_id": "15685567",
+      "name": "三角形",
+      "font_class": "sanjiaoxing",
+      "unicode": "e6e6",
+      "unicode_decimal": 59110
+    }
+  ]
+}

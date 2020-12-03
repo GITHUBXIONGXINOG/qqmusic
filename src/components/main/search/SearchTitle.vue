@@ -1,7 +1,5 @@
 <template>
     <div class="search-title">
-
-
         <search-bar
             @getHotSearch="getHotSearch"
             :setSearchWord="clickWord"

@@ -46,7 +46,7 @@
                                         <span class="rank-number">
                                             {{v.song[p].rank}}
                                         </span>
-                                        <router-link :to="`/songinfo/`+v.song[p].mid" class="rank-title" href="javascript:;">
+                                        <router-link :to="`/songinfo/`+v.song[p].mid" class="rank-title" >
                                             <!--                                            {{v.song[p].title}}-->
                                             {{v.song[p].title.length>10
                                           ? v.song[p].title.slice(0,9)+'...'

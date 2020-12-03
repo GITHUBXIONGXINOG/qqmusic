@@ -11,15 +11,6 @@
 
         </ul>
         <!--用户操作-->
-       <!-- <ul class="userOpera">
-            <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index"
-               v-show="activeIndex.t==0">
-                <span :class="['iconfont ',`${iconList[index]}`]"></span>
-                <span>
-                        {{item}}
-                    </span>
-            </a>
-        </ul>-->
         <song-list
           v-if="activeIndex.t!=7 &&activeIndex.t!=12"
           :setContentList="contentList"
@@ -31,11 +22,8 @@
           :setContentList="contentList"
 
         />
-    <!--    <search-mv
-          v-if="activeIndex.t==12 "
-          :setContentList="contentList"
-        />
--->
+
+
     </div>
 </template>
 

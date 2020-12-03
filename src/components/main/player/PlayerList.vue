@@ -99,11 +99,6 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
-                      <!--  &lt;!&ndash;播放&ndash;&gt;
-                        <li @click="clickPlaying(item.mid)">
-                            <i class="iconfont ">
-                            </i>
-                        </li>-->
                         <!--开始按钮-->
                         <span class="startButton"
                               @click="clickStart(item.mid)"
@@ -361,7 +356,9 @@ import {mapMutations, mapGetters} from "vuex"
                     if (res.data.result===100){
                         let index = this.songList.findIndex(item=>item.mid==mid)
                         let name = this.songList[index].title
-                        this.downloadItem(res.data.data,name)
+                        let reg = new RegExp('http://122.226.161.16')
+                        let url = res.data.data.replace(reg,'/down')
+                        this.downloadItem(url,name)
 
                     }
                 })

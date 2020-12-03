@@ -9,7 +9,7 @@
     export default {
         created() {
             this.$router.beforeEach((to, from, next) => {
-                this.queryPathFrom(from.path)
+                this.queryPathFrom(from.fullPath)
                 next();
             });
         },

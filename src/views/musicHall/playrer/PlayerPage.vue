@@ -80,7 +80,7 @@
         },
         created() {
            this.fetchPlayerApi()
-            // debugger
+            debugger
             //歌曲
             let regSong = /songmid=/
             //歌单
@@ -115,12 +115,7 @@
                 idInfo=this.$route.params.songId.replace(regRank,'')
                 this.$store.dispatch('queryDataRank',idInfo)
             }
-            //mv
-            // else if (this.$route.params.songId.match(regMv)){
-            //     idInfo=this.$route.params.songId.replace(regMv,'')
-            //     this.$store.dispatch('queryDataMvPlayer',idInfo)
-            //     this.$router.push('/mvplayer/'+idInfo)
-            // }
+
 
 
 

@@ -8,7 +8,7 @@
             <Comment />
         </div>
         <div class="comment-new-wrap">
-            <div class="comment-new-title">
+            <div class="comment-new-title" id="commentTotal">
                 最新评论({{commentTotal}})
             </div>
             <ul class="comment-info-ul">

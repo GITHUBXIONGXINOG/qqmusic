@@ -1,7 +1,7 @@
 <template>
     <div class="song-list">
         <!--用户操作-->
-        <ul class="userOpera" v-if="contentType==0">
+<!--        <ul class="userOpera" v-if="contentType==0">
             <a :href="`${userOperaUrl[index]}`" v-for="(item,index) in userOperating" :key="index"
               >
                 <span :class="['iconfont ',`${iconList[index]}`]"></span>
@@ -9,7 +9,7 @@
                         {{item}}
                     </span>
             </a>
-        </ul>
+        </ul>-->
         <div :class="contentType==2||contentType==8 ? 'song-label-three' : 'song-label-four'">
             <ul class="song-label">
                 <li v-for="item in labelList">
@@ -17,26 +17,23 @@
                 </li>
             </ul>
             <ul v-for="(item,index) in contentList" :key="index" class="content-info-ul" >
-
                     <li class="content-info-li">
                      <span class="song-title-wrap"
                       @mouseenter="OperateChange(index)"
                       @mouseleave="OperateChange"
                 >
+
                     <i class="song-title">
                         <div v-if="contentType==0">
                                <a href="javascript:;" >{{item.songname}}</a>
-
                         </div>
                         <div v-else-if="contentType==8">
                             <img :src="item.albumPic" alt="">
                             <a href="javascript:;">{{item.albumName}}</a>
-
                         </div>
                           <div v-else-if="contentType==2">
                             <img :src="item.imgurl" alt="">
                             <a href="javascript:;">{{item.dissname}}</a>
-
                         </div>
 
                     </i>
@@ -47,10 +44,13 @@
                     <ul class="song-operating"
                         v-show="songOperatingShow==index"
                     >
-                        <li v-for="n in operatingList">
+                        <router-link :to="`/player/${contentTypeOr}${songIdOr(item)}`" tag="li">
+                            <i class="iconfont icon-bofang2"></i>
+                        </router-link>
+<!--                        <li v-for="n in operatingList">
                             <i :class="['iconfont',`icon-${n}`]">
                             </i>
-                        </li>
+                        </li>-->
                     </ul>
                 </span>
                         <i class="content-singerName">
@@ -143,7 +143,7 @@
                     '创建人',
                     '收听'
                 ],//歌曲页面总标题-歌单
-            }
+             }
         },
         methods:{
 
@@ -197,6 +197,29 @@
                     return m+':'+s
                 }
             },
+            contentTypeOr(){
+                if (this.contentType==0){
+                     return 'songmid='
+                }else if (this.contentType==8){
+                    return 'albummid='
+                }else if (this.contentType==2){
+                    return 'content_id='
+                }
+                return ''
+            },
+            songIdOr(){
+                return function (item) {
+                    if (this.contentType==0){
+                        return item.songmid
+                    }else if (this.contentType==8){
+                        return item.albumMID
+                    }else if (this.contentType==2){
+                        return item.dissid
+                    }
+                    return ''
+                }
+            },
+
         },
         watch:{
             setContentList(val){
@@ -217,7 +240,7 @@
 .song-list{
     //border: 1px solid red;
     font-size: 14px;
-    //margin: -50px 0 50px ;
+    margin: 20px 0 0px ;
     //用户操作
     .userOpera{
         //border: 1px solid red;

@@ -62,7 +62,9 @@
                     <!--下载-->
                     <span class="downloadSelect" @click.prevent="downSongs(songData)"><i></i></span>
                     <!--评论-->
-                    <span class="commentSelect"><i></i></span>
+                    <router-link :to="`/songinfo/${songData.mid}`" tag="span" class="commentSelect" v-if="songData">
+                        <i></i>
+                    </router-link>
                     <!--纯净-->
 <!--                    <span class="openPure"><i></i></span>-->
                 </div>
@@ -427,7 +429,9 @@ import Axios from "axios";
             async downSongs(item){
                 let res = await api.downSongs(item.mid)
                 if (res.data.result===100){
-                    this.downloadItem(res.data.data,item.name||item.title)
+                    let reg = new RegExp('http://122.226.161.16')
+                    let url = res.data.data.replace(reg,'/down')
+                    this.downloadItem(url,item.name||item.title)
                 }
             },
             //下载

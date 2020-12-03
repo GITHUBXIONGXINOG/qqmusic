@@ -560,7 +560,6 @@
   }
   //播放控制组件
   .player-bar{
-    //background: grey;
     //border: 1px solid black;
     position: fixed;
     bottom: 32px;
@@ -752,7 +751,7 @@
         .moreOpera{
           //border: 1px solid red;
           height: 100%;
-          min-width: 280px;
+          min-width: 200px;
           display: flex;
           justify-content: space-between;
           margin: 0 0 0 35px;

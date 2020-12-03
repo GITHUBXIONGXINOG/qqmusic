@@ -5,7 +5,7 @@ const actions = {
 
     //想展示那首歌的信息就传递id
     async queryDataSong({state,commit}, songId){
-        // debugger
+        debugger
         //校验是否存在
         let result = state.playList.find(item=>{
             return item.mid===songId
@@ -405,6 +405,8 @@ const actions = {
             }
         }
     },
+
+
 
 }
 export default actions

@@ -37,23 +37,23 @@
                     </div>
                 </div>
                 <div class="operating">
-                    <router-link :to="`/player/songmid=` + songInfoPage.songId" tag="div" class="playing">
+                    <router-link :to="`/player/songmid=` + songInfoPage.songId" tag="a" class="playing">
                         <span class="iconfont icon-bofang1"></span>
                         <i>播放</i>
                     </router-link>
-                    <div class="playing">
+                    <a class="playing">
                         <span class="iconfont icon-shoucang"></span>
                         <i>收藏</i>
-                    </div>
-                    <div class="playing">
+                    </a>
+                    <a href="#rankComment" class="playing">
                         <span class="iconfont icon-pinglun2"></span>
                         <i>评论</i>
                         <i>({{songInfoPage.commend.data.comment.commenttotal}})</i>
-                    </div>
-                    <div class="playing">
+                    </a>
+                    <a class="playing">
                         <span class="iconfont icon-gengduo"></span>
                         <i>更多</i>
-                    </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
                     />
                 </div>
                 <div class="comment-wrap">
-                    <rank-comment v-if="songInfoPage&&songInfoPage.commend"
+                    <rank-comment v-if="songInfoPage&&songInfoPage.commend" id="rankComment"
                                   :commentList="songInfoPage.commend.data.comment"
                                   @change="setCommendPageChange"
                     />
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="related-mv" v-if="songInfoPage&&songInfoPage.RelatedMV">
+                <div class="related-mv" v-if="songInfoPage&&songInfoPage.RelatedMV[0]">
                     <span class="related-mv-title">相关mv</span>
                     <div class="mv-wrap">
                         <img :src="songInfoPage.RelatedMV[0].picurl" alt="">
@@ -100,7 +100,7 @@
 import {mapGetters} from "vuex";
 import LyricsPanel from "@/components/main/search/LyricsPanel";
 import RankComment from "@/components/main/rank/RankComment";
-import {songInfoPage} from "@/store/getters";
+// import {songInfoPage} from "@/store/getters";
     export default {
         data(){
             return{
