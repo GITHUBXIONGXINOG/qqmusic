@@ -46,8 +46,6 @@
                 </div>
             </div>
         </div>
-<!-- {{recommendList.title}}-->
-
 
         <!--后退按钮-->
         <div class="up-page checked"
@@ -74,9 +72,7 @@
 
             >
                 <svg class="icon" aria-hidden="true" v-show="i>0&&i<pageLen-1">
-<!--                    <use :xlink:href="[ activeIndex == i ? '#icon-nav-middle-deep' : '#icon-nav-shallow'] ">-->
                     <use :xlink:href="setNav(i)">
-
                     </use>
                 </svg>
             </li>
@@ -137,10 +133,7 @@
         methods:{
             //点击按钮
             clickPage(str){
-          /*      debugger
-                if (this.aListName.length!=this.pageLen){
-                    this.pageLen = this.aListName.length
-                }*/
+
                 if (str === 'up'){
                     if (this.clickFlag==false){
                         /*利用clcikFlag防止多次重复点击*/
@@ -201,7 +194,6 @@
                 const pages = []
                 const pageLen = Math.floor(this.imgList.length/this.pageSize)
                 this.imgList.forEach((item, index) => {
-                    // debugger
                     //Math.floor() 返回小于或等于一个给定数字的最大整数
                     const page = Math.floor(index / this.pageSize)
 
@@ -234,8 +226,6 @@
             },
             //设置导航
             setNav(i){
-
-            // <use :xlink:href="[ activeIndex == i ? '#icon-nav-middle-deep' : '#icon-nav-shallow'] ">
              if (this.activeIndex == i){
                  return '#icon-nav-middle-deep'
              }else if (this.activeIndex==0 && i==this.pageLen-2){
@@ -267,8 +257,6 @@
                         return v.cover
                     }
                 }
-
-
             },
             //歌曲或歌单id
             songsId(){
@@ -294,7 +282,7 @@
             ])
         },
         mounted() {
-            // console.log(this.recommendList)
+
         }
     }
 
